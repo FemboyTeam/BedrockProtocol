@@ -2,6 +2,24 @@
     "name": "femboyteam/bedrock-protocol",
     "description": "An implementation of the Minecraft: Bedrock Edition protocol in PHP",
     "type": "library",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/FemboyTeam/BinaryUtils"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/FemboyTeam/Color"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/FemboyTeam/Math"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/FemboyTeam/NBT"
+        }
+    ],
     "require": {
         "php": "^8.1",
         "ext-json": "*",
