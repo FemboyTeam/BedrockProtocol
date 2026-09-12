@@ -14,24 +14,12 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol;
 
+use pocketmine\network\mcpe\protocol\types\TextPacketType;
 use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
 use function count;
 
-class TextPacket extends DataPacket implements ClientboundPacket, ServerboundPacket{
+class TextPacket extends DataPacket implements ClientboundPacket, ServerboundPacket, TextPacketType{
 	public const NETWORK_ID = ProtocolInfo::TEXT_PACKET;
-
-	public const TYPE_RAW = 0;
-	public const TYPE_CHAT = 1;
-	public const TYPE_TRANSLATION = 2;
-	public const TYPE_POPUP = 3;
-	public const TYPE_JUKEBOX_POPUP = 4;
-	public const TYPE_TIP = 5;
-	public const TYPE_SYSTEM = 6;
-	public const TYPE_WHISPER = 7;
-	public const TYPE_ANNOUNCEMENT = 8;
-	public const TYPE_JSON_WHISPER = 9;
-	public const TYPE_JSON = 10;
-	public const TYPE_JSON_ANNOUNCEMENT = 11;
 
 	public int $type;
 	public bool $needsTranslation = false;

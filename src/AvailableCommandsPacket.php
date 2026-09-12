@@ -22,12 +22,13 @@ use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnumConstraint;
 use pocketmine\network\mcpe\protocol\types\command\CommandOverload;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
+use pocketmine\network\mcpe\protocol\types\command\CommandParameterType;
 use pocketmine\utils\BinaryDataException;
 use function array_search;
 use function count;
 use function dechex;
 
-class AvailableCommandsPacket extends DataPacket implements ClientboundPacket{
+class AvailableCommandsPacket extends DataPacket implements ClientboundPacket, CommandParameterType{
 	public const NETWORK_ID = ProtocolInfo::AVAILABLE_COMMANDS_PACKET;
 
 	/**
@@ -35,40 +36,6 @@ class AvailableCommandsPacket extends DataPacket implements ClientboundPacket{
 	 * for the argtype to work correctly. VALID seems as good a name as any.
 	 */
 	public const ARG_FLAG_VALID = 0x100000;
-
-	/**
-	 * Basic parameter types. These must be combined with the ARG_FLAG_VALID constant.
-	 * ARG_FLAG_VALID | (type const)
-	 */
-	public const ARG_TYPE_INT = 1;
-	public const ARG_TYPE_FLOAT = 3;
-	public const ARG_TYPE_VALUE = 4;
-	public const ARG_TYPE_WILDCARD_INT = 5;
-	public const ARG_TYPE_OPERATOR = 6;
-	public const ARG_TYPE_COMPARE_OPERATOR = 7;
-	public const ARG_TYPE_TARGET = 8;
-
-	public const ARG_TYPE_WILDCARD_TARGET = 10;
-
-	public const ARG_TYPE_FILEPATH = 17;
-
-	public const ARG_TYPE_FULL_INTEGER_RANGE = 23;
-
-	public const ARG_TYPE_EQUIPMENT_SLOT = 43;
-	public const ARG_TYPE_STRING = 44;
-
-	public const ARG_TYPE_INT_POSITION = 52;
-	public const ARG_TYPE_POSITION = 53;
-
-	public const ARG_TYPE_MESSAGE = 55;
-
-	public const ARG_TYPE_RAWTEXT = 58;
-
-	public const ARG_TYPE_JSON = 62;
-
-	public const ARG_TYPE_BLOCK_STATES = 71;
-
-	public const ARG_TYPE_COMMAND = 74;
 
 	/**
 	 * Enums are a little different: they are composed as follows:
