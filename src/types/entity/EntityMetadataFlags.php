@@ -14,6 +14,10 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\types\entity;
 
+use function decbin;
+use function strlen;
+use function strrev;
+
 final class EntityMetadataFlags{
 
 	private function __construct(){
@@ -137,4 +141,33 @@ final class EntityMetadataFlags{
 	public const TIMER_FLAG_1 = 115;
 	public const TIMER_FLAG_2 = 116;
 	public const TIMER_FLAG_3 = 117;
+
+	/**
+	 * @return int[]
+	 */
+	public static function toArray(int $flags) : array{
+		$result = [];
+
+		$flags = strrev(decbin($flags));
+		for($i = 0, $len = strlen($flags); $i < $len; ++$i){
+			if($flags[$i] === "1"){
+				$result[] = $i % 64;
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @param int[] $flags
+	 */
+	public static function fromArray(array $flags) : int{
+		$result = 0;
+
+		foreach($flags as $flag){
+			$result |= 1 << ($flag % 64);
+		}
+
+		return $result;
+	}
 }
