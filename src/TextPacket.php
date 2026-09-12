@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol;
 
-use pocketmine\network\mcpe\protocol\types\TextPacketType;
 use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
+use pocketmine\network\mcpe\protocol\types\TextPacketType;
 use function count;
 
 class TextPacket extends DataPacket implements ClientboundPacket, ServerboundPacket, TextPacketType{
