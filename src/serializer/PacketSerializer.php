@@ -20,6 +20,7 @@ use pocketmine\nbt\NbtDataException;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\TreeRoot;
 use pocketmine\network\mcpe\protocol\PacketDecodeException;
+use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\network\mcpe\protocol\types\BlockPosition;
 use pocketmine\network\mcpe\protocol\types\BoolGameRule;
 use pocketmine\network\mcpe\protocol\types\command\CommandOriginData;
@@ -66,6 +67,7 @@ use function substr;
 
 class PacketSerializer extends BinaryStream{
 
+	private int $protocol = ProtocolInfo::CURRENT_PROTOCOL;
 	private int $shieldItemRuntimeId;
 	private PacketSerializerContext $context;
 
@@ -73,6 +75,15 @@ class PacketSerializer extends BinaryStream{
 		parent::__construct($buffer, $offset);
 		$this->context = $context;
 		$this->shieldItemRuntimeId = $context->getItemDictionary()->fromStringId("minecraft:shield");
+	}
+
+	public function setProtocol(int $protocol) : self{
+		$this->protocol = $protocol;
+		return $this;
+	}
+
+	public function getProtocol() : int{
+		return $this->protocol;
 	}
 
 	public static function encoder(PacketSerializerContext $context) : self{
