@@ -70,4 +70,8 @@ class PositionTrackingDBClientRequestPacket extends DataPacket implements Server
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handlePositionTrackingDBClientRequest($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translatePositionTrackingDBClientRequest($this);
+	}
 }

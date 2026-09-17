@@ -81,4 +81,8 @@ class CorrectPlayerMovePredictionPacket extends DataPacket implements Clientboun
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleCorrectPlayerMovePrediction($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateCorrectPlayerMovePrediction($this);
+	}
 }

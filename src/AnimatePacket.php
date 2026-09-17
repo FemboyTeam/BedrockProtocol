@@ -82,4 +82,8 @@ class AnimatePacket extends DataPacket implements ClientboundPacket, Serverbound
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleAnimate($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateAnimate($this);
+	}
 }

@@ -85,4 +85,8 @@ class MoveActorAbsolutePacket extends DataPacket implements ClientboundPacket, S
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleMoveActorAbsolute($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateMoveActorAbsolute($this);
+	}
 }

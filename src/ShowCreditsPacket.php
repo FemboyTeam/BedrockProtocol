@@ -67,4 +67,8 @@ class ShowCreditsPacket extends DataPacket implements ClientboundPacket, Serverb
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleShowCredits($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateShowCredits($this);
+	}
 }

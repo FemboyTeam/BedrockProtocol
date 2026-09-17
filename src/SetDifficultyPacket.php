@@ -60,4 +60,8 @@ class SetDifficultyPacket extends DataPacket implements ClientboundPacket, Serve
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleSetDifficulty($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateSetDifficulty($this);
+	}
 }

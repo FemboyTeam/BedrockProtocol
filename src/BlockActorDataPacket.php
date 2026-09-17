@@ -68,4 +68,8 @@ class BlockActorDataPacket extends DataPacket implements ClientboundPacket, Serv
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleBlockActorData($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateBlockActorData($this);
+	}
 }

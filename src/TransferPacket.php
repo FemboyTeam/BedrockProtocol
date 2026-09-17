@@ -64,4 +64,8 @@ class TransferPacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleTransfer($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateTransfer($this);
+	}
 }

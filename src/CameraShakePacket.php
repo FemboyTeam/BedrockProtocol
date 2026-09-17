@@ -86,4 +86,8 @@ class CameraShakePacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleCameraShake($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateCameraShake($this);
+	}
 }

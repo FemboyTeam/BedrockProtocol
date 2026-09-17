@@ -89,4 +89,8 @@ class SetPlayerInventoryOptionsPacket extends DataPacket implements ClientboundP
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleSetPlayerInventoryOptions($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateSetPlayerInventoryOptions($this);
+	}
 }

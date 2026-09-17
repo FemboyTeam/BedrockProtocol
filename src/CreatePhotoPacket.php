@@ -74,4 +74,8 @@ class CreatePhotoPacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleCreatePhoto($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateCreatePhoto($this);
+	}
 }

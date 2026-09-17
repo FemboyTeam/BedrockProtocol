@@ -100,4 +100,8 @@ class ResourcePackStackPacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleResourcePackStack($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateResourcePackStack($this);
+	}
 }

@@ -115,4 +115,8 @@ class GameTestRequestPacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleGameTestRequest($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateGameTestRequest($this);
+	}
 }

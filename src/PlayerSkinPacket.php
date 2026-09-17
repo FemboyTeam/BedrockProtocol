@@ -76,4 +76,8 @@ class PlayerSkinPacket extends DataPacket implements ClientboundPacket, Serverbo
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handlePlayerSkin($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translatePlayerSkin($this);
+	}
 }

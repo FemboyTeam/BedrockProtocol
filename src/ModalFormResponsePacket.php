@@ -81,4 +81,8 @@ class ModalFormResponsePacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleModalFormResponse($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateModalFormResponse($this);
+	}
 }

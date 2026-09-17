@@ -95,4 +95,8 @@ class NpcDialoguePacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleNpcDialogue($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateNpcDialogue($this);
+	}
 }

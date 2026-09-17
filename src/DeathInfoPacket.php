@@ -83,4 +83,8 @@ class DeathInfoPacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleDeathInfo($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateDeathInfo($this);
+	}
 }

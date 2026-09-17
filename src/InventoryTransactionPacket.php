@@ -112,4 +112,8 @@ class InventoryTransactionPacket extends DataPacket implements ClientboundPacket
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleInventoryTransaction($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateInventoryTransaction($this);
+	}
 }

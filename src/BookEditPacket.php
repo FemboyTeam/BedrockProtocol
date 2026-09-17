@@ -113,4 +113,8 @@ class BookEditPacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleBookEdit($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateBookEdit($this);
+	}
 }

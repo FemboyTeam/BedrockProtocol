@@ -79,4 +79,8 @@ class PlayerActionPacket extends DataPacket implements ClientboundPacket, Server
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handlePlayerAction($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translatePlayerAction($this);
+	}
 }

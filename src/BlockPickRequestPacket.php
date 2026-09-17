@@ -69,4 +69,8 @@ class BlockPickRequestPacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleBlockPickRequest($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateBlockPickRequest($this);
+	}
 }

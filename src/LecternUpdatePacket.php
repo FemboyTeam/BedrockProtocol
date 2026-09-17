@@ -73,4 +73,8 @@ class LecternUpdatePacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleLecternUpdate($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateLecternUpdate($this);
+	}
 }

@@ -92,4 +92,8 @@ class UpdateAdventureSettingsPacket extends DataPacket implements ClientboundPac
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleUpdateAdventureSettings($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateUpdateAdventureSettings($this);
+	}
 }

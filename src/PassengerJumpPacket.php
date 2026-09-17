@@ -60,4 +60,8 @@ class PassengerJumpPacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handlePassengerJump($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translatePassengerJump($this);
+	}
 }

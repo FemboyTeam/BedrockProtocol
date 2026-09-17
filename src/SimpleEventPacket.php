@@ -64,4 +64,8 @@ class SimpleEventPacket extends DataPacket implements ClientboundPacket, Serverb
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleSimpleEvent($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateSimpleEvent($this);
+	}
 }

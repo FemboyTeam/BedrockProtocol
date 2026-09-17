@@ -68,4 +68,8 @@ class DebugInfoPacket extends DataPacket implements ClientboundPacket, Serverbou
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleDebugInfo($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateDebugInfo($this);
+	}
 }

@@ -79,4 +79,8 @@ class ResourcePackClientResponsePacket extends DataPacket implements Serverbound
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleResourcePackClientResponse($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateResourcePackClientResponse($this);
+	}
 }

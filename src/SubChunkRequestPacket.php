@@ -95,4 +95,8 @@ class SubChunkRequestPacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleSubChunkRequest($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateSubChunkRequest($this);
+	}
 }

@@ -75,4 +75,8 @@ class LevelEventPacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleLevelEvent($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateLevelEvent($this);
+	}
 }

@@ -78,4 +78,8 @@ class ContainerSetDataPacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleContainerSetData($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateContainerSetData($this);
+	}
 }

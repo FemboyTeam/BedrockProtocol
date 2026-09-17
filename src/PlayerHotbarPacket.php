@@ -69,4 +69,8 @@ class PlayerHotbarPacket extends DataPacket implements ClientboundPacket, Server
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handlePlayerHotbar($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translatePlayerHotbar($this);
+	}
 }

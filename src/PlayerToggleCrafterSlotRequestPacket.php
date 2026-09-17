@@ -80,4 +80,8 @@ class PlayerToggleCrafterSlotRequestPacket extends DataPacket implements Serverb
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handlePlayerToggleCrafterSlotRequest($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translatePlayerToggleCrafterSlotRequest($this);
+	}
 }

@@ -80,4 +80,8 @@ class TickSyncPacket extends DataPacket implements ClientboundPacket, Serverboun
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleTickSync($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateTickSync($this);
+	}
 }

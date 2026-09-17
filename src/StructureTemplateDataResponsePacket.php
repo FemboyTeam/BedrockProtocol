@@ -81,4 +81,8 @@ class StructureTemplateDataResponsePacket extends DataPacket implements Clientbo
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleStructureTemplateDataResponse($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateStructureTemplateDataResponse($this);
+	}
 }

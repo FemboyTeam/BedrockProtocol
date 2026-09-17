@@ -90,4 +90,8 @@ class RequestPermissionsPacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleRequestPermissions($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateRequestPermissions($this);
+	}
 }

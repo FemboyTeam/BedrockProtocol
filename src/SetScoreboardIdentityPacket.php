@@ -85,4 +85,8 @@ class SetScoreboardIdentityPacket extends DataPacket implements ClientboundPacke
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleSetScoreboardIdentity($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateSetScoreboardIdentity($this);
+	}
 }

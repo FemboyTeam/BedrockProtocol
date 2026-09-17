@@ -72,4 +72,8 @@ class CompressedBiomeDefinitionListPacket extends DataPacket implements Clientbo
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleCompressedBiomeDefinitionList($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateCompressedBiomeDefinitionList($this);
+	}
 }

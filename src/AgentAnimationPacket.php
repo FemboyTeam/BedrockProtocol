@@ -71,4 +71,8 @@ class AgentAnimationPacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleAgentAnimation($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateAgentAnimation($this);
+	}
 }

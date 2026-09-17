@@ -80,4 +80,8 @@ class AgentActionEventPacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleAgentActionEvent($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateAgentActionEvent($this);
+	}
 }

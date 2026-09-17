@@ -87,4 +87,8 @@ class LegacyTelemetryEventPacket extends DataPacket implements ClientboundPacket
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleLegacyTelemetryEvent($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateLegacyTelemetryEvent($this);
+	}
 }

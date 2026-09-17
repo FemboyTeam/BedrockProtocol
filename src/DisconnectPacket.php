@@ -74,4 +74,8 @@ class DisconnectPacket extends DataPacket implements ClientboundPacket, Serverbo
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleDisconnect($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateDisconnect($this);
+	}
 }

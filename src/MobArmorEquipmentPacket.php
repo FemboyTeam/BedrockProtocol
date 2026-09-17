@@ -79,4 +79,8 @@ class MobArmorEquipmentPacket extends DataPacket implements ClientboundPacket, S
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleMobArmorEquipment($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateMobArmorEquipment($this);
+	}
 }

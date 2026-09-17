@@ -86,4 +86,8 @@ class UnlockedRecipesPacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleUnlockedRecipes($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateUnlockedRecipes($this);
+	}
 }

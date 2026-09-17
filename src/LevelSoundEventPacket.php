@@ -87,4 +87,8 @@ class LevelSoundEventPacket extends DataPacket implements ClientboundPacket, Ser
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleLevelSoundEvent($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateLevelSoundEvent($this);
+	}
 }

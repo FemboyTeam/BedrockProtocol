@@ -75,4 +75,8 @@ class CameraPresetsPacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleCameraPresets($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateCameraPresets($this);
+	}
 }

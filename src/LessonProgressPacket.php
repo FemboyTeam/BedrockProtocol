@@ -81,4 +81,8 @@ class LessonProgressPacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleLessonProgress($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateLessonProgress($this);
+	}
 }

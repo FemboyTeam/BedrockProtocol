@@ -134,4 +134,8 @@ class ClientboundDebugRendererPacket extends DataPacket implements ClientboundPa
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleClientboundDebugRenderer($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateClientboundDebugRenderer($this);
+	}
 }

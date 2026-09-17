@@ -62,4 +62,8 @@ class ItemFrameDropItemPacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleItemFrameDropItem($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateItemFrameDropItem($this);
+	}
 }

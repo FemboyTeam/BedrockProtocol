@@ -80,4 +80,8 @@ class UpdateSoftEnumPacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleUpdateSoftEnum($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateUpdateSoftEnum($this);
+	}
 }

@@ -65,4 +65,8 @@ class UpdateClientInputLocksPacket extends DataPacket implements ClientboundPack
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleUpdateClientInputLocks($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateUpdateClientInputLocks($this);
+	}
 }

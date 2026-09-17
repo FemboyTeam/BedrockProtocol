@@ -74,4 +74,8 @@ class StructureBlockUpdatePacket extends DataPacket implements ServerboundPacket
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleStructureBlockUpdate($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateStructureBlockUpdate($this);
+	}
 }

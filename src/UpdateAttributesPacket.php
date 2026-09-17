@@ -72,4 +72,8 @@ class UpdateAttributesPacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleUpdateAttributes($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateUpdateAttributes($this);
+	}
 }

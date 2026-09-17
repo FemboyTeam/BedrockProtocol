@@ -79,4 +79,8 @@ class ClientCacheMissResponsePacket extends DataPacket implements ClientboundPac
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleClientCacheMissResponse($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateClientCacheMissResponse($this);
+	}
 }

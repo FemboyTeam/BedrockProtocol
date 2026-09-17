@@ -60,4 +60,8 @@ class SubClientLoginPacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleSubClientLogin($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateSubClientLogin($this);
+	}
 }

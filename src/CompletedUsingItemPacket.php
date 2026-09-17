@@ -82,4 +82,8 @@ class CompletedUsingItemPacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleCompletedUsingItem($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateCompletedUsingItem($this);
+	}
 }

@@ -64,4 +64,8 @@ class RequestChunkRadiusPacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleRequestChunkRadius($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateRequestChunkRadius($this);
+	}
 }

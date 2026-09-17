@@ -79,4 +79,8 @@ class StructureTemplateDataRequestPacket extends DataPacket implements Serverbou
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleStructureTemplateDataRequest($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateStructureTemplateDataRequest($this);
+	}
 }

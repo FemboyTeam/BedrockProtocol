@@ -112,4 +112,8 @@ class CommandOutputPacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleCommandOutput($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateCommandOutput($this);
+	}
 }

@@ -60,4 +60,8 @@ class SetLocalPlayerAsInitializedPacket extends DataPacket implements Serverboun
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleSetLocalPlayerAsInitialized($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateSetLocalPlayerAsInitialized($this);
+	}
 }

@@ -60,4 +60,8 @@ class RemoveObjectivePacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleRemoveObjective($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateRemoveObjective($this);
+	}
 }

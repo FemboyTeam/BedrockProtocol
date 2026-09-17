@@ -60,4 +60,8 @@ class SetPlayerGameTypePacket extends DataPacket implements ClientboundPacket, S
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleSetPlayerGameType($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateSetPlayerGameType($this);
+	}
 }

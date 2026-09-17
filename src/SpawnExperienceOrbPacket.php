@@ -65,4 +65,8 @@ class SpawnExperienceOrbPacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleSpawnExperienceOrb($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateSpawnExperienceOrb($this);
+	}
 }

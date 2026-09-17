@@ -63,4 +63,8 @@ class AvailableActorIdentifiersPacket extends DataPacket implements ClientboundP
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleAvailableActorIdentifiers($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateAvailableActorIdentifiers($this);
+	}
 }

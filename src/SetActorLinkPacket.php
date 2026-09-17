@@ -61,4 +61,8 @@ class SetActorLinkPacket extends DataPacket implements ClientboundPacket, Server
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleSetActorLink($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateSetActorLink($this);
+	}
 }

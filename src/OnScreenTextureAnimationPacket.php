@@ -60,4 +60,8 @@ class OnScreenTextureAnimationPacket extends DataPacket implements ClientboundPa
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleOnScreenTextureAnimation($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateOnScreenTextureAnimation($this);
+	}
 }

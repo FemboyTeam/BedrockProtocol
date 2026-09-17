@@ -64,4 +64,8 @@ class ResourcePackChunkRequestPacket extends DataPacket implements ServerboundPa
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleResourcePackChunkRequest($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateResourcePackChunkRequest($this);
+	}
 }

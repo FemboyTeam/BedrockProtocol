@@ -64,4 +64,8 @@ class ClientCacheStatusPacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleClientCacheStatus($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateClientCacheStatus($this);
+	}
 }

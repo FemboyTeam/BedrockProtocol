@@ -65,4 +65,8 @@ class SetActorMotionPacket extends DataPacket implements ClientboundPacket, Serv
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleSetActorMotion($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateSetActorMotion($this);
+	}
 }

@@ -77,4 +77,8 @@ class MobEquipmentPacket extends DataPacket implements ClientboundPacket, Server
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleMobEquipment($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateMobEquipment($this);
+	}
 }

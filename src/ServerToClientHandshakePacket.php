@@ -65,4 +65,8 @@ class ServerToClientHandshakePacket extends DataPacket implements ClientboundPac
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleServerToClientHandshake($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateServerToClientHandshake($this);
+	}
 }

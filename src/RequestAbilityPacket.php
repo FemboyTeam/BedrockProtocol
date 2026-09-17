@@ -101,4 +101,8 @@ class RequestAbilityPacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleRequestAbility($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateRequestAbility($this);
+	}
 }

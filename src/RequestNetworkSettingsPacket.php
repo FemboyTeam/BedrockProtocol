@@ -71,4 +71,8 @@ class RequestNetworkSettingsPacket extends DataPacket implements ServerboundPack
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleRequestNetworkSettings($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateRequestNetworkSettings($this);
+	}
 }

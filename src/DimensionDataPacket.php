@@ -96,4 +96,8 @@ class DimensionDataPacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleDimensionData($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateDimensionData($this);
+	}
 }

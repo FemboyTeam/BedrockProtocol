@@ -68,4 +68,8 @@ class PlayerStartItemCooldownPacket extends DataPacket implements ClientboundPac
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handlePlayerStartItemCooldown($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translatePlayerStartItemCooldown($this);
+	}
 }

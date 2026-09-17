@@ -64,4 +64,8 @@ class ContainerClosePacket extends DataPacket implements ClientboundPacket, Serv
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleContainerClose($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateContainerClose($this);
+	}
 }

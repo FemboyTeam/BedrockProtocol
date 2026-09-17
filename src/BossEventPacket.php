@@ -196,4 +196,8 @@ class BossEventPacket extends DataPacket implements ClientboundPacket, Serverbou
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleBossEvent($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateBossEvent($this);
+	}
 }

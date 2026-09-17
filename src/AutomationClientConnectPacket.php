@@ -60,4 +60,8 @@ class AutomationClientConnectPacket extends DataPacket implements ClientboundPac
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleAutomationClientConnect($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateAutomationClientConnect($this);
+	}
 }

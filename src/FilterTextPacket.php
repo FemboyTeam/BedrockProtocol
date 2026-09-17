@@ -68,4 +68,8 @@ class FilterTextPacket extends DataPacket implements ClientboundPacket, Serverbo
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleFilterText($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateFilterText($this);
+	}
 }

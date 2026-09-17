@@ -103,6 +103,10 @@ class SetTitlePacket extends DataPacket implements ClientboundPacket{
 		return $handler->handleSetTitle($this);
 	}
 
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateSetTitle($this);
+	}
+
 	private static function type(int $type) : self{
 		$result = new self;
 		$result->type = $type;

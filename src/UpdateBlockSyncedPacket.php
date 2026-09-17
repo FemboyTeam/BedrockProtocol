@@ -60,4 +60,8 @@ class UpdateBlockSyncedPacket extends UpdateBlockPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleUpdateBlockSynced($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateUpdateBlockSynced($this);
+	}
 }

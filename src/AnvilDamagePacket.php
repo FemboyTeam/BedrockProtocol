@@ -71,4 +71,8 @@ class AnvilDamagePacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleAnvilDamage($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateAnvilDamage($this);
+	}
 }

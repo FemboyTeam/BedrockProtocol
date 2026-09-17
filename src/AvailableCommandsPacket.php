@@ -589,4 +589,8 @@ class AvailableCommandsPacket extends DataPacket implements ClientboundPacket, C
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleAvailableCommands($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateAvailableCommands($this);
+	}
 }

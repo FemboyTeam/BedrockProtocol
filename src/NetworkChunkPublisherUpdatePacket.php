@@ -86,4 +86,8 @@ class NetworkChunkPublisherUpdatePacket extends DataPacket implements Clientboun
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleNetworkChunkPublisherUpdate($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateNetworkChunkPublisherUpdate($this);
+	}
 }

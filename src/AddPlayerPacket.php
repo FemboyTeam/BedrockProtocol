@@ -173,4 +173,8 @@ class AddPlayerPacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleAddPlayer($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateAddPlayer($this);
+	}
 }

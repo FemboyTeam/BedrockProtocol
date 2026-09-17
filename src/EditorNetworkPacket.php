@@ -69,4 +69,8 @@ class EditorNetworkPacket extends DataPacket implements ClientboundPacket, Serve
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleEditorNetwork($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateEditorNetwork($this);
+	}
 }

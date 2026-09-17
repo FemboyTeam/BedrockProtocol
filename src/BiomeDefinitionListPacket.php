@@ -63,4 +63,8 @@ class BiomeDefinitionListPacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleBiomeDefinitionList($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateBiomeDefinitionList($this);
+	}
 }

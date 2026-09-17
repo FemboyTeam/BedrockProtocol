@@ -72,4 +72,8 @@ class ResourcePackChunkDataPacket extends DataPacket implements ClientboundPacke
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleResourcePackChunkData($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateResourcePackChunkData($this);
+	}
 }

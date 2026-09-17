@@ -81,4 +81,8 @@ class SpawnParticleEffectPacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleSpawnParticleEffect($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateSpawnParticleEffect($this);
+	}
 }

@@ -196,4 +196,8 @@ class ClientboundMapItemDataPacket extends DataPacket implements ClientboundPack
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleClientboundMapItemData($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateClientboundMapItemData($this);
+	}
 }

@@ -300,4 +300,8 @@ class PlayerAuthInputPacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handlePlayerAuthInput($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translatePlayerAuthInput($this);
+	}
 }

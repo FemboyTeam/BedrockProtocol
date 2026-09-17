@@ -80,4 +80,8 @@ class SetActorDataPacket extends DataPacket implements ClientboundPacket, Server
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleSetActorData($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateSetActorData($this);
+	}
 }

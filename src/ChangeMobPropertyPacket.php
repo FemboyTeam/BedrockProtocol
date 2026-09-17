@@ -112,4 +112,8 @@ class ChangeMobPropertyPacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleChangeMobProperty($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateChangeMobProperty($this);
+	}
 }

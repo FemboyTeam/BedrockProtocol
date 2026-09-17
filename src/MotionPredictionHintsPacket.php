@@ -75,4 +75,8 @@ class MotionPredictionHintsPacket extends DataPacket implements ClientboundPacke
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleMotionPredictionHints($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateMotionPredictionHints($this);
+	}
 }

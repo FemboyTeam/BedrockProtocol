@@ -73,4 +73,8 @@ class RespawnPacket extends DataPacket implements ClientboundPacket, Serverbound
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleRespawn($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateRespawn($this);
+	}
 }

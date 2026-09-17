@@ -95,4 +95,8 @@ class EmotePacket extends DataPacket implements ClientboundPacket, ServerboundPa
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleEmote($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateEmote($this);
+	}
 }

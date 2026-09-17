@@ -111,4 +111,8 @@ class PlayerArmorDamagePacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handlePlayerArmorDamage($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translatePlayerArmorDamage($this);
+	}
 }

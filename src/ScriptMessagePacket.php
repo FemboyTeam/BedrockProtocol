@@ -68,4 +68,8 @@ class ScriptMessagePacket extends DataPacket implements ClientboundPacket, Serve
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleScriptMessage($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateScriptMessage($this);
+	}
 }

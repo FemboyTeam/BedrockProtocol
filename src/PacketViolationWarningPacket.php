@@ -86,4 +86,8 @@ class PacketViolationWarningPacket extends DataPacket implements ServerboundPack
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handlePacketViolationWarning($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translatePacketViolationWarning($this);
+	}
 }

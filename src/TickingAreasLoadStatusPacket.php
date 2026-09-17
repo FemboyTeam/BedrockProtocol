@@ -62,4 +62,8 @@ class TickingAreasLoadStatusPacket extends DataPacket implements ClientboundPack
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleTickingAreasLoadStatus($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateTickingAreasLoadStatus($this);
+	}
 }

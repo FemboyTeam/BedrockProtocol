@@ -69,4 +69,8 @@ class PurchaseReceiptPacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handlePurchaseReceipt($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translatePurchaseReceipt($this);
+	}
 }

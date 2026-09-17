@@ -70,4 +70,8 @@ class ActorEventPacket extends DataPacket implements ClientboundPacket, Serverbo
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleActorEvent($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateActorEvent($this);
+	}
 }

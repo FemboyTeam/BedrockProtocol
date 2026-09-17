@@ -136,4 +136,8 @@ class MovePlayerPacket extends DataPacket implements ClientboundPacket, Serverbo
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleMovePlayer($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateMovePlayer($this);
+	}
 }

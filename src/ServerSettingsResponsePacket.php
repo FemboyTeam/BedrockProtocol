@@ -64,4 +64,8 @@ class ServerSettingsResponsePacket extends DataPacket implements ClientboundPack
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleServerSettingsResponse($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateServerSettingsResponse($this);
+	}
 }

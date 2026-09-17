@@ -68,4 +68,8 @@ class ActorPickRequestPacket extends DataPacket implements ServerboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleActorPickRequest($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateActorPickRequest($this);
+	}
 }

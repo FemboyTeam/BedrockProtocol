@@ -64,4 +64,8 @@ class TakeItemActorPacket extends DataPacket implements ClientboundPacket{
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleTakeItemActor($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateTakeItemActor($this);
+	}
 }

@@ -170,4 +170,8 @@ class TextPacket extends DataPacket implements ClientboundPacket, ServerboundPac
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handleText($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateText($this);
+	}
 }

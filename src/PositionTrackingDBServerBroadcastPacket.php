@@ -82,4 +82,8 @@ class PositionTrackingDBServerBroadcastPacket extends DataPacket implements Clie
 	public function handle(PacketHandlerInterface $handler) : bool{
 		return $handler->handlePositionTrackingDBServerBroadcast($this);
 	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translatePositionTrackingDBServerBroadcast($this);
+	}
 }
