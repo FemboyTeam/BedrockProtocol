@@ -64,4 +64,6 @@ interface Packet{
 	 * @throws PacketDecodeException if broken data was found in the packet
 	 */
 	public function handle(PacketHandlerInterface $handler) : bool;
+
+	public function translate(PacketTranslatorInterface $translator) : ?self;
 }

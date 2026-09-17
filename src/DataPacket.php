@@ -33,6 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol;
 
+use pocketmine\network\mcpe\protocol\mapping\packet\PacketIdMapper;
 use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
 use pocketmine\utils\BinaryDataException;
 use function get_class;
@@ -80,10 +81,11 @@ abstract class DataPacket implements Packet{
 	 */
 	protected function decodeHeader(PacketSerializer $in) : void{
 		$header = $in->getUnsignedVarInt();
-		$pid = $header & self::PID_MASK;
+		$networkPid = $header & self::PID_MASK;
+		$pid = PacketIdMapper::getInstance($in->getProtocol())->networkToCore($networkPid);
 		if($pid !== static::NETWORK_ID){
 			//TODO: this means a logical error in the code, but how to prevent it from happening?
-			throw new PacketDecodeException("Expected " . static::NETWORK_ID . " for packet ID, got $pid");
+			throw new PacketDecodeException("Expected " . static::NETWORK_ID . " for packet ID, got " . ($pid === null ? "unmapped packet ID $networkPid" : $pid));
 		}
 		$this->senderSubId = ($header >> self::SENDER_SUBCLIENT_ID_SHIFT) & self::SUBCLIENT_ID_MASK;
 		$this->recipientSubId = ($header >> self::RECIPIENT_SUBCLIENT_ID_SHIFT) & self::SUBCLIENT_ID_MASK;
@@ -105,7 +107,7 @@ abstract class DataPacket implements Packet{
 
 	protected function encodeHeader(PacketSerializer $out) : void{
 		$out->putUnsignedVarInt(
-			static::NETWORK_ID |
+			(PacketIdMapper::getInstance($out->getProtocol())->coreToNetwork(static::NETWORK_ID) ?? throw new \LogicException("Failed to get mapped network packet ID for " . static::class . " (protocol " . $out->getProtocol() . ")")) |
 			($this->senderSubId << self::SENDER_SUBCLIENT_ID_SHIFT) |
 			($this->recipientSubId << self::RECIPIENT_SUBCLIENT_ID_SHIFT)
 		);
@@ -115,6 +117,10 @@ abstract class DataPacket implements Packet{
 	 * Encodes the packet body, without the packet ID or other generic header fields.
 	 */
 	abstract protected function encodePayload(PacketSerializer $out) : void;
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $this;
+	}
 
 	/**
 	 * @param string $name
