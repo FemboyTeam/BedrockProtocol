@@ -37,397 +37,397 @@ namespace pocketmine\network\mcpe\protocol;
  * This class is an automatically generated stub. Do not edit it manually.
  */
 interface PacketTranslatorInterface{
-	public function translateLogin(LoginPacket $packet) : bool;
+	public function translateLogin(LoginPacket $packet) : ?LoginPacket;
 
-	public function translatePlayStatus(PlayStatusPacket $packet) : bool;
+	public function translatePlayStatus(PlayStatusPacket $packet) : ?PlayStatusPacket;
 
-	public function translateServerToClientHandshake(ServerToClientHandshakePacket $packet) : bool;
+	public function translateServerToClientHandshake(ServerToClientHandshakePacket $packet) : ?ServerToClientHandshakePacket;
 
-	public function translateClientToServerHandshake(ClientToServerHandshakePacket $packet) : bool;
+	public function translateClientToServerHandshake(ClientToServerHandshakePacket $packet) : ?ClientToServerHandshakePacket;
 
-	public function translateDisconnect(DisconnectPacket $packet) : bool;
+	public function translateDisconnect(DisconnectPacket $packet) : ?DisconnectPacket;
 
-	public function translateResourcePacksInfo(ResourcePacksInfoPacket $packet) : bool;
+	public function translateResourcePacksInfo(ResourcePacksInfoPacket $packet) : ?ResourcePacksInfoPacket;
 
-	public function translateResourcePackStack(ResourcePackStackPacket $packet) : bool;
+	public function translateResourcePackStack(ResourcePackStackPacket $packet) : ?ResourcePackStackPacket;
 
-	public function translateResourcePackClientResponse(ResourcePackClientResponsePacket $packet) : bool;
+	public function translateResourcePackClientResponse(ResourcePackClientResponsePacket $packet) : ?ResourcePackClientResponsePacket;
 
-	public function translateText(TextPacket $packet) : bool;
+	public function translateText(TextPacket $packet) : ?TextPacket;
 
-	public function translateSetTime(SetTimePacket $packet) : bool;
+	public function translateSetTime(SetTimePacket $packet) : ?SetTimePacket;
 
-	public function translateStartGame(StartGamePacket $packet) : bool;
+	public function translateStartGame(StartGamePacket $packet) : ?StartGamePacket;
 
-	public function translateAddPlayer(AddPlayerPacket $packet) : bool;
+	public function translateAddPlayer(AddPlayerPacket $packet) : ?AddPlayerPacket;
 
-	public function translateAddActor(AddActorPacket $packet) : bool;
+	public function translateAddActor(AddActorPacket $packet) : ?AddActorPacket;
 
-	public function translateRemoveActor(RemoveActorPacket $packet) : bool;
+	public function translateRemoveActor(RemoveActorPacket $packet) : ?RemoveActorPacket;
 
-	public function translateAddItemActor(AddItemActorPacket $packet) : bool;
+	public function translateAddItemActor(AddItemActorPacket $packet) : ?AddItemActorPacket;
 
-	public function translateTakeItemActor(TakeItemActorPacket $packet) : bool;
+	public function translateTakeItemActor(TakeItemActorPacket $packet) : ?TakeItemActorPacket;
 
-	public function translateMoveActorAbsolute(MoveActorAbsolutePacket $packet) : bool;
+	public function translateMoveActorAbsolute(MoveActorAbsolutePacket $packet) : ?MoveActorAbsolutePacket;
 
-	public function translateMovePlayer(MovePlayerPacket $packet) : bool;
+	public function translateMovePlayer(MovePlayerPacket $packet) : ?MovePlayerPacket;
 
-	public function translatePassengerJump(PassengerJumpPacket $packet) : bool;
+	public function translatePassengerJump(PassengerJumpPacket $packet) : ?PassengerJumpPacket;
 
-	public function translateUpdateBlock(UpdateBlockPacket $packet) : bool;
+	public function translateUpdateBlock(UpdateBlockPacket $packet) : ?UpdateBlockPacket;
 
-	public function translateAddPainting(AddPaintingPacket $packet) : bool;
+	public function translateAddPainting(AddPaintingPacket $packet) : ?AddPaintingPacket;
 
-	public function translateTickSync(TickSyncPacket $packet) : bool;
+	public function translateTickSync(TickSyncPacket $packet) : ?TickSyncPacket;
 
-	public function translateLevelSoundEventPacketV1(LevelSoundEventPacketV1 $packet) : bool;
+	public function translateLevelSoundEventPacketV1(LevelSoundEventPacketV1 $packet) : ?LevelSoundEventPacketV1;
 
-	public function translateLevelEvent(LevelEventPacket $packet) : bool;
+	public function translateLevelEvent(LevelEventPacket $packet) : ?LevelEventPacket;
 
-	public function translateBlockEvent(BlockEventPacket $packet) : bool;
+	public function translateBlockEvent(BlockEventPacket $packet) : ?BlockEventPacket;
 
-	public function translateActorEvent(ActorEventPacket $packet) : bool;
+	public function translateActorEvent(ActorEventPacket $packet) : ?ActorEventPacket;
 
-	public function translateMobEffect(MobEffectPacket $packet) : bool;
+	public function translateMobEffect(MobEffectPacket $packet) : ?MobEffectPacket;
 
-	public function translateUpdateAttributes(UpdateAttributesPacket $packet) : bool;
+	public function translateUpdateAttributes(UpdateAttributesPacket $packet) : ?UpdateAttributesPacket;
 
-	public function translateInventoryTransaction(InventoryTransactionPacket $packet) : bool;
+	public function translateInventoryTransaction(InventoryTransactionPacket $packet) : ?InventoryTransactionPacket;
 
-	public function translateMobEquipment(MobEquipmentPacket $packet) : bool;
+	public function translateMobEquipment(MobEquipmentPacket $packet) : ?MobEquipmentPacket;
 
-	public function translateMobArmorEquipment(MobArmorEquipmentPacket $packet) : bool;
+	public function translateMobArmorEquipment(MobArmorEquipmentPacket $packet) : ?MobArmorEquipmentPacket;
 
-	public function translateInteract(InteractPacket $packet) : bool;
+	public function translateInteract(InteractPacket $packet) : ?InteractPacket;
 
-	public function translateBlockPickRequest(BlockPickRequestPacket $packet) : bool;
+	public function translateBlockPickRequest(BlockPickRequestPacket $packet) : ?BlockPickRequestPacket;
 
-	public function translateActorPickRequest(ActorPickRequestPacket $packet) : bool;
+	public function translateActorPickRequest(ActorPickRequestPacket $packet) : ?ActorPickRequestPacket;
 
-	public function translatePlayerAction(PlayerActionPacket $packet) : bool;
+	public function translatePlayerAction(PlayerActionPacket $packet) : ?PlayerActionPacket;
 
-	public function translateHurtArmor(HurtArmorPacket $packet) : bool;
+	public function translateHurtArmor(HurtArmorPacket $packet) : ?HurtArmorPacket;
 
-	public function translateSetActorData(SetActorDataPacket $packet) : bool;
+	public function translateSetActorData(SetActorDataPacket $packet) : ?SetActorDataPacket;
 
-	public function translateSetActorMotion(SetActorMotionPacket $packet) : bool;
+	public function translateSetActorMotion(SetActorMotionPacket $packet) : ?SetActorMotionPacket;
 
-	public function translateSetActorLink(SetActorLinkPacket $packet) : bool;
+	public function translateSetActorLink(SetActorLinkPacket $packet) : ?SetActorLinkPacket;
 
-	public function translateSetHealth(SetHealthPacket $packet) : bool;
+	public function translateSetHealth(SetHealthPacket $packet) : ?SetHealthPacket;
 
-	public function translateSetSpawnPosition(SetSpawnPositionPacket $packet) : bool;
+	public function translateSetSpawnPosition(SetSpawnPositionPacket $packet) : ?SetSpawnPositionPacket;
 
-	public function translateAnimate(AnimatePacket $packet) : bool;
+	public function translateAnimate(AnimatePacket $packet) : ?AnimatePacket;
 
-	public function translateRespawn(RespawnPacket $packet) : bool;
+	public function translateRespawn(RespawnPacket $packet) : ?RespawnPacket;
 
-	public function translateContainerOpen(ContainerOpenPacket $packet) : bool;
+	public function translateContainerOpen(ContainerOpenPacket $packet) : ?ContainerOpenPacket;
 
-	public function translateContainerClose(ContainerClosePacket $packet) : bool;
+	public function translateContainerClose(ContainerClosePacket $packet) : ?ContainerClosePacket;
 
-	public function translatePlayerHotbar(PlayerHotbarPacket $packet) : bool;
+	public function translatePlayerHotbar(PlayerHotbarPacket $packet) : ?PlayerHotbarPacket;
 
-	public function translateInventoryContent(InventoryContentPacket $packet) : bool;
+	public function translateInventoryContent(InventoryContentPacket $packet) : ?InventoryContentPacket;
 
-	public function translateInventorySlot(InventorySlotPacket $packet) : bool;
+	public function translateInventorySlot(InventorySlotPacket $packet) : ?InventorySlotPacket;
 
-	public function translateContainerSetData(ContainerSetDataPacket $packet) : bool;
+	public function translateContainerSetData(ContainerSetDataPacket $packet) : ?ContainerSetDataPacket;
 
-	public function translateCraftingData(CraftingDataPacket $packet) : bool;
+	public function translateCraftingData(CraftingDataPacket $packet) : ?CraftingDataPacket;
 
-	public function translateGuiDataPickItem(GuiDataPickItemPacket $packet) : bool;
+	public function translateGuiDataPickItem(GuiDataPickItemPacket $packet) : ?GuiDataPickItemPacket;
 
-	public function translateBlockActorData(BlockActorDataPacket $packet) : bool;
+	public function translateBlockActorData(BlockActorDataPacket $packet) : ?BlockActorDataPacket;
 
-	public function translatePlayerInput(PlayerInputPacket $packet) : bool;
+	public function translatePlayerInput(PlayerInputPacket $packet) : ?PlayerInputPacket;
 
-	public function translateLevelChunk(LevelChunkPacket $packet) : bool;
+	public function translateLevelChunk(LevelChunkPacket $packet) : ?LevelChunkPacket;
 
-	public function translateSetCommandsEnabled(SetCommandsEnabledPacket $packet) : bool;
+	public function translateSetCommandsEnabled(SetCommandsEnabledPacket $packet) : ?SetCommandsEnabledPacket;
 
-	public function translateSetDifficulty(SetDifficultyPacket $packet) : bool;
+	public function translateSetDifficulty(SetDifficultyPacket $packet) : ?SetDifficultyPacket;
 
-	public function translateChangeDimension(ChangeDimensionPacket $packet) : bool;
+	public function translateChangeDimension(ChangeDimensionPacket $packet) : ?ChangeDimensionPacket;
 
-	public function translateSetPlayerGameType(SetPlayerGameTypePacket $packet) : bool;
+	public function translateSetPlayerGameType(SetPlayerGameTypePacket $packet) : ?SetPlayerGameTypePacket;
 
-	public function translatePlayerList(PlayerListPacket $packet) : bool;
+	public function translatePlayerList(PlayerListPacket $packet) : ?PlayerListPacket;
 
-	public function translateSimpleEvent(SimpleEventPacket $packet) : bool;
+	public function translateSimpleEvent(SimpleEventPacket $packet) : ?SimpleEventPacket;
 
-	public function translateLegacyTelemetryEvent(LegacyTelemetryEventPacket $packet) : bool;
+	public function translateLegacyTelemetryEvent(LegacyTelemetryEventPacket $packet) : ?LegacyTelemetryEventPacket;
 
-	public function translateSpawnExperienceOrb(SpawnExperienceOrbPacket $packet) : bool;
+	public function translateSpawnExperienceOrb(SpawnExperienceOrbPacket $packet) : ?SpawnExperienceOrbPacket;
 
-	public function translateClientboundMapItemData(ClientboundMapItemDataPacket $packet) : bool;
+	public function translateClientboundMapItemData(ClientboundMapItemDataPacket $packet) : ?ClientboundMapItemDataPacket;
 
-	public function translateMapInfoRequest(MapInfoRequestPacket $packet) : bool;
+	public function translateMapInfoRequest(MapInfoRequestPacket $packet) : ?MapInfoRequestPacket;
 
-	public function translateRequestChunkRadius(RequestChunkRadiusPacket $packet) : bool;
+	public function translateRequestChunkRadius(RequestChunkRadiusPacket $packet) : ?RequestChunkRadiusPacket;
 
-	public function translateChunkRadiusUpdated(ChunkRadiusUpdatedPacket $packet) : bool;
+	public function translateChunkRadiusUpdated(ChunkRadiusUpdatedPacket $packet) : ?ChunkRadiusUpdatedPacket;
 
-	public function translateItemFrameDropItem(ItemFrameDropItemPacket $packet) : bool;
+	public function translateItemFrameDropItem(ItemFrameDropItemPacket $packet) : ?ItemFrameDropItemPacket;
 
-	public function translateGameRulesChanged(GameRulesChangedPacket $packet) : bool;
+	public function translateGameRulesChanged(GameRulesChangedPacket $packet) : ?GameRulesChangedPacket;
 
-	public function translateCamera(CameraPacket $packet) : bool;
+	public function translateCamera(CameraPacket $packet) : ?CameraPacket;
 
-	public function translateBossEvent(BossEventPacket $packet) : bool;
+	public function translateBossEvent(BossEventPacket $packet) : ?BossEventPacket;
 
-	public function translateShowCredits(ShowCreditsPacket $packet) : bool;
+	public function translateShowCredits(ShowCreditsPacket $packet) : ?ShowCreditsPacket;
 
-	public function translateAvailableCommands(AvailableCommandsPacket $packet) : bool;
+	public function translateAvailableCommands(AvailableCommandsPacket $packet) : ?AvailableCommandsPacket;
 
-	public function translateCommandRequest(CommandRequestPacket $packet) : bool;
+	public function translateCommandRequest(CommandRequestPacket $packet) : ?CommandRequestPacket;
 
-	public function translateCommandBlockUpdate(CommandBlockUpdatePacket $packet) : bool;
+	public function translateCommandBlockUpdate(CommandBlockUpdatePacket $packet) : ?CommandBlockUpdatePacket;
 
-	public function translateCommandOutput(CommandOutputPacket $packet) : bool;
+	public function translateCommandOutput(CommandOutputPacket $packet) : ?CommandOutputPacket;
 
-	public function translateUpdateTrade(UpdateTradePacket $packet) : bool;
+	public function translateUpdateTrade(UpdateTradePacket $packet) : ?UpdateTradePacket;
 
-	public function translateUpdateEquip(UpdateEquipPacket $packet) : bool;
+	public function translateUpdateEquip(UpdateEquipPacket $packet) : ?UpdateEquipPacket;
 
-	public function translateResourcePackDataInfo(ResourcePackDataInfoPacket $packet) : bool;
+	public function translateResourcePackDataInfo(ResourcePackDataInfoPacket $packet) : ?ResourcePackDataInfoPacket;
 
-	public function translateResourcePackChunkData(ResourcePackChunkDataPacket $packet) : bool;
+	public function translateResourcePackChunkData(ResourcePackChunkDataPacket $packet) : ?ResourcePackChunkDataPacket;
 
-	public function translateResourcePackChunkRequest(ResourcePackChunkRequestPacket $packet) : bool;
+	public function translateResourcePackChunkRequest(ResourcePackChunkRequestPacket $packet) : ?ResourcePackChunkRequestPacket;
 
-	public function translateTransfer(TransferPacket $packet) : bool;
+	public function translateTransfer(TransferPacket $packet) : ?TransferPacket;
 
-	public function translatePlaySound(PlaySoundPacket $packet) : bool;
+	public function translatePlaySound(PlaySoundPacket $packet) : ?PlaySoundPacket;
 
-	public function translateStopSound(StopSoundPacket $packet) : bool;
+	public function translateStopSound(StopSoundPacket $packet) : ?StopSoundPacket;
 
-	public function translateSetTitle(SetTitlePacket $packet) : bool;
+	public function translateSetTitle(SetTitlePacket $packet) : ?SetTitlePacket;
 
-	public function translateAddBehaviorTree(AddBehaviorTreePacket $packet) : bool;
+	public function translateAddBehaviorTree(AddBehaviorTreePacket $packet) : ?AddBehaviorTreePacket;
 
-	public function translateStructureBlockUpdate(StructureBlockUpdatePacket $packet) : bool;
+	public function translateStructureBlockUpdate(StructureBlockUpdatePacket $packet) : ?StructureBlockUpdatePacket;
 
-	public function translateShowStoreOffer(ShowStoreOfferPacket $packet) : bool;
+	public function translateShowStoreOffer(ShowStoreOfferPacket $packet) : ?ShowStoreOfferPacket;
 
-	public function translatePurchaseReceipt(PurchaseReceiptPacket $packet) : bool;
+	public function translatePurchaseReceipt(PurchaseReceiptPacket $packet) : ?PurchaseReceiptPacket;
 
-	public function translatePlayerSkin(PlayerSkinPacket $packet) : bool;
+	public function translatePlayerSkin(PlayerSkinPacket $packet) : ?PlayerSkinPacket;
 
-	public function translateSubClientLogin(SubClientLoginPacket $packet) : bool;
+	public function translateSubClientLogin(SubClientLoginPacket $packet) : ?SubClientLoginPacket;
 
-	public function translateAutomationClientConnect(AutomationClientConnectPacket $packet) : bool;
+	public function translateAutomationClientConnect(AutomationClientConnectPacket $packet) : ?AutomationClientConnectPacket;
 
-	public function translateSetLastHurtBy(SetLastHurtByPacket $packet) : bool;
+	public function translateSetLastHurtBy(SetLastHurtByPacket $packet) : ?SetLastHurtByPacket;
 
-	public function translateBookEdit(BookEditPacket $packet) : bool;
+	public function translateBookEdit(BookEditPacket $packet) : ?BookEditPacket;
 
-	public function translateNpcRequest(NpcRequestPacket $packet) : bool;
+	public function translateNpcRequest(NpcRequestPacket $packet) : ?NpcRequestPacket;
 
-	public function translatePhotoTransfer(PhotoTransferPacket $packet) : bool;
+	public function translatePhotoTransfer(PhotoTransferPacket $packet) : ?PhotoTransferPacket;
 
-	public function translateModalFormRequest(ModalFormRequestPacket $packet) : bool;
+	public function translateModalFormRequest(ModalFormRequestPacket $packet) : ?ModalFormRequestPacket;
 
-	public function translateModalFormResponse(ModalFormResponsePacket $packet) : bool;
+	public function translateModalFormResponse(ModalFormResponsePacket $packet) : ?ModalFormResponsePacket;
 
-	public function translateServerSettingsRequest(ServerSettingsRequestPacket $packet) : bool;
+	public function translateServerSettingsRequest(ServerSettingsRequestPacket $packet) : ?ServerSettingsRequestPacket;
 
-	public function translateServerSettingsResponse(ServerSettingsResponsePacket $packet) : bool;
+	public function translateServerSettingsResponse(ServerSettingsResponsePacket $packet) : ?ServerSettingsResponsePacket;
 
-	public function translateShowProfile(ShowProfilePacket $packet) : bool;
+	public function translateShowProfile(ShowProfilePacket $packet) : ?ShowProfilePacket;
 
-	public function translateSetDefaultGameType(SetDefaultGameTypePacket $packet) : bool;
+	public function translateSetDefaultGameType(SetDefaultGameTypePacket $packet) : ?SetDefaultGameTypePacket;
 
-	public function translateRemoveObjective(RemoveObjectivePacket $packet) : bool;
+	public function translateRemoveObjective(RemoveObjectivePacket $packet) : ?RemoveObjectivePacket;
 
-	public function translateSetDisplayObjective(SetDisplayObjectivePacket $packet) : bool;
+	public function translateSetDisplayObjective(SetDisplayObjectivePacket $packet) : ?SetDisplayObjectivePacket;
 
-	public function translateSetScore(SetScorePacket $packet) : bool;
+	public function translateSetScore(SetScorePacket $packet) : ?SetScorePacket;
 
-	public function translateLabTable(LabTablePacket $packet) : bool;
+	public function translateLabTable(LabTablePacket $packet) : ?LabTablePacket;
 
-	public function translateUpdateBlockSynced(UpdateBlockSyncedPacket $packet) : bool;
+	public function translateUpdateBlockSynced(UpdateBlockSyncedPacket $packet) : ?UpdateBlockSyncedPacket;
 
-	public function translateMoveActorDelta(MoveActorDeltaPacket $packet) : bool;
+	public function translateMoveActorDelta(MoveActorDeltaPacket $packet) : ?MoveActorDeltaPacket;
 
-	public function translateSetScoreboardIdentity(SetScoreboardIdentityPacket $packet) : bool;
+	public function translateSetScoreboardIdentity(SetScoreboardIdentityPacket $packet) : ?SetScoreboardIdentityPacket;
 
-	public function translateSetLocalPlayerAsInitialized(SetLocalPlayerAsInitializedPacket $packet) : bool;
+	public function translateSetLocalPlayerAsInitialized(SetLocalPlayerAsInitializedPacket $packet) : ?SetLocalPlayerAsInitializedPacket;
 
-	public function translateUpdateSoftEnum(UpdateSoftEnumPacket $packet) : bool;
+	public function translateUpdateSoftEnum(UpdateSoftEnumPacket $packet) : ?UpdateSoftEnumPacket;
 
-	public function translateNetworkStackLatency(NetworkStackLatencyPacket $packet) : bool;
+	public function translateNetworkStackLatency(NetworkStackLatencyPacket $packet) : ?NetworkStackLatencyPacket;
 
-	public function translateSpawnParticleEffect(SpawnParticleEffectPacket $packet) : bool;
+	public function translateSpawnParticleEffect(SpawnParticleEffectPacket $packet) : ?SpawnParticleEffectPacket;
 
-	public function translateAvailableActorIdentifiers(AvailableActorIdentifiersPacket $packet) : bool;
+	public function translateAvailableActorIdentifiers(AvailableActorIdentifiersPacket $packet) : ?AvailableActorIdentifiersPacket;
 
-	public function translateLevelSoundEventPacketV2(LevelSoundEventPacketV2 $packet) : bool;
+	public function translateLevelSoundEventPacketV2(LevelSoundEventPacketV2 $packet) : ?LevelSoundEventPacketV2;
 
-	public function translateNetworkChunkPublisherUpdate(NetworkChunkPublisherUpdatePacket $packet) : bool;
+	public function translateNetworkChunkPublisherUpdate(NetworkChunkPublisherUpdatePacket $packet) : ?NetworkChunkPublisherUpdatePacket;
 
-	public function translateBiomeDefinitionList(BiomeDefinitionListPacket $packet) : bool;
+	public function translateBiomeDefinitionList(BiomeDefinitionListPacket $packet) : ?BiomeDefinitionListPacket;
 
-	public function translateLevelSoundEvent(LevelSoundEventPacket $packet) : bool;
+	public function translateLevelSoundEvent(LevelSoundEventPacket $packet) : ?LevelSoundEventPacket;
 
-	public function translateLevelEventGeneric(LevelEventGenericPacket $packet) : bool;
+	public function translateLevelEventGeneric(LevelEventGenericPacket $packet) : ?LevelEventGenericPacket;
 
-	public function translateLecternUpdate(LecternUpdatePacket $packet) : bool;
+	public function translateLecternUpdate(LecternUpdatePacket $packet) : ?LecternUpdatePacket;
 
-	public function translateAddEntity(AddEntityPacket $packet) : bool;
+	public function translateAddEntity(AddEntityPacket $packet) : ?AddEntityPacket;
 
-	public function translateRemoveEntity(RemoveEntityPacket $packet) : bool;
+	public function translateRemoveEntity(RemoveEntityPacket $packet) : ?RemoveEntityPacket;
 
-	public function translateClientCacheStatus(ClientCacheStatusPacket $packet) : bool;
+	public function translateClientCacheStatus(ClientCacheStatusPacket $packet) : ?ClientCacheStatusPacket;
 
-	public function translateOnScreenTextureAnimation(OnScreenTextureAnimationPacket $packet) : bool;
+	public function translateOnScreenTextureAnimation(OnScreenTextureAnimationPacket $packet) : ?OnScreenTextureAnimationPacket;
 
-	public function translateMapCreateLockedCopy(MapCreateLockedCopyPacket $packet) : bool;
+	public function translateMapCreateLockedCopy(MapCreateLockedCopyPacket $packet) : ?MapCreateLockedCopyPacket;
 
-	public function translateStructureTemplateDataRequest(StructureTemplateDataRequestPacket $packet) : bool;
+	public function translateStructureTemplateDataRequest(StructureTemplateDataRequestPacket $packet) : ?StructureTemplateDataRequestPacket;
 
-	public function translateStructureTemplateDataResponse(StructureTemplateDataResponsePacket $packet) : bool;
+	public function translateStructureTemplateDataResponse(StructureTemplateDataResponsePacket $packet) : ?StructureTemplateDataResponsePacket;
 
-	public function translateClientCacheBlobStatus(ClientCacheBlobStatusPacket $packet) : bool;
+	public function translateClientCacheBlobStatus(ClientCacheBlobStatusPacket $packet) : ?ClientCacheBlobStatusPacket;
 
-	public function translateClientCacheMissResponse(ClientCacheMissResponsePacket $packet) : bool;
+	public function translateClientCacheMissResponse(ClientCacheMissResponsePacket $packet) : ?ClientCacheMissResponsePacket;
 
-	public function translateEducationSettings(EducationSettingsPacket $packet) : bool;
+	public function translateEducationSettings(EducationSettingsPacket $packet) : ?EducationSettingsPacket;
 
-	public function translateEmote(EmotePacket $packet) : bool;
+	public function translateEmote(EmotePacket $packet) : ?EmotePacket;
 
-	public function translateMultiplayerSettings(MultiplayerSettingsPacket $packet) : bool;
+	public function translateMultiplayerSettings(MultiplayerSettingsPacket $packet) : ?MultiplayerSettingsPacket;
 
-	public function translateSettingsCommand(SettingsCommandPacket $packet) : bool;
+	public function translateSettingsCommand(SettingsCommandPacket $packet) : ?SettingsCommandPacket;
 
-	public function translateAnvilDamage(AnvilDamagePacket $packet) : bool;
+	public function translateAnvilDamage(AnvilDamagePacket $packet) : ?AnvilDamagePacket;
 
-	public function translateCompletedUsingItem(CompletedUsingItemPacket $packet) : bool;
+	public function translateCompletedUsingItem(CompletedUsingItemPacket $packet) : ?CompletedUsingItemPacket;
 
-	public function translateNetworkSettings(NetworkSettingsPacket $packet) : bool;
+	public function translateNetworkSettings(NetworkSettingsPacket $packet) : ?NetworkSettingsPacket;
 
-	public function translatePlayerAuthInput(PlayerAuthInputPacket $packet) : bool;
+	public function translatePlayerAuthInput(PlayerAuthInputPacket $packet) : ?PlayerAuthInputPacket;
 
-	public function translateCreativeContent(CreativeContentPacket $packet) : bool;
+	public function translateCreativeContent(CreativeContentPacket $packet) : ?CreativeContentPacket;
 
-	public function translatePlayerEnchantOptions(PlayerEnchantOptionsPacket $packet) : bool;
+	public function translatePlayerEnchantOptions(PlayerEnchantOptionsPacket $packet) : ?PlayerEnchantOptionsPacket;
 
-	public function translateItemStackRequest(ItemStackRequestPacket $packet) : bool;
+	public function translateItemStackRequest(ItemStackRequestPacket $packet) : ?ItemStackRequestPacket;
 
-	public function translateItemStackResponse(ItemStackResponsePacket $packet) : bool;
+	public function translateItemStackResponse(ItemStackResponsePacket $packet) : ?ItemStackResponsePacket;
 
-	public function translatePlayerArmorDamage(PlayerArmorDamagePacket $packet) : bool;
+	public function translatePlayerArmorDamage(PlayerArmorDamagePacket $packet) : ?PlayerArmorDamagePacket;
 
-	public function translateCodeBuilder(CodeBuilderPacket $packet) : bool;
+	public function translateCodeBuilder(CodeBuilderPacket $packet) : ?CodeBuilderPacket;
 
-	public function translateUpdatePlayerGameType(UpdatePlayerGameTypePacket $packet) : bool;
+	public function translateUpdatePlayerGameType(UpdatePlayerGameTypePacket $packet) : ?UpdatePlayerGameTypePacket;
 
-	public function translateEmoteList(EmoteListPacket $packet) : bool;
+	public function translateEmoteList(EmoteListPacket $packet) : ?EmoteListPacket;
 
-	public function translatePositionTrackingDBServerBroadcast(PositionTrackingDBServerBroadcastPacket $packet) : bool;
+	public function translatePositionTrackingDBServerBroadcast(PositionTrackingDBServerBroadcastPacket $packet) : ?PositionTrackingDBServerBroadcastPacket;
 
-	public function translatePositionTrackingDBClientRequest(PositionTrackingDBClientRequestPacket $packet) : bool;
+	public function translatePositionTrackingDBClientRequest(PositionTrackingDBClientRequestPacket $packet) : ?PositionTrackingDBClientRequestPacket;
 
-	public function translateDebugInfo(DebugInfoPacket $packet) : bool;
+	public function translateDebugInfo(DebugInfoPacket $packet) : ?DebugInfoPacket;
 
-	public function translatePacketViolationWarning(PacketViolationWarningPacket $packet) : bool;
+	public function translatePacketViolationWarning(PacketViolationWarningPacket $packet) : ?PacketViolationWarningPacket;
 
-	public function translateMotionPredictionHints(MotionPredictionHintsPacket $packet) : bool;
+	public function translateMotionPredictionHints(MotionPredictionHintsPacket $packet) : ?MotionPredictionHintsPacket;
 
-	public function translateAnimateEntity(AnimateEntityPacket $packet) : bool;
+	public function translateAnimateEntity(AnimateEntityPacket $packet) : ?AnimateEntityPacket;
 
-	public function translateCameraShake(CameraShakePacket $packet) : bool;
+	public function translateCameraShake(CameraShakePacket $packet) : ?CameraShakePacket;
 
-	public function translatePlayerFog(PlayerFogPacket $packet) : bool;
+	public function translatePlayerFog(PlayerFogPacket $packet) : ?PlayerFogPacket;
 
-	public function translateCorrectPlayerMovePrediction(CorrectPlayerMovePredictionPacket $packet) : bool;
+	public function translateCorrectPlayerMovePrediction(CorrectPlayerMovePredictionPacket $packet) : ?CorrectPlayerMovePredictionPacket;
 
-	public function translateItemComponent(ItemComponentPacket $packet) : bool;
+	public function translateItemComponent(ItemComponentPacket $packet) : ?ItemComponentPacket;
 
-	public function translateFilterText(FilterTextPacket $packet) : bool;
+	public function translateFilterText(FilterTextPacket $packet) : ?FilterTextPacket;
 
-	public function translateClientboundDebugRenderer(ClientboundDebugRendererPacket $packet) : bool;
+	public function translateClientboundDebugRenderer(ClientboundDebugRendererPacket $packet) : ?ClientboundDebugRendererPacket;
 
-	public function translateSyncActorProperty(SyncActorPropertyPacket $packet) : bool;
+	public function translateSyncActorProperty(SyncActorPropertyPacket $packet) : ?SyncActorPropertyPacket;
 
-	public function translateAddVolumeEntity(AddVolumeEntityPacket $packet) : bool;
+	public function translateAddVolumeEntity(AddVolumeEntityPacket $packet) : ?AddVolumeEntityPacket;
 
-	public function translateRemoveVolumeEntity(RemoveVolumeEntityPacket $packet) : bool;
+	public function translateRemoveVolumeEntity(RemoveVolumeEntityPacket $packet) : ?RemoveVolumeEntityPacket;
 
-	public function translateSimulationType(SimulationTypePacket $packet) : bool;
+	public function translateSimulationType(SimulationTypePacket $packet) : ?SimulationTypePacket;
 
-	public function translateNpcDialogue(NpcDialoguePacket $packet) : bool;
+	public function translateNpcDialogue(NpcDialoguePacket $packet) : ?NpcDialoguePacket;
 
-	public function translateEduUriResource(EduUriResourcePacket $packet) : bool;
+	public function translateEduUriResource(EduUriResourcePacket $packet) : ?EduUriResourcePacket;
 
-	public function translateCreatePhoto(CreatePhotoPacket $packet) : bool;
+	public function translateCreatePhoto(CreatePhotoPacket $packet) : ?CreatePhotoPacket;
 
-	public function translateUpdateSubChunkBlocks(UpdateSubChunkBlocksPacket $packet) : bool;
+	public function translateUpdateSubChunkBlocks(UpdateSubChunkBlocksPacket $packet) : ?UpdateSubChunkBlocksPacket;
 
-	public function translateSubChunk(SubChunkPacket $packet) : bool;
+	public function translateSubChunk(SubChunkPacket $packet) : ?SubChunkPacket;
 
-	public function translateSubChunkRequest(SubChunkRequestPacket $packet) : bool;
+	public function translateSubChunkRequest(SubChunkRequestPacket $packet) : ?SubChunkRequestPacket;
 
-	public function translatePlayerStartItemCooldown(PlayerStartItemCooldownPacket $packet) : bool;
+	public function translatePlayerStartItemCooldown(PlayerStartItemCooldownPacket $packet) : ?PlayerStartItemCooldownPacket;
 
-	public function translateScriptMessage(ScriptMessagePacket $packet) : bool;
+	public function translateScriptMessage(ScriptMessagePacket $packet) : ?ScriptMessagePacket;
 
-	public function translateCodeBuilderSource(CodeBuilderSourcePacket $packet) : bool;
+	public function translateCodeBuilderSource(CodeBuilderSourcePacket $packet) : ?CodeBuilderSourcePacket;
 
-	public function translateTickingAreasLoadStatus(TickingAreasLoadStatusPacket $packet) : bool;
+	public function translateTickingAreasLoadStatus(TickingAreasLoadStatusPacket $packet) : ?TickingAreasLoadStatusPacket;
 
-	public function translateDimensionData(DimensionDataPacket $packet) : bool;
+	public function translateDimensionData(DimensionDataPacket $packet) : ?DimensionDataPacket;
 
-	public function translateAgentActionEvent(AgentActionEventPacket $packet) : bool;
+	public function translateAgentActionEvent(AgentActionEventPacket $packet) : ?AgentActionEventPacket;
 
-	public function translateChangeMobProperty(ChangeMobPropertyPacket $packet) : bool;
+	public function translateChangeMobProperty(ChangeMobPropertyPacket $packet) : ?ChangeMobPropertyPacket;
 
-	public function translateLessonProgress(LessonProgressPacket $packet) : bool;
+	public function translateLessonProgress(LessonProgressPacket $packet) : ?LessonProgressPacket;
 
-	public function translateRequestAbility(RequestAbilityPacket $packet) : bool;
+	public function translateRequestAbility(RequestAbilityPacket $packet) : ?RequestAbilityPacket;
 
-	public function translateRequestPermissions(RequestPermissionsPacket $packet) : bool;
+	public function translateRequestPermissions(RequestPermissionsPacket $packet) : ?RequestPermissionsPacket;
 
-	public function translateToastRequest(ToastRequestPacket $packet) : bool;
+	public function translateToastRequest(ToastRequestPacket $packet) : ?ToastRequestPacket;
 
-	public function translateUpdateAbilities(UpdateAbilitiesPacket $packet) : bool;
+	public function translateUpdateAbilities(UpdateAbilitiesPacket $packet) : ?UpdateAbilitiesPacket;
 
-	public function translateUpdateAdventureSettings(UpdateAdventureSettingsPacket $packet) : bool;
+	public function translateUpdateAdventureSettings(UpdateAdventureSettingsPacket $packet) : ?UpdateAdventureSettingsPacket;
 
-	public function translateDeathInfo(DeathInfoPacket $packet) : bool;
+	public function translateDeathInfo(DeathInfoPacket $packet) : ?DeathInfoPacket;
 
-	public function translateEditorNetwork(EditorNetworkPacket $packet) : bool;
+	public function translateEditorNetwork(EditorNetworkPacket $packet) : ?EditorNetworkPacket;
 
-	public function translateFeatureRegistry(FeatureRegistryPacket $packet) : bool;
+	public function translateFeatureRegistry(FeatureRegistryPacket $packet) : ?FeatureRegistryPacket;
 
-	public function translateServerStats(ServerStatsPacket $packet) : bool;
+	public function translateServerStats(ServerStatsPacket $packet) : ?ServerStatsPacket;
 
-	public function translateRequestNetworkSettings(RequestNetworkSettingsPacket $packet) : bool;
+	public function translateRequestNetworkSettings(RequestNetworkSettingsPacket $packet) : ?RequestNetworkSettingsPacket;
 
-	public function translateGameTestRequest(GameTestRequestPacket $packet) : bool;
+	public function translateGameTestRequest(GameTestRequestPacket $packet) : ?GameTestRequestPacket;
 
-	public function translateGameTestResults(GameTestResultsPacket $packet) : bool;
+	public function translateGameTestResults(GameTestResultsPacket $packet) : ?GameTestResultsPacket;
 
-	public function translateUpdateClientInputLocks(UpdateClientInputLocksPacket $packet) : bool;
+	public function translateUpdateClientInputLocks(UpdateClientInputLocksPacket $packet) : ?UpdateClientInputLocksPacket;
 
-	public function translateCameraPresets(CameraPresetsPacket $packet) : bool;
+	public function translateCameraPresets(CameraPresetsPacket $packet) : ?CameraPresetsPacket;
 
-	public function translateUnlockedRecipes(UnlockedRecipesPacket $packet) : bool;
+	public function translateUnlockedRecipes(UnlockedRecipesPacket $packet) : ?UnlockedRecipesPacket;
 
-	public function translateCameraInstruction(CameraInstructionPacket $packet) : bool;
+	public function translateCameraInstruction(CameraInstructionPacket $packet) : ?CameraInstructionPacket;
 
-	public function translateCompressedBiomeDefinitionList(CompressedBiomeDefinitionListPacket $packet) : bool;
+	public function translateCompressedBiomeDefinitionList(CompressedBiomeDefinitionListPacket $packet) : ?CompressedBiomeDefinitionListPacket;
 
-	public function translateTrimData(TrimDataPacket $packet) : bool;
+	public function translateTrimData(TrimDataPacket $packet) : ?TrimDataPacket;
 
-	public function translateOpenSign(OpenSignPacket $packet) : bool;
+	public function translateOpenSign(OpenSignPacket $packet) : ?OpenSignPacket;
 
-	public function translateAgentAnimation(AgentAnimationPacket $packet) : bool;
+	public function translateAgentAnimation(AgentAnimationPacket $packet) : ?AgentAnimationPacket;
 
-	public function translateRefreshEntitlements(RefreshEntitlementsPacket $packet) : bool;
+	public function translateRefreshEntitlements(RefreshEntitlementsPacket $packet) : ?RefreshEntitlementsPacket;
 
-	public function translatePlayerToggleCrafterSlotRequest(PlayerToggleCrafterSlotRequestPacket $packet) : bool;
+	public function translatePlayerToggleCrafterSlotRequest(PlayerToggleCrafterSlotRequestPacket $packet) : ?PlayerToggleCrafterSlotRequestPacket;
 
-	public function translateSetPlayerInventoryOptions(SetPlayerInventoryOptionsPacket $packet) : bool;
+	public function translateSetPlayerInventoryOptions(SetPlayerInventoryOptionsPacket $packet) : ?SetPlayerInventoryOptionsPacket;
 }
