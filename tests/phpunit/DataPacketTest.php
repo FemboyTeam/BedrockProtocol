@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace pocketmine\network\mcpe\protocol;
 
 use PHPUnit\Framework\TestCase;
+use pocketmine\network\mcpe\protocol\mapping\packet\PacketIdMapper;
 use pocketmine\network\mcpe\protocol\serializer\ItemTypeDictionary;
 use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
 use pocketmine\network\mcpe\protocol\serializer\PacketSerializerContext;
@@ -32,6 +33,10 @@ use pocketmine\network\mcpe\protocol\types\ItemTypeEntry;
 class DataPacketTest extends TestCase{
 
 	public function testHeaderFidelity() : void{
+		PacketIdMapper::addCreationListener(function(PacketIdMapper $mapper) : void{
+			$mapper->registerMapping(TestPacket::NETWORK_ID, TestPacket::NETWORK_ID);
+		});
+
 		$pk = new TestPacket();
 		$pk->senderSubId = 3;
 		$pk->recipientSubId = 2;
