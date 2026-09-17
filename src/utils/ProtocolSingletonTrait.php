@@ -42,7 +42,7 @@ trait ProtocolSingletonTrait{
 	/** @var (\Closure(static): void)[] */
 	private static array $creationListeners = [];
 
-	private static function make(int $protocol) : self{
+	private static function make(int $protocol) : static{
 		return new static($protocol);
 	}
 
