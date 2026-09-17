@@ -86,6 +86,6 @@ class LevelSoundEventPacketV2 extends DataPacket{
 	}
 
 	public function translate(PacketTranslatorInterface $translator) : ?self{
-		return $translator->translateLevelSoundEventV2($this);
+		return $translator->translateLevelSoundEventPacketV2($this);
 	}
 }
