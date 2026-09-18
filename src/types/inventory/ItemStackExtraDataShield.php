@@ -31,16 +31,40 @@
 
 declare(strict_types=1);
 
-namespace pocketmine\network\mcpe\protocol\serializer;
+namespace pocketmine\network\mcpe\protocol\types\inventory;
+
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
 
 /**
- * Contains information for a packet serializer specific to a given game session needed for packet encoding and decoding,
- * such as a dictionary of item runtime IDs to their internal string IDs.
+ * Extension of ItemStackExtraData for shield items, which have an additional field for the blocking tick.
  */
-final class PacketSerializerContext{
-	public function __construct(
-		private ItemTypeDictionary $itemDictionary
-	){}
+final class ItemStackExtraDataShield extends ItemStackExtraData{
 
-	public function getItemDictionary() : ItemTypeDictionary{ return $this->itemDictionary; }
+	/**
+	 * @param string[] $canPlaceOn
+	 * @param string[] $canDestroy
+	 */
+	public function __construct(
+		?CompoundTag $nbt,
+		array $canPlaceOn,
+		array $canDestroy,
+		private int $blockingTick
+	){
+		parent::__construct($nbt, $canPlaceOn, $canDestroy);
+	}
+
+	public function getBlockingTick() : int{ return $this->blockingTick; }
+
+	public static function read(PacketSerializer $in) : self{
+		$base = parent::read($in);
+		$blockingTick = $in->getLLong();
+
+		return new self($base->getNbt(), $base->getCanPlaceOn(), $base->getCanDestroy(), $blockingTick);
+	}
+
+	public function write(PacketSerializer $out) : void{
+		parent::write($out);
+		$out->putLLong($this->blockingTick);
+	}
 }
