@@ -36,11 +36,22 @@ namespace pocketmine\network\mcpe\protocol\mapping\packet;
 use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
 use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\network\mcpe\protocol\types\PacketIds;
+use pocketmine\network\mcpe\protocol\utils\FallbackProtocolSingletonTrait;
 
 class PacketIdMapper extends ProtocolMappingTable{
+	use FallbackProtocolSingletonTrait {
+		FallbackProtocolSingletonTrait::__construct as private __protocolConstruct;
+	}
+
 	public const FALLBACK_PROTOCOLS = [
 		ProtocolInfo::CURRENT_PROTOCOL => PacketIds::class
 	];
 
 	public const CORE_CONSTANTS = PacketIds::class;
+
+	public function __construct(int $protocol){
+		$this->__protocolConstruct($protocol);
+
+		parent::__construct($protocol);
+	}
 }

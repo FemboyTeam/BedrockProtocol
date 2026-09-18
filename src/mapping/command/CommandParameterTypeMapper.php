@@ -36,11 +36,22 @@ namespace pocketmine\network\mcpe\protocol\mapping\command;
 use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
 use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameterType;
+use pocketmine\network\mcpe\protocol\utils\FallbackProtocolSingletonTrait;
 
 class CommandParameterTypeMapper extends ProtocolMappingTable{
+	use FallbackProtocolSingletonTrait {
+		FallbackProtocolSingletonTrait::__construct as private __protocolConstruct;
+	}
+
 	public const FALLBACK_PROTOCOLS = [
 		ProtocolInfo::CURRENT_PROTOCOL => CommandParameterType::class
 	];
 
 	public const CORE_CONSTANTS = CommandParameterType::class;
+
+	public function __construct(int $protocol){
+		$this->__protocolConstruct($protocol);
+
+		parent::__construct($protocol);
+	}
 }

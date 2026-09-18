@@ -39,11 +39,11 @@ trait ProtocolSingletonTrait{
 	/** @var self[] */
 	private static $instance = [];
 
-	/** @var (\Closure(static): void)[] */
+	/** @var (\Closure(self): void)[] */
 	private static array $creationListeners = [];
 
-	private static function make(int $protocol) : static{
-		return new static($protocol);
+	private static function make(int $protocol) : self{
+		return new self($protocol);
 	}
 
 	private function __construct(protected readonly int $protocol){
@@ -69,7 +69,7 @@ trait ProtocolSingletonTrait{
 	}
 
 	/**
-	 * @param \Closure(static): void $listener
+	 * @param \Closure(self): void $listener
 	 */
 	public static function addCreationListener(\Closure $listener) : void{
 		self::$creationListeners[] = $listener;

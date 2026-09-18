@@ -36,11 +36,22 @@ namespace pocketmine\network\mcpe\protocol\mapping\sound;
 use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
 use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\network\mcpe\protocol\types\LevelSoundEvent;
+use pocketmine\network\mcpe\protocol\utils\FallbackProtocolSingletonTrait;
 
 class SoundIdMapper extends ProtocolMappingTable{
+	use FallbackProtocolSingletonTrait {
+		FallbackProtocolSingletonTrait::__construct as private __protocolConstruct;
+	}
+
 	public const FALLBACK_PROTOCOLS = [
 		ProtocolInfo::CURRENT_PROTOCOL => LevelSoundEvent::class
 	];
 
 	public const CORE_CONSTANTS = LevelSoundEvent::class;
+
+	public function __construct(int $protocol){
+		$this->__protocolConstruct($protocol);
+
+		parent::__construct($protocol);
+	}
 }

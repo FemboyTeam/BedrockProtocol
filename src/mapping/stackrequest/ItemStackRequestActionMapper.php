@@ -36,11 +36,22 @@ namespace pocketmine\network\mcpe\protocol\mapping\stackrequest;
 use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
 use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\network\mcpe\protocol\types\inventory\stackrequest\ItemStackRequestActionType;
+use pocketmine\network\mcpe\protocol\utils\FallbackProtocolSingletonTrait;
 
 class ItemStackRequestActionMapper extends ProtocolMappingTable{
+	use FallbackProtocolSingletonTrait {
+		FallbackProtocolSingletonTrait::__construct as private __protocolConstruct;
+	}
+
 	public const FALLBACK_PROTOCOLS = [
 		ProtocolInfo::CURRENT_PROTOCOL => ItemStackRequestActionType::class
 	];
 
 	public const CORE_CONSTANTS = ItemStackRequestActionType::class;
+
+	public function __construct(int $protocol){
+		$this->__protocolConstruct($protocol);
+
+		parent::__construct($protocol);
+	}
 }

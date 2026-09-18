@@ -33,18 +33,10 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\mapping;
 
-use pocketmine\network\mcpe\protocol\utils\FallbackProtocolSingletonTrait;
 use function array_filter;
 use function is_int;
 
-/**
- * @phpstan-consistent-constructor
- */
 class ProtocolMappingTable{
-	use FallbackProtocolSingletonTrait {
-		FallbackProtocolSingletonTrait::__construct as private __protocolConstruct;
-	}
-
 	public const FALLBACK_PROTOCOLS = [];
 	public const CORE_CONSTANTS = "";
 
@@ -54,8 +46,6 @@ class ProtocolMappingTable{
 	protected array $coreToNetwork = [];
 
 	public function __construct(int $protocol){
-		$this->__protocolConstruct($protocol);
-
 		$this->build(
 			static::FALLBACK_PROTOCOLS[$protocol],
 			static::CORE_CONSTANTS

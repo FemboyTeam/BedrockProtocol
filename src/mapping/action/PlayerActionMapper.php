@@ -36,11 +36,22 @@ namespace pocketmine\network\mcpe\protocol\mapping\action;
 use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
 use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\network\mcpe\protocol\types\PlayerAction;
+use pocketmine\network\mcpe\protocol\utils\FallbackProtocolSingletonTrait;
 
 class PlayerActionMapper extends ProtocolMappingTable{
+	use FallbackProtocolSingletonTrait {
+		FallbackProtocolSingletonTrait::__construct as private __protocolConstruct;
+	}
+
 	public const FALLBACK_PROTOCOLS = [
 		ProtocolInfo::CURRENT_PROTOCOL => PlayerAction::class
 	];
 
 	public const CORE_CONSTANTS = PlayerAction::class;
+
+	public function __construct(int $protocol){
+		$this->__protocolConstruct($protocol);
+
+		parent::__construct($protocol);
+	}
 }
