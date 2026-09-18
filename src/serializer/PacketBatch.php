@@ -75,13 +75,13 @@ class PacketBatch{
 	 * @phpstan-return \Generator<int, Packet, void, void>
 	 * @throws PacketDecodeException
 	 */
-	final public static function decodePackets(BinaryStream $stream, PacketPool $packetPool) : \Generator{
+	final public static function decodePackets(BinaryStream $stream, PacketPool $packetPool, int $protocol) : \Generator{
 		$c = 0;
 		foreach(self::decodeRaw($stream) as $packetBuffer){
-			$packet = $packetPool->getPacket($packetBuffer);
+			$packet = $packetPool->getPacket($packetBuffer, $protocol);
 			if($packet !== null){
 				try{
-					$packet->decode(PacketSerializer::decoder($packetBuffer, 0));
+					$packet->decode(PacketSerializer::decoder($packetBuffer, 0)->setProtocol($protocol));
 				}catch(PacketDecodeException $e){
 					throw new PacketDecodeException("Error decoding packet $c in batch: " . $e->getMessage(), 0, $e);
 				}
@@ -96,9 +96,9 @@ class PacketBatch{
 	/**
 	 * @param Packet[]       $packets
 	 */
-	final public static function encodePackets(BinaryStream $stream, array $packets) : void{
+	final public static function encodePackets(BinaryStream $stream, array $packets, int $protocol) : void{
 		foreach($packets as $packet){
-			$serializer = PacketSerializer::encoder();
+			$serializer = PacketSerializer::encoder()->setProtocol($protocol);
 			$packet->encode($serializer);
 			$stream->putUnsignedVarInt(strlen($serializer->getBuffer()));
 			$stream->put($serializer->getBuffer());
@@ -118,7 +118,7 @@ class PacketBatch{
 	 * @phpstan-return \Generator<int, array{?Packet, string}, void, void>
 	 * @throws PacketDecodeException
 	 */
-	public function getPackets(PacketPool $packetPool, int $max) : \Generator{
+	public function getPackets(PacketPool $packetPool, int $protocol, int $max) : \Generator{
 		$stream = new BinaryStream($this->buffer);
 		$c = 0;
 		try{
@@ -126,21 +126,11 @@ class PacketBatch{
 				if(++$c > $max){
 					throw new PacketDecodeException("Reached limit of $max packets in a single batch");
 				}
-				yield $c => [$packetPool->getPacket($raw), $raw];
+				yield $c => [$packetPool->getPacket($raw, $protocol), $raw];
 			}
 		}catch(BinaryDataException $e){
 			throw new PacketDecodeException("Error decoding packet $c of batch: " . $e->getMessage(), 0, $e);
 		}
-	}
-
-	/**
-	 * @deprecated
-	 * Constructs a packet batch from the given list of packets.
-	 */
-	public static function fromPackets(Packet ...$packets) : self{
-		$stream = new BinaryStream();
-		self::encodePackets($stream, $packets);
-		return new self($stream->getBuffer());
 	}
 
 	/**

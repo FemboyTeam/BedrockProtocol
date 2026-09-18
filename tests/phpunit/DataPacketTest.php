@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace pocketmine\network\mcpe\protocol;
 
 use PHPUnit\Framework\TestCase;
+use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\network\mcpe\protocol\mapping\packet\PacketIdMapper;
 use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
 
@@ -34,15 +35,17 @@ class DataPacketTest extends TestCase{
 			$mapper->registerMapping(TestPacket::NETWORK_ID, TestPacket::NETWORK_ID);
 		});
 
+		$protocol = ProtocolInfo::CURRENT_PROTOCOL;
+
 		$pk = new TestPacket();
 		$pk->senderSubId = 3;
 		$pk->recipientSubId = 2;
 
-		$serializer = PacketSerializer::encoder();
+		$serializer = PacketSerializer::encoder()->setProtocol($protocol);
 		$pk->encode($serializer);
 
 		$pk2 = new TestPacket();
-		$pk2->decode(PacketSerializer::decoder($serializer->getBuffer(), 0));
+		$pk2->decode(PacketSerializer::decoder($serializer->getBuffer(), 0)->setProtocol($protocol));
 		self::assertSame($pk2->senderSubId, 3);
 		self::assertSame($pk2->recipientSubId, 2);
 	}

@@ -33,6 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol;
 
+use pocketmine\network\mcpe\protocol\mapping\packet\PacketIdMapper;
 use pocketmine\utils\Binary;
 use pocketmine\utils\BinaryDataException;
 
@@ -262,8 +263,15 @@ class PacketPool{
 	/**
 	 * @throws BinaryDataException
 	 */
-	public function getPacket(string $buffer) : ?Packet{
+	public function getPacket(string $buffer, int $protocol) : ?Packet{
 		$offset = 0;
-		return $this->getPacketById(Binary::readUnsignedVarInt($buffer, $offset) & DataPacket::PID_MASK);
+		$networkPid = Binary::readUnsignedVarInt($buffer, $offset) & DataPacket::PID_MASK;
+
+		$corePid = PacketIdMapper::getInstance($protocol)->networkToCore($networkPid);
+		if($corePid === null){
+			return null;
+		}
+
+		return $this->getPacketById($corePid);
 	}
 }
