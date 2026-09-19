@@ -33,6 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\types\inventory\stackrequest;
 
+use pocketmine\network\mcpe\protocol\mapping\stackrequest\ItemStackRequestActionMapper;
 use pocketmine\network\mcpe\protocol\PacketDecodeException;
 use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
 use pocketmine\utils\BinaryDataException;
@@ -69,7 +70,12 @@ final class ItemStackRequest{
 	 * @throws PacketDecodeException
 	 */
 	private static function readAction(PacketSerializer $in, int $typeId) : ItemStackRequestAction{
-		return match($typeId){
+		$coreId = ItemStackRequestActionMapper::getInstance($in->getProtocol())->networkToCore($typeId);
+		if($coreId === null){
+			throw new PacketDecodeException("Unmapped item stack request action type " . $typeId . ". Protocol: " . $in->getProtocol());
+		}
+
+		return match($coreId){
 			TakeStackRequestAction::ID => TakeStackRequestAction::read($in),
 			PlaceStackRequestAction::ID => PlaceStackRequestAction::read($in),
 			SwapStackRequestAction::ID => SwapStackRequestAction::read($in),
@@ -90,7 +96,7 @@ final class ItemStackRequest{
 			LoomStackRequestAction::ID => LoomStackRequestAction::read($in),
 			DeprecatedCraftingNonImplementedStackRequestAction::ID => DeprecatedCraftingNonImplementedStackRequestAction::read($in),
 			DeprecatedCraftingResultsStackRequestAction::ID => DeprecatedCraftingResultsStackRequestAction::read($in),
-			default => throw new PacketDecodeException("Unhandled item stack request action type $typeId"),
+			default => throw new PacketDecodeException("Unhandled item stack request action type $coreId"),
 		};
 	}
 
@@ -113,7 +119,8 @@ final class ItemStackRequest{
 		$out->writeGenericTypeNetworkId($this->requestId);
 		$out->putUnsignedVarInt(count($this->actions));
 		foreach($this->actions as $action){
-			$out->putByte($action->getTypeId());
+			$networkId = ItemStackRequestActionMapper::getInstance($out->getProtocol())->coreToNetwork($action->getTypeId()) ?? throw new \LogicException("Failed to get mapped action type id for " . $action::class);
+			$out->putByte($networkId);
 			$action->write($out);
 		}
 		$out->putUnsignedVarInt(count($this->filterStrings));
