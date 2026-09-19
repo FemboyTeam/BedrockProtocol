@@ -137,6 +137,8 @@ interface PacketTranslatorInterface{
 
 	public function translateCraftingData(CraftingDataPacket $packet) : ?CraftingDataPacket;
 
+	public function translateCraftingEvent(CraftingEventPacket $packet) : ?CraftingEventPacket;
+
 	public function translateGuiDataPickItem(GuiDataPickItemPacket $packet) : ?GuiDataPickItemPacket;
 
 	public function translateBlockActorData(BlockActorDataPacket $packet) : ?BlockActorDataPacket;

@@ -103,6 +103,7 @@ class PacketPool{
 		$this->registerPacket(new InventorySlotPacket());
 		$this->registerPacket(new ContainerSetDataPacket());
 		$this->registerPacket(new CraftingDataPacket());
+		$this->registerPacket(new CraftingEventPacket());
 		$this->registerPacket(new GuiDataPickItemPacket());
 		$this->registerPacket(new BlockActorDataPacket());
 		$this->registerPacket(new PlayerInputPacket());

@@ -241,6 +241,10 @@ trait PacketTranslatorDefaultImplTrait{
 		return $packet;
 	}
 
+	public function translateCraftingEvent(CraftingEventPacket $packet) : ?CraftingEventPacket{
+		return $packet;
+	}
+
 	public function translateGuiDataPickItem(GuiDataPickItemPacket $packet) : ?GuiDataPickItemPacket{
 		return $packet;
 	}

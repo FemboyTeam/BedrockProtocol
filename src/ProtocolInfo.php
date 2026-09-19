@@ -49,15 +49,19 @@ final class ProtocolInfo extends PacketIds{
 	 */
 
 	/** Actual Minecraft: PE protocol version */
-	public const CURRENT_PROTOCOL = 630;
+	public const CURRENT_PROTOCOL = self::PROTOCOL_V1_20_50;
 
 	/** Actual supported protocols */
 	public const SUPPORTED_PROTOCOLS = [
-		self::CURRENT_PROTOCOL
+		self::CURRENT_PROTOCOL,
+		self::PROTOCOL_V1_20_40
 	];
 
+	public const PROTOCOL_V1_20_50 = 630;
+	public const PROTOCOL_V1_20_40 = 622;
+
 	/** Current Minecraft PE version reported by the server. This is usually the earliest currently supported version. */
-	public const MINECRAFT_VERSION = 'v1.20.50';
+	public const MINECRAFT_VERSION = '1.20.40 - 1.20.50';
 	/** Version number sent to clients in ping responses. */
 	public const MINECRAFT_VERSION_NETWORK = '1.20.50';
 }
