@@ -44,7 +44,7 @@ class CommandParameterTypeMapper extends ProtocolMappingTable{
 	}
 
 	public const FALLBACK_PROTOCOLS = [
-		ProtocolInfo::CURRENT_PROTOCOL => CommandParameterType::class
+		ProtocolInfo::PROTOCOL_V1_20_40 => CommandParameterType::class
 	];
 
 	public const CORE_CONSTANTS = CommandParameterType::class;
