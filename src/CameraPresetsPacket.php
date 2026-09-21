@@ -50,8 +50,8 @@ class CameraPresetsPacket extends DataPacket implements ClientboundPacket{
 
 	/**
 	 * @generate-create-func
-	 * @phpstan-param CacheableNbt<CompoundTag> $data
 	 * @param CameraPreset[] $presets
+	 * @phpstan-param CacheableNbt<CompoundTag> $data
 	 */
 	public static function create(CacheableNbt $data, array $presets) : self{
 		$result = new self;

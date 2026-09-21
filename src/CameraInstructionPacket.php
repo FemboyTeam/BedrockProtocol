@@ -49,10 +49,11 @@ class CameraInstructionPacket extends DataPacket implements ClientboundPacket{
 	private ?bool $clear;
 	private ?CameraFadeInstruction $fade;
 
-	/**
-	 * @generate-create-func
+  	/**
+ 	 * @generate-create-func
+ 	 * @param CameraPreset[] $presets
 	 * @phpstan-param CacheableNbt<CompoundTag> $data
-	 */
+ 	 */
 	public static function create(CacheableNbt $data, ?CameraSetInstruction $set, ?bool $clear, ?CameraFadeInstruction $fade) : self{
 		$result = new self;
 		$result->data = $data;
