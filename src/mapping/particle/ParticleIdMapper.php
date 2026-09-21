@@ -47,7 +47,7 @@ class ParticleIdMapper extends ProtocolMappingTable{
 
 	public const FALLBACK_PROTOCOLS = [
 		ProtocolInfo::CURRENT_PROTOCOL => ParticleIds630::class,
-		ProtocolInfo::PROTOCOL_V1_20_20 => ParticleIds594::class
+		ProtocolInfo::PROTOCOL_V1_20_10 => ParticleIds594::class
 	];
 
 	public const CORE_CONSTANTS = ParticleIds::class;

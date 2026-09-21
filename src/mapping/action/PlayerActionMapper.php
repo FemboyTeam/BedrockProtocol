@@ -49,7 +49,7 @@ class PlayerActionMapper extends ProtocolMappingTable{
 	public const FALLBACK_PROTOCOLS = [
 		ProtocolInfo::PROTOCOL_V1_20_40 => PlayerAction622::class,
 		ProtocolInfo::PROTOCOL_V1_20_30 => PlayerAction618::class,
-		ProtocolInfo::PROTOCOL_V1_20_20 => PlayerAction594::class
+		ProtocolInfo::PROTOCOL_V1_20_10 => PlayerAction594::class
 	];
 
 	public const CORE_CONSTANTS = PlayerAction::class;

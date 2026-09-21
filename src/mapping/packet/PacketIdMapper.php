@@ -49,7 +49,7 @@ class PacketIdMapper extends ProtocolMappingTable{
 	public const FALLBACK_PROTOCOLS = [
 		ProtocolInfo::CURRENT_PROTOCOL => PacketIds630::class,
 		ProtocolInfo::PROTOCOL_V1_20_30 => PacketIds618::class,
-		ProtocolInfo::PROTOCOL_V1_20_20 => PacketIds594::class
+		ProtocolInfo::PROTOCOL_V1_20_10 => PacketIds594::class
 	];
 
 	public const CORE_CONSTANTS = PacketIds::class;
