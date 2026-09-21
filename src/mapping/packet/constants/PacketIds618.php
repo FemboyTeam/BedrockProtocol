@@ -36,7 +36,7 @@ namespace pocketmine\network\mcpe\protocol\mapping\packet\constants;
 /**
  * Packet IDs for the current Minecraft PE protocol
  */
-class PacketIds622{
+class PacketIds618{
 
 	private function __construct(){
 		//NOOP

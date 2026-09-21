@@ -44,7 +44,7 @@ class MetadataFlagsMapper extends ProtocolMappingTable{
 	}
 
 	public const FALLBACK_PROTOCOLS = [
-		ProtocolInfo::PROTOCOL_V1_20_40 => EntityMetadataFlags::class
+		ProtocolInfo::PROTOCOL_V1_20_30 => EntityMetadataFlags::class
 	];
 
 	public const CORE_CONSTANTS = EntityMetadataFlags::class;

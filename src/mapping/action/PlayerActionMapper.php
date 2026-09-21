@@ -33,6 +33,8 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\mapping\action;
 
+use pocketmine\network\mcpe\protocol\mapping\action\constants\PlayerAction618;
+use pocketmine\network\mcpe\protocol\mapping\action\constants\PlayerAction622;
 use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
 use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\network\mcpe\protocol\types\PlayerAction;
@@ -44,7 +46,8 @@ class PlayerActionMapper extends ProtocolMappingTable{
 	}
 
 	public const FALLBACK_PROTOCOLS = [
-		ProtocolInfo::PROTOCOL_V1_20_40 => PlayerAction::class
+		ProtocolInfo::PROTOCOL_V1_20_40 => PlayerAction622::class,
+		ProtocolInfo::PROTOCOL_V1_20_30 => PlayerAction618::class
 	];
 
 	public const CORE_CONSTANTS = PlayerAction::class;
