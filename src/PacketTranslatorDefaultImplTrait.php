@@ -705,6 +705,10 @@ trait PacketTranslatorDefaultImplTrait{
 		return $packet;
 	}
 
+	public function translatePhotoInfoRequest(PhotoInfoRequestPacket $packet) : ?PhotoInfoRequestPacket{
+		return $packet;
+	}
+
 	public function translateSubChunk(SubChunkPacket $packet) : ?SubChunkPacket{
 		return $packet;
 	}

@@ -369,6 +369,8 @@ interface PacketTranslatorInterface{
 
 	public function translateUpdateSubChunkBlocks(UpdateSubChunkBlocksPacket $packet) : ?UpdateSubChunkBlocksPacket;
 
+	public function translatePhotoInfoRequest(PhotoInfoRequestPacket $packet) : ?PhotoInfoRequestPacket;
+
 	public function translateSubChunk(SubChunkPacket $packet) : ?SubChunkPacket;
 
 	public function translateSubChunkRequest(SubChunkRequestPacket $packet) : ?SubChunkRequestPacket;

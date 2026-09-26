@@ -53,12 +53,16 @@ class RequestChunkRadiusPacket extends DataPacket implements ServerboundPacket{
 
 	protected function decodePayload(PacketSerializer $in) : void{
 		$this->radius = $in->getVarInt();
-		$this->maxRadius = $in->getByte();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_80){
+			$this->maxRadius = $in->getByte();
+		}
 	}
 
 	protected function encodePayload(PacketSerializer $out) : void{
 		$out->putVarInt($this->radius);
-		$out->putByte($this->maxRadius);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_80){
+			$out->putByte($this->maxRadius);
+		}
 	}
 
 	public function handle(PacketHandlerInterface $handler) : bool{

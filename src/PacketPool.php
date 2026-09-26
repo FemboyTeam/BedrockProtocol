@@ -219,6 +219,7 @@ class PacketPool{
 		$this->registerPacket(new EduUriResourcePacket());
 		$this->registerPacket(new CreatePhotoPacket());
 		$this->registerPacket(new UpdateSubChunkBlocksPacket());
+		$this->registerPacket(new PhotoInfoRequestPacket());
 		$this->registerPacket(new SubChunkPacket());
 		$this->registerPacket(new SubChunkRequestPacket());
 		$this->registerPacket(new PlayerStartItemCooldownPacket());

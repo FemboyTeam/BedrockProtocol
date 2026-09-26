@@ -31,30 +31,41 @@
 
 declare(strict_types=1);
 
-namespace pocketmine\network\mcpe\protocol\mapping\metadata;
+namespace pocketmine\network\mcpe\protocol\mapping\command\constants;
 
-use pocketmine\network\mcpe\protocol\mapping\metadata\constants\properties\EntityMetadataProperties575;
-use pocketmine\network\mcpe\protocol\mapping\metadata\constants\properties\EntityMetadataProperties594;
-use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
-use pocketmine\network\mcpe\protocol\ProtocolInfo;
-use pocketmine\network\mcpe\protocol\types\entity\EntityMetadataProperties;
-use pocketmine\network\mcpe\protocol\utils\FallbackProtocolSingletonTrait;
+final class CommandParameterType575{
 
-class MetadataPropertiesMapper extends ProtocolMappingTable{
-	use FallbackProtocolSingletonTrait {
-		FallbackProtocolSingletonTrait::__construct as private __protocolConstruct;
-	}
+	/**
+	 * Basic parameter types. These must be combined with the ARG_FLAG_VALID constant.
+	 * ARG_FLAG_VALID | (type const)
+	 */
+	public const ARG_TYPE_INT = 1;
+	public const ARG_TYPE_FLOAT = 3;
+	public const ARG_TYPE_VALUE = 4;
+	public const ARG_TYPE_WILDCARD_INT = 5;
+	public const ARG_TYPE_OPERATOR = 6;
+	public const ARG_TYPE_COMPARE_OPERATOR = 7;
+	public const ARG_TYPE_TARGET = 8;
 
-	public const FALLBACK_PROTOCOLS = [
-		ProtocolInfo::PROTOCOL_V1_20_10 => EntityMetadataProperties594::class,
-		ProtocolInfo::PROTOCOL_V1_19_70 => EntityMetadataProperties575::class
-	];
+	public const ARG_TYPE_WILDCARD_TARGET = 10;
 
-	public const CORE_CONSTANTS = EntityMetadataProperties::class;
+	public const ARG_TYPE_FILEPATH = 17;
 
-	public function __construct(int $protocol){
-		$this->__protocolConstruct($protocol);
+	public const ARG_TYPE_FULL_INTEGER_RANGE = 23;
 
-		parent::__construct($protocol);
-	}
+	public const ARG_TYPE_EQUIPMENT_SLOT = 38;
+	public const ARG_TYPE_STRING = 39;
+
+	public const ARG_TYPE_INT_POSITION = 47;
+	public const ARG_TYPE_POSITION = 48;
+
+	public const ARG_TYPE_MESSAGE = 51;
+
+	public const ARG_TYPE_RAWTEXT = 53;
+
+	public const ARG_TYPE_JSON = 57;
+
+	public const ARG_TYPE_BLOCK_STATES = 67;
+
+	public const ARG_TYPE_COMMAND = 70;
 }

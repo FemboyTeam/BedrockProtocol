@@ -31,30 +31,43 @@
 
 declare(strict_types=1);
 
-namespace pocketmine\network\mcpe\protocol\mapping\metadata;
+namespace pocketmine\network\mcpe\protocol;
 
-use pocketmine\network\mcpe\protocol\mapping\metadata\constants\properties\EntityMetadataProperties575;
-use pocketmine\network\mcpe\protocol\mapping\metadata\constants\properties\EntityMetadataProperties594;
-use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
-use pocketmine\network\mcpe\protocol\ProtocolInfo;
-use pocketmine\network\mcpe\protocol\types\entity\EntityMetadataProperties;
-use pocketmine\network\mcpe\protocol\utils\FallbackProtocolSingletonTrait;
+use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
 
-class MetadataPropertiesMapper extends ProtocolMappingTable{
-	use FallbackProtocolSingletonTrait {
-		FallbackProtocolSingletonTrait::__construct as private __protocolConstruct;
+/**
+ * TODO: this one has no handlers, so I have no idea which direction it should be sent
+ * It doesn't appear to be used at all right now... this is just here to keep the scraper happy
+ */
+class PhotoInfoRequestPacket extends DataPacket{
+	public const NETWORK_ID = ProtocolInfo::PHOTO_INFO_REQUEST_PACKET;
+
+	private int $photoId;
+
+	/**
+	 * @generate-create-func
+	 */
+	public static function create(int $photoId) : self{
+		$result = new self;
+		$result->photoId = $photoId;
+		return $result;
 	}
 
-	public const FALLBACK_PROTOCOLS = [
-		ProtocolInfo::PROTOCOL_V1_20_10 => EntityMetadataProperties594::class,
-		ProtocolInfo::PROTOCOL_V1_19_70 => EntityMetadataProperties575::class
-	];
+	public function getPhotoId() : int{ return $this->photoId; }
 
-	public const CORE_CONSTANTS = EntityMetadataProperties::class;
+	protected function decodePayload(PacketSerializer $in) : void{
+		$this->photoId = $in->getActorUniqueId();
+	}
 
-	public function __construct(int $protocol){
-		$this->__protocolConstruct($protocol);
+	protected function encodePayload(PacketSerializer $out) : void{
+		$out->putActorUniqueId($this->photoId);
+	}
 
-		parent::__construct($protocol);
+	public function handle(PacketHandlerInterface $handler) : bool{
+		return $handler->handlePhotoInfoRequest($this);
+	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translatePhotoInfoRequest($this);
 	}
 }

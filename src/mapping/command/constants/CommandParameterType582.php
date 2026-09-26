@@ -31,45 +31,41 @@
 
 declare(strict_types=1);
 
-namespace pocketmine\network\mcpe\protocol\mapping\action\constants;
+namespace pocketmine\network\mcpe\protocol\mapping\command\constants;
 
-final class PlayerAction582{
-	private function __construct(){
-		//NOOP
-	}
+final class CommandParameterType582{
 
-	public const START_BREAK = 0;
-	public const ABORT_BREAK = 1;
-	public const STOP_BREAK = 2;
-	public const GET_UPDATED_BLOCK = 3;
-	public const DROP_ITEM = 4;
-	public const START_SLEEPING = 5;
-	public const STOP_SLEEPING = 6;
-	public const RESPAWN = 7;
-	public const JUMP = 8;
-	public const START_SPRINT = 9;
-	public const STOP_SPRINT = 10;
-	public const START_SNEAK = 11;
-	public const STOP_SNEAK = 12;
-	public const CREATIVE_PLAYER_DESTROY_BLOCK = 13;
-	public const DIMENSION_CHANGE_ACK = 14; //sent when spawning in a different dimension to tell the server we spawned
-	public const START_GLIDE = 15;
-	public const STOP_GLIDE = 16;
-	public const BUILD_DENIED = 17;
-	public const CRACK_BLOCK = 18;
-	public const CHANGE_SKIN = 19;
-	public const SET_ENCHANTMENT_SEED = 20; //no longer used
-	public const START_SWIMMING = 21;
-	public const STOP_SWIMMING = 22;
-	public const START_SPIN_ATTACK = 23;
-	public const STOP_SPIN_ATTACK = 24;
-	public const INTERACT_BLOCK = 25;
-	public const PREDICT_DESTROY_BLOCK = 26;
-	public const CONTINUE_DESTROY_BLOCK = 27;
-	public const START_ITEM_USE_ON = 28;
-	public const STOP_ITEM_USE_ON = 29;
-	public const HANDLED_TELEPORT = 30;
+	/**
+	 * Basic parameter types. These must be combined with the ARG_FLAG_VALID constant.
+	 * ARG_FLAG_VALID | (type const)
+	 */
+	public const ARG_TYPE_INT = 1;
+	public const ARG_TYPE_FLOAT = 3;
+	public const ARG_TYPE_VALUE = 4;
+	public const ARG_TYPE_WILDCARD_INT = 5;
+	public const ARG_TYPE_OPERATOR = 6;
+	public const ARG_TYPE_COMPARE_OPERATOR = 7;
+	public const ARG_TYPE_TARGET = 8;
 
-	//Backwards compatibility (blame @dktapps)
-	public const CRACK_BREAK = 18;
+	public const ARG_TYPE_WILDCARD_TARGET = 10;
+
+	public const ARG_TYPE_FILEPATH = 17;
+
+	public const ARG_TYPE_FULL_INTEGER_RANGE = 23;
+
+	public const ARG_TYPE_EQUIPMENT_SLOT = 43;
+	public const ARG_TYPE_STRING = 44;
+
+	public const ARG_TYPE_INT_POSITION = 52;
+	public const ARG_TYPE_POSITION = 53;
+
+	public const ARG_TYPE_MESSAGE = 55;
+
+	public const ARG_TYPE_RAWTEXT = 58;
+
+	public const ARG_TYPE_JSON = 62;
+
+	public const ARG_TYPE_BLOCK_STATES = 71;
+
+	public const ARG_TYPE_COMMAND = 74;
 }

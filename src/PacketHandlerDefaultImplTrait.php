@@ -705,6 +705,10 @@ trait PacketHandlerDefaultImplTrait{
 		return false;
 	}
 
+	public function handlePhotoInfoRequest(PhotoInfoRequestPacket $packet) : bool{
+		return false;
+	}
+
 	public function handleSubChunk(SubChunkPacket $packet) : bool{
 		return false;
 	}

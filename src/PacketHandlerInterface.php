@@ -369,6 +369,8 @@ interface PacketHandlerInterface{
 
 	public function handleUpdateSubChunkBlocks(UpdateSubChunkBlocksPacket $packet) : bool;
 
+	public function handlePhotoInfoRequest(PhotoInfoRequestPacket $packet) : bool;
+
 	public function handleSubChunk(SubChunkPacket $packet) : bool;
 
 	public function handleSubChunkRequest(SubChunkRequestPacket $packet) : bool;

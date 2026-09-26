@@ -124,8 +124,10 @@ final class LevelSettings{
 		}else{
 			$this->isEditorMode = $in->getBool();
 		}
-		$this->createdInEditorMode = $in->getBool();
-		$this->exportedFromEditorMode = $in->getBool();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_80){
+			$this->createdInEditorMode = $in->getBool();
+			$this->exportedFromEditorMode = $in->getBool();
+		}
 		$this->time = $in->getVarInt();
 		$this->eduEditionOffer = $in->getVarInt();
 		$this->hasEduFeaturesEnabled = $in->getBool();
@@ -178,8 +180,10 @@ final class LevelSettings{
 		}else{
 			$out->putBool($this->isEditorMode);
 		}
-		$out->putBool($this->createdInEditorMode);
-		$out->putBool($this->exportedFromEditorMode);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_80){
+			$out->putBool($this->createdInEditorMode);
+			$out->putBool($this->exportedFromEditorMode);
+		}
 		$out->putVarInt($this->time);
 		$out->putVarInt($this->eduEditionOffer);
 		$out->putBool($this->hasEduFeaturesEnabled);
