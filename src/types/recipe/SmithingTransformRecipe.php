@@ -80,7 +80,7 @@ final class SmithingTransformRecipe extends RecipeWithTypeId{
 		return new self(
 			$typeId,
 			$recipeId,
-			$template,
+			$template ?? new RecipeIngredient(null, 0),
 			$input,
 			$addition,
 			$output,
