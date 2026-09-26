@@ -206,7 +206,7 @@ class StartGamePacket extends DataPacket implements ClientboundPacket{
 		$this->enableClientSideChunkGeneration = $in->getBool();
 		$this->blockNetworkIdsAreHashes = $in->getBool();
 		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_20_0){
-		    $this->networkPermissions = NetworkPermissions::decode($in);
+			$this->networkPermissions = NetworkPermissions::decode($in);
 		}
 	}
 
@@ -253,7 +253,7 @@ class StartGamePacket extends DataPacket implements ClientboundPacket{
 		$out->putBool($this->enableClientSideChunkGeneration);
 		$out->putBool($this->blockNetworkIdsAreHashes);
 		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_20_0){
-		    $this->networkPermissions->encode($out);
+			$this->networkPermissions->encode($out);
 		}
 	}
 

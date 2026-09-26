@@ -73,7 +73,7 @@ class UnlockedRecipesPacket extends DataPacket implements ClientboundPacket{
 
 	protected function decodePayload(PacketSerializer $in) : void{
 		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_20_0){
-		    $this->type = $in->getLInt();
+			$this->type = $in->getLInt();
 		}else{
 			$this->newRecipes = $in->getBool();
 		}
@@ -85,7 +85,7 @@ class UnlockedRecipesPacket extends DataPacket implements ClientboundPacket{
 
 	protected function encodePayload(PacketSerializer $out) : void{
 		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_20_0){
-		    $out->putLInt($this->type);
+			$out->putLInt($this->type);
 		}else{
 			$out->putBool($this->newRecipes);
 		}

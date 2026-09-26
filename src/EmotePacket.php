@@ -80,8 +80,8 @@ class EmotePacket extends DataPacket implements ClientboundPacket, ServerboundPa
 		$this->actorRuntimeId = $in->getActorRuntimeId();
 		$this->emoteId = $in->getString();
 		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_20_0){
-		    $this->xboxUserId = $in->getString();
-		    $this->platformChatId = $in->getString();
+			$this->xboxUserId = $in->getString();
+			$this->platformChatId = $in->getString();
 		}
 		$this->flags = $in->getByte();
 	}
@@ -90,8 +90,8 @@ class EmotePacket extends DataPacket implements ClientboundPacket, ServerboundPa
 		$out->putActorRuntimeId($this->actorRuntimeId);
 		$out->putString($this->emoteId);
 		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_20_0){
-		    $out->putString($this->xboxUserId);
-		    $out->putString($this->platformChatId);
+			$out->putString($this->xboxUserId);
+			$out->putString($this->platformChatId);
 		}
 		$out->putByte($this->flags);
 	}
