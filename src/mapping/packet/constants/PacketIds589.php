@@ -31,12 +31,12 @@
 
 declare(strict_types=1);
 
-namespace pocketmine\network\mcpe\protocol\types;
+namespace pocketmine\network\mcpe\protocol\mapping\packet\constants;
 
 /**
  * Packet IDs for the current Minecraft PE protocol
  */
-class PacketIds{
+class PacketIds589{
 
 	private function __construct(){
 		//NOOP
@@ -247,7 +247,4 @@ class PacketIds{
 	public const TRIM_DATA_PACKET = 0x12e;
 	public const OPEN_SIGN_PACKET = 0x12f;
 	public const AGENT_ANIMATION_PACKET = 0x130;
-	public const REFRESH_ENTITLEMENTS_PACKET = 0x131;
-	public const PLAYER_TOGGLE_CRAFTER_SLOT_REQUEST_PACKET = 0x132;
-	public const SET_PLAYER_INVENTORY_OPTIONS_PACKET = 0x133;
 }

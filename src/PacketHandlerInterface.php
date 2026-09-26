@@ -261,6 +261,8 @@ interface PacketHandlerInterface{
 
 	public function handleNetworkStackLatency(NetworkStackLatencyPacket $packet) : bool;
 
+	public function handleScriptCustomEvent(ScriptCustomEventPacket $packet) : bool;
+
 	public function handleSpawnParticleEffect(SpawnParticleEffectPacket $packet) : bool;
 
 	public function handleAvailableActorIdentifiers(AvailableActorIdentifiersPacket $packet) : bool;
@@ -412,6 +414,8 @@ interface PacketHandlerInterface{
 	public function handleGameTestResults(GameTestResultsPacket $packet) : bool;
 
 	public function handleUpdateClientInputLocks(UpdateClientInputLocksPacket $packet) : bool;
+
+	public function handleClientCheatAbility(ClientCheatAbilityPacket $packet) : bool;
 
 	public function handleCameraPresets(CameraPresetsPacket $packet) : bool;
 

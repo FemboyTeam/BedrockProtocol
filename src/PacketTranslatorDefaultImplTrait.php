@@ -489,6 +489,10 @@ trait PacketTranslatorDefaultImplTrait{
 		return $packet;
 	}
 
+	public function translateScriptCustomEvent(ScriptCustomEventPacket $packet) : ?ScriptCustomEventPacket{
+		return $packet;
+	}
+
 	public function translateSpawnParticleEffect(SpawnParticleEffectPacket $packet) : ?SpawnParticleEffectPacket{
 		return $packet;
 	}
@@ -790,6 +794,10 @@ trait PacketTranslatorDefaultImplTrait{
 	}
 
 	public function translateUpdateClientInputLocks(UpdateClientInputLocksPacket $packet) : ?UpdateClientInputLocksPacket{
+		return $packet;
+	}
+
+	public function translateClientCheatAbility(ClientCheatAbilityPacket $packet) : ?ClientCheatAbilityPacket{
 		return $packet;
 	}
 

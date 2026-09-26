@@ -44,7 +44,7 @@ class ItemStackRequestActionMapper extends ProtocolMappingTable{
 	}
 
 	public const FALLBACK_PROTOCOLS = [
-		ProtocolInfo::PROTOCOL_V1_20_10 => ItemStackRequestActionType::class
+		ProtocolInfo::PROTOCOL_V1_20_0 => ItemStackRequestActionType::class
 	];
 
 	public const CORE_CONSTANTS = ItemStackRequestActionType::class;

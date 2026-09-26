@@ -261,6 +261,8 @@ interface PacketTranslatorInterface{
 
 	public function translateNetworkStackLatency(NetworkStackLatencyPacket $packet) : ?NetworkStackLatencyPacket;
 
+	public function translateScriptCustomEvent(ScriptCustomEventPacket $packet) : ?ScriptCustomEventPacket;
+
 	public function translateSpawnParticleEffect(SpawnParticleEffectPacket $packet) : ?SpawnParticleEffectPacket;
 
 	public function translateAvailableActorIdentifiers(AvailableActorIdentifiersPacket $packet) : ?AvailableActorIdentifiersPacket;
@@ -412,6 +414,8 @@ interface PacketTranslatorInterface{
 	public function translateGameTestResults(GameTestResultsPacket $packet) : ?GameTestResultsPacket;
 
 	public function translateUpdateClientInputLocks(UpdateClientInputLocksPacket $packet) : ?UpdateClientInputLocksPacket;
+
+	public function translateClientCheatAbility(ClientCheatAbilityPacket $packet) : ?ClientCheatAbilityPacket;
 
 	public function translateCameraPresets(CameraPresetsPacket $packet) : ?CameraPresetsPacket;
 

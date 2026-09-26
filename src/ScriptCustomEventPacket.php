@@ -31,30 +31,42 @@
 
 declare(strict_types=1);
 
-namespace pocketmine\network\mcpe\protocol\mapping\metadata;
+namespace pocketmine\network\mcpe\protocol;
 
-use pocketmine\network\mcpe\protocol\mapping\metadata\constants\properties\EntityMetadataProperties589;
-use pocketmine\network\mcpe\protocol\mapping\metadata\constants\properties\EntityMetadataProperties594;
-use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
-use pocketmine\network\mcpe\protocol\ProtocolInfo;
-use pocketmine\network\mcpe\protocol\types\entity\EntityMetadataProperties;
-use pocketmine\network\mcpe\protocol\utils\FallbackProtocolSingletonTrait;
+use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
 
-class MetadataPropertiesMapper extends ProtocolMappingTable{
-	use FallbackProtocolSingletonTrait {
-		FallbackProtocolSingletonTrait::__construct as private __protocolConstruct;
+class ScriptCustomEventPacket extends DataPacket{ //TODO: this doesn't have handlers in either client or server in the game as of 1.8
+	public const NETWORK_ID = ProtocolInfo::SCRIPT_CUSTOM_EVENT_PACKET;
+
+	public string $eventName;
+	/** @var string json data */
+	public string $eventData;
+
+	/**
+	 * @generate-create-func
+	 */
+	public static function create(string $eventName, string $eventData) : self{
+		$result = new self;
+		$result->eventName = $eventName;
+		$result->eventData = $eventData;
+		return $result;
 	}
 
-	public const FALLBACK_PROTOCOLS = [
-		ProtocolInfo::PROTOCOL_V1_20_10 => EntityMetadataProperties594::class,
-		ProtocolInfo::PROTOCOL_V1_20_0 => EntityMetadataProperties589::class
-	];
+	protected function decodePayload(PacketSerializer $in) : void{
+		$this->eventName = $in->getString();
+		$this->eventData = $in->getString();
+	}
 
-	public const CORE_CONSTANTS = EntityMetadataProperties::class;
+	protected function encodePayload(PacketSerializer $out) : void{
+		$out->putString($this->eventName);
+		$out->putString($this->eventData);
+	}
 
-	public function __construct(int $protocol){
-		$this->__protocolConstruct($protocol);
+	public function handle(PacketHandlerInterface $handler) : bool{
+		return $handler->handleScriptCustomEvent($this);
+	}
 
-		parent::__construct($protocol);
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateScriptCustomEvent($this);
 	}
 }

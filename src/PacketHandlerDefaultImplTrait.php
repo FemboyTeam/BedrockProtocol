@@ -489,6 +489,10 @@ trait PacketHandlerDefaultImplTrait{
 		return false;
 	}
 
+	public function handleScriptCustomEvent(ScriptCustomEventPacket $packet) : bool{
+		return false;
+	}
+
 	public function handleSpawnParticleEffect(SpawnParticleEffectPacket $packet) : bool{
 		return false;
 	}
@@ -790,6 +794,10 @@ trait PacketHandlerDefaultImplTrait{
 	}
 
 	public function handleUpdateClientInputLocks(UpdateClientInputLocksPacket $packet) : bool{
+		return false;
+	}
+
+	public function handleClientCheatAbility(ClientCheatAbilityPacket $packet) : bool{
 		return false;
 	}
 

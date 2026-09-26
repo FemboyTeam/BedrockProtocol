@@ -33,6 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\mapping\packet;
 
+use pocketmine\network\mcpe\protocol\mapping\packet\constants\PacketIds589;
 use pocketmine\network\mcpe\protocol\mapping\packet\constants\PacketIds594;
 use pocketmine\network\mcpe\protocol\mapping\packet\constants\PacketIds618;
 use pocketmine\network\mcpe\protocol\mapping\packet\constants\PacketIds630;
@@ -49,7 +50,8 @@ class PacketIdMapper extends ProtocolMappingTable{
 	public const FALLBACK_PROTOCOLS = [
 		ProtocolInfo::CURRENT_PROTOCOL => PacketIds630::class,
 		ProtocolInfo::PROTOCOL_V1_20_30 => PacketIds618::class,
-		ProtocolInfo::PROTOCOL_V1_20_10 => PacketIds594::class
+		ProtocolInfo::PROTOCOL_V1_20_10 => PacketIds594::class,
+		ProtocolInfo::PROTOCOL_V1_20_0 => PacketIds589::class
 	];
 
 	public const CORE_CONSTANTS = PacketIds::class;

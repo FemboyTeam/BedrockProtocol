@@ -31,30 +31,40 @@
 
 declare(strict_types=1);
 
-namespace pocketmine\network\mcpe\protocol\mapping\metadata;
+namespace pocketmine\network\mcpe\protocol;
 
-use pocketmine\network\mcpe\protocol\mapping\metadata\constants\properties\EntityMetadataProperties589;
-use pocketmine\network\mcpe\protocol\mapping\metadata\constants\properties\EntityMetadataProperties594;
-use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
-use pocketmine\network\mcpe\protocol\ProtocolInfo;
-use pocketmine\network\mcpe\protocol\types\entity\EntityMetadataProperties;
-use pocketmine\network\mcpe\protocol\utils\FallbackProtocolSingletonTrait;
+use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
+use pocketmine\network\mcpe\protocol\types\AbilitiesData;
 
-class MetadataPropertiesMapper extends ProtocolMappingTable{
-	use FallbackProtocolSingletonTrait {
-		FallbackProtocolSingletonTrait::__construct as private __protocolConstruct;
+class ClientCheatAbilityPacket extends DataPacket implements ServerboundPacket{
+	public const NETWORK_ID = ProtocolInfo::CLIENT_CHEAT_ABILITY_PACKET;
+
+	private AbilitiesData $data;
+
+	/**
+	 * @generate-create-func
+	 */
+	public static function create(AbilitiesData $data) : self{
+		$result = new self;
+		$result->data = $data;
+		return $result;
 	}
 
-	public const FALLBACK_PROTOCOLS = [
-		ProtocolInfo::PROTOCOL_V1_20_10 => EntityMetadataProperties594::class,
-		ProtocolInfo::PROTOCOL_V1_20_0 => EntityMetadataProperties589::class
-	];
+	public function getData() : AbilitiesData{ return $this->data; }
 
-	public const CORE_CONSTANTS = EntityMetadataProperties::class;
+	protected function decodePayload(PacketSerializer $in) : void{
+		$this->data = AbilitiesData::decode($in);
+	}
 
-	public function __construct(int $protocol){
-		$this->__protocolConstruct($protocol);
+	protected function encodePayload(PacketSerializer $out) : void{
+		$this->data->encode($out);
+	}
 
-		parent::__construct($protocol);
+	public function handle(PacketHandlerInterface $handler) : bool{
+		return $handler->handleClientCheatAbility($this);
+	}
+
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateClientCheatAbility($this);
 	}
 }
