@@ -33,7 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\mapping\metadata;
 
-use pocketmine\network\mcpe\protocol\mapping\metadata\constants\flags\EntityMetadataFlags589;
+use pocketmine\network\mcpe\protocol\mapping\metadata\constants\flags\EntityMetadataFlags582;
 use pocketmine\network\mcpe\protocol\mapping\metadata\constants\flags\EntityMetadataFlags594;
 use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
 use pocketmine\network\mcpe\protocol\ProtocolInfo;
@@ -47,7 +47,7 @@ class MetadataFlagsMapper extends ProtocolMappingTable{
 
 	public const FALLBACK_PROTOCOLS = [
 		ProtocolInfo::PROTOCOL_V1_20_10 => EntityMetadataFlags594::class,
-		ProtocolInfo::PROTOCOL_V1_20_0 => EntityMetadataFlags589::class
+		ProtocolInfo::PROTOCOL_V1_19_80 => EntityMetadataFlags582::class
 	];
 
 	public const CORE_CONSTANTS = EntityMetadataFlags::class;

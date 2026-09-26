@@ -205,7 +205,9 @@ class StartGamePacket extends DataPacket implements ClientboundPacket{
 		$this->worldTemplateId = $in->getUUID();
 		$this->enableClientSideChunkGeneration = $in->getBool();
 		$this->blockNetworkIdsAreHashes = $in->getBool();
-		$this->networkPermissions = NetworkPermissions::decode($in);
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_20_0){
+		    $this->networkPermissions = NetworkPermissions::decode($in);
+		}
 	}
 
 	protected function encodePayload(PacketSerializer $out) : void{
@@ -250,7 +252,9 @@ class StartGamePacket extends DataPacket implements ClientboundPacket{
 		$out->putUUID($this->worldTemplateId);
 		$out->putBool($this->enableClientSideChunkGeneration);
 		$out->putBool($this->blockNetworkIdsAreHashes);
-		$this->networkPermissions->encode($out);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_20_0){
+		    $this->networkPermissions->encode($out);
+		}
 	}
 
 	public function handle(PacketHandlerInterface $handler) : bool{

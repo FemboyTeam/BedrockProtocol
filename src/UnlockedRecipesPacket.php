@@ -45,6 +45,7 @@ class UnlockedRecipesPacket extends DataPacket implements ClientboundPacket{
 	public const TYPE_REMOVE = 3;
 	public const TYPE_REMOVE_ALL = 4;
 
+	private bool $newRecipes;
 	private int $type;
 	/** @var string[] */
 	private array $recipes;
@@ -53,12 +54,15 @@ class UnlockedRecipesPacket extends DataPacket implements ClientboundPacket{
 	 * @generate-create-func
 	 * @param string[] $recipes
 	 */
-	public static function create(int $type, array $recipes) : self{
+	public static function create(bool $newRecipes, int $type, array $recipes) : self{
 		$result = new self;
+		$result->newRecipes = $newRecipes;
 		$result->type = $type;
 		$result->recipes = $recipes;
 		return $result;
 	}
+
+	public function isNewRecipes() : bool{ return $this->newRecipes; }
 
 	public function getType() : int{ return $this->type; }
 
@@ -68,7 +72,11 @@ class UnlockedRecipesPacket extends DataPacket implements ClientboundPacket{
 	public function getRecipes() : array{ return $this->recipes; }
 
 	protected function decodePayload(PacketSerializer $in) : void{
-		$this->type = $in->getLInt();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_20_0){
+		    $this->type = $in->getLInt();
+		}else{
+			$this->newRecipes = $in->getBool();
+		}
 		$this->recipes = [];
 		for($i = 0, $count = $in->getUnsignedVarInt(); $i < $count; $i++){
 			$this->recipes[] = $in->getString();
@@ -76,7 +84,11 @@ class UnlockedRecipesPacket extends DataPacket implements ClientboundPacket{
 	}
 
 	protected function encodePayload(PacketSerializer $out) : void{
-		$out->putLInt($this->type);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_20_0){
+		    $out->putLInt($this->type);
+		}else{
+			$out->putBool($this->newRecipes);
+		}
 		$out->putUnsignedVarInt(count($this->recipes));
 		foreach($this->recipes as $recipe){
 			$out->putString($recipe);
