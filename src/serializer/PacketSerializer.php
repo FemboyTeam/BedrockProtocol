@@ -187,7 +187,7 @@ class PacketSerializer extends BinaryStream{
 		$persona = $this->getBool();
 		$capeOnClassic = $this->getBool();
 		$isPrimaryUser = $this->getBool();
-		if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_62){
+		if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_63){
 			$override = $this->getBool();
 		}
 
@@ -256,7 +256,7 @@ class PacketSerializer extends BinaryStream{
 		$this->putBool($skin->isPersona());
 		$this->putBool($skin->isPersonaCapeOnClassic());
 		$this->putBool($skin->isPrimaryUser());
-		if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_62){
+		if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_63){
 			$this->putBool($skin->isOverride());
 		}
 	}
