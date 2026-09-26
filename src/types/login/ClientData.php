@@ -95,6 +95,7 @@ final class ClientData{
 	/** @required */
 	public string $LanguageCode;
 
+	/** >= ProtocolInfo::PROTOCOL_V1_19_62 */
 	public bool $OverrideSkin;
 
 	/**
