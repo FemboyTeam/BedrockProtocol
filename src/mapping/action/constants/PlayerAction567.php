@@ -33,7 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\mapping\action\constants;
 
-final class PlayerAction575{
+final class PlayerAction567{
 	private function __construct(){
 		//NOOP
 	}
