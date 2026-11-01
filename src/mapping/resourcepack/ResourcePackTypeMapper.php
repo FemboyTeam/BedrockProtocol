@@ -44,7 +44,7 @@ class ResourcePackTypeMapper extends ProtocolMappingTable{
 	}
 
 	public const FALLBACK_PROTOCOLS = [
-		ProtocolInfo::PROTOCOL_V1_19_60 => ResourcePackType::class
+		ProtocolInfo::PROTOCOL_V1_19_50 => ResourcePackType::class
 	];
 
 	public const CORE_CONSTANTS = ResourcePackType::class;

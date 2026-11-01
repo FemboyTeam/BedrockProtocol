@@ -44,7 +44,7 @@ class TextPacketTypeMapper extends ProtocolMappingTable{
 	}
 
 	public const FALLBACK_PROTOCOLS = [
-		ProtocolInfo::PROTOCOL_V1_19_60 => TextPacketType::class
+		ProtocolInfo::PROTOCOL_V1_19_50 => TextPacketType::class
 	];
 
 	public const CORE_CONSTANTS = TextPacketType::class;

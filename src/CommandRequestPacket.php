@@ -60,14 +60,18 @@ class CommandRequestPacket extends DataPacket implements ServerboundPacket{
 		$this->command = $in->getString();
 		$this->originData = $in->getCommandOriginData();
 		$this->isInternal = $in->getBool();
-		$this->version = $in->getVarInt();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_60){
+			$this->version = $in->getVarInt();
+		}
 	}
 
 	protected function encodePayload(PacketSerializer $out) : void{
 		$out->putString($this->command);
 		$out->putCommandOriginData($this->originData);
 		$out->putBool($this->isInternal);
-		$out->putVarInt($this->version);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_60){
+			$out->putVarInt($this->version);
+		}
 	}
 
 	public function handle(PacketHandlerInterface $handler) : bool{

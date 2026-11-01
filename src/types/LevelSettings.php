@@ -156,7 +156,9 @@ final class LevelSettings{
 		$this->onlySpawnV1Villagers = $in->getBool();
 		$this->disablePersona = $in->getBool();
 		$this->disableCustomSkins = $in->getBool();
-		$this->muteEmoteAnnouncements = $in->getBool();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_60){
+			$this->muteEmoteAnnouncements = $in->getBool();
+		}
 		$this->vanillaVersion = $in->getString();
 		$this->limitedWorldWidth = $in->getLInt();
 		$this->limitedWorldLength = $in->getLInt();
@@ -212,7 +214,9 @@ final class LevelSettings{
 		$out->putBool($this->onlySpawnV1Villagers);
 		$out->putBool($this->disablePersona);
 		$out->putBool($this->disableCustomSkins);
-		$out->putBool($this->muteEmoteAnnouncements);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_60){
+			$out->putBool($this->muteEmoteAnnouncements);
+		}
 		$out->putString($this->vanillaVersion);
 		$out->putLInt($this->limitedWorldWidth);
 		$out->putLInt($this->limitedWorldLength);
