@@ -38,7 +38,7 @@ use pocketmine\network\mcpe\protocol\mapping\containerui\constants\ContainerUIId
 use pocketmine\network\mcpe\protocol\mapping\containerui\constants\ContainerUIIds582;
 use pocketmine\network\mcpe\protocol\mapping\containerui\constants\ContainerUIIds630;
 use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
-use pocketmine\network\mcpe\protocol\ProtocolInfo;
+use pocketmine\network\mcpe\protocol\types\inventory\ContainerUIIds;
 use pocketmine\network\mcpe\protocol\utils\FallbackProtocolSingletonTrait;
 
 class ContainerUIIdMapper extends ProtocolMappingTable{
@@ -53,7 +53,7 @@ class ContainerUIIdMapper extends ProtocolMappingTable{
 		ProtocolInfo::PROTOCOL_V1_19_40 => ContainerUIIds557::class
 	];
 
-	public const CORE_CONSTANTS = PacketIds::class;
+	public const CORE_CONSTANTS = ContainerUIIds::class;
 
 	public function __construct(int $protocol){
 		$this->__protocolConstruct($protocol);
