@@ -159,22 +159,7 @@ final class EntityMetadataProperties557{
 	public const AMBIENT_SOUND_INTERVAL_MIN = 108; //float
 	public const AMBIENT_SOUND_INTERVAL_RANGE = 109; //float
 	public const AMBIENT_SOUND_EVENT = 110; //string
-	public const FALL_DAMAGE_MULTIPLIER = 111; //float
-	public const NAME_RAW_TEXT = 112; //string
-	public const CAN_RIDE_TARGET = 113; //byte
-	public const LOW_TIER_CURED_TRADE_DISCOUNT = 114; //int
-	public const HIGH_TIER_CURED_TRADE_DISCOUNT = 115; //int
-	public const NEARBY_CURED_TRADE_DISCOUNT = 116; //int
-	public const NEARBY_CURED_DISCOUNT_TIME_STAMP = 117; //int
-	public const HITBOX = 118; //compound
-	public const IS_BUOYANT = 119; //byte
-	public const FREEZING_EFFECT_STRENGTH = 120; //float
-	public const BUOYANCY_DATA = 121; //string
-	public const GOAT_HORN_COUNT = 122; //int
-	public const BASE_RUNTIME_ID = 123; //string
-	public const MOVEMENT_SOUND_DISTANCE_OFFSET = 124;
-	public const HEARTBEAT_INTERVAL_TICKS = 125; //int
-	public const HEARTBEAT_LEVEL_SOUND_EVENT = 126; //int
+
 	public const PLAYER_DEATH_POSITION = 127; //blockpos
 	public const PLAYER_DEATH_DIMENSION = 128; //int
 	public const PLAYER_HAS_DIED = 129; //byte

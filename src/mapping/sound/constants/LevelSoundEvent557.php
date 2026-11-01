@@ -156,7 +156,7 @@ final class LevelSoundEvent557{
 	public const RECORD_WARD = 110;
 	public const RECORD_11 = 111;
 	public const RECORD_WAIT = 112;
-	public const STOP_RECORD = 113;
+	public const STOP_RECORD = 113; //Not really a sound
 	public const FLOP = 114;
 	public const ELDERGUARDIAN_CURSE = 115;
 	public const MOB_WARNING = 116;
@@ -418,55 +418,7 @@ final class LevelSoundEvent557{
 	public const TONGUE = 372;
 	public const IRONGOLEM_CRACK = 373;
 	public const IRONGOLEM_REPAIR = 374;
-	public const LISTENING = 375;
-	public const HEARTBEAT = 376;
-	public const HORN_BREAK = 377;
-
-	public const BLOCK_SCULK_SPREAD = 379;
-	public const CHARGE_SCULK = 380;
-	public const BLOCK_SCULK_SENSOR_PLACE = 381;
-	public const BLOCK_SCULK_SHRIEKER_PLACE = 382;
-	public const HORN_CALL0 = 383;
-	public const HORN_CALL1 = 384;
-	public const HORN_CALL2 = 385;
-	public const HORN_CALL3 = 386;
-	public const HORN_CALL4 = 387;
-	public const HORN_CALL5 = 388;
-	public const HORN_CALL6 = 389;
-	public const HORN_CALL7 = 390;
-
-	public const IMITATE_WARDEN = 426;
-	public const LISTENING_ANGRY = 427;
-	public const ITEM_GIVEN = 428;
-	public const ITEM_TAKEN = 429;
-	public const DISAPPEARED = 430;
-	public const REAPPEARED = 431;
-	public const DRINK_MILK = 432;
-	public const BLOCK_FROG_SPAWN_HATCH = 433;
-	public const LAY_SPAWN = 434;
-	public const BLOCK_FROG_SPAWN_BREAK = 435;
-	public const SONIC_BOOM = 436;
-	public const SONIC_CHARGE = 437;
-	public const ITEM_THROWN = 438;
-	public const RECORD_5 = 439;
-	public const CONVERT_TO_FROG = 440;
-
-	public const BLOCK_ENCHANTING_TABLE_USE = 442;
-	public const STEP_SAND = 443;
-	public const DASH_READY = 444;
-	public const BUNDLE_DROP_CONTENTS = 445;
-	public const BUNDLE_INSERT = 446;
-	public const BUNDLE_REMOVE_ONE = 447;
-	public const PRESSURE_PLATE_CLICK_OFF = 448;
-	public const PRESSURE_PLATE_CLICK_ON = 449;
-	public const BUTTON_CLICK_OFF = 450;
-	public const BUTTON_CLICK_ON = 451;
-	public const DOOR_OPEN = 452;
-	public const DOOR_CLOSE = 453;
-	public const TRAPDOOR_OPEN = 454;
-	public const TRAPDOOR_CLOSE = 455;
-	public const FENCE_GATE_OPEN = 456;
-	public const FENCE_GATE_CLOSE = 457;
+	public const UNDEFINED = 375;
 
 	//The following aliases are kept for backwards compatibility only
 	public const SCULK_SENSOR_POWER_ON = self::POWER_ON_SCULK_SENSOR;
