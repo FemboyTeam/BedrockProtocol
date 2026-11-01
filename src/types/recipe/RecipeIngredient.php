@@ -36,11 +36,21 @@ namespace pocketmine\network\mcpe\protocol\types\recipe;
 final class RecipeIngredient{
 	public function __construct(
 		private ?ItemDescriptor $descriptor,
+		private int $id,
+		private int $meta,
 		private int $count
 	){}
 
 	public function getDescriptor() : ?ItemDescriptor{
 		return $this->descriptor;
+	}
+
+	public function getId() : int{
+		return $this->id;
+	}
+
+	public function getMeta() : int{
+		return $this->meta;
 	}
 
 	public function getCount() : int{

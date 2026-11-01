@@ -130,7 +130,9 @@ class AddPlayerPacket extends DataPacket implements ClientboundPacket{
 		$this->item = ItemStackWrapper::read($in);
 		$this->gameMode = $in->getVarInt();
 		$this->metadata = $in->getEntityMetadata();
-		$this->syncedProperties = PropertySyncData::read($in);
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_40){
+			$this->syncedProperties = PropertySyncData::read($in);
+		}
 
 		$this->abilitiesPacket = new UpdateAbilitiesPacket();
 		$this->abilitiesPacket->decodePayload($in);
@@ -157,7 +159,9 @@ class AddPlayerPacket extends DataPacket implements ClientboundPacket{
 		$this->item->write($out);
 		$out->putVarInt($this->gameMode);
 		$out->putEntityMetadata($this->metadata);
-		$this->syncedProperties->write($out);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_40){
+			$this->syncedProperties->write($out);
+		}
 
 		$this->abilitiesPacket->encodePayload($out);
 

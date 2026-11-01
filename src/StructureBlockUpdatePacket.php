@@ -61,14 +61,18 @@ class StructureBlockUpdatePacket extends DataPacket implements ServerboundPacket
 		$this->blockPosition = $in->getBlockPosition();
 		$this->structureEditorData = $in->getStructureEditorData();
 		$this->isPowered = $in->getBool();
-		$this->waterlogged = $in->getBool();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_30){
+			$this->waterlogged = $in->getBool();
+		}
 	}
 
 	protected function encodePayload(PacketSerializer $out) : void{
 		$out->putBlockPosition($this->blockPosition);
 		$out->putStructureEditorData($this->structureEditorData);
 		$out->putBool($this->isPowered);
-		$out->putBool($this->waterlogged);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_30){
+			$out->putBool($this->waterlogged);
+		}
 	}
 
 	public function handle(PacketHandlerInterface $handler) : bool{

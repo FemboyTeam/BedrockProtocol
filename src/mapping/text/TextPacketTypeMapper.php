@@ -34,6 +34,8 @@ declare(strict_types=1);
 namespace pocketmine\network\mcpe\protocol\mapping\text;
 
 use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
+use pocketmine\network\mcpe\protocol\mapping\text\constants\TextPacketType544;
+use pocketmine\network\mcpe\protocol\mapping\text\constants\TextPacketType554;
 use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\network\mcpe\protocol\types\TextPacketType;
 use pocketmine\network\mcpe\protocol\utils\FallbackProtocolSingletonTrait;
@@ -44,7 +46,8 @@ class TextPacketTypeMapper extends ProtocolMappingTable{
 	}
 
 	public const FALLBACK_PROTOCOLS = [
-		ProtocolInfo::PROTOCOL_V1_19_40 => TextPacketType::class
+		ProtocolInfo::PROTOCOL_V1_19_30 => TextPacketType554::class,
+		ProtocolInfo::PROTOCOL_V1_19_20 => TextPacketType544::class
 	];
 
 	public const CORE_CONSTANTS = TextPacketType::class;

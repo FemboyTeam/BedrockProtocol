@@ -249,6 +249,10 @@ trait PacketTranslatorDefaultImplTrait{
 		return $packet;
 	}
 
+	public function translateAdventureSettings(AdventureSettingsPacket $packet) : ?AdventureSettingsPacket{
+		return $packet;
+	}
+
 	public function translateBlockActorData(BlockActorDataPacket $packet) : ?BlockActorDataPacket{
 		return $packet;
 	}

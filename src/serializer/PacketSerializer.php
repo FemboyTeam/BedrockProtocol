@@ -340,27 +340,46 @@ class PacketSerializer extends BinaryStream{
 	}
 
 	public function getRecipeIngredient() : RecipeIngredient{
-		$descriptorType = $this->getByte();
-		$descriptor = match($descriptorType){
-			ItemDescriptorType::INT_ID_META => IntIdMetaItemDescriptor::read($this),
-			ItemDescriptorType::STRING_ID_META => StringIdMetaItemDescriptor::read($this),
-			ItemDescriptorType::TAG => TagItemDescriptor::read($this),
-			ItemDescriptorType::MOLANG => MolangItemDescriptor::read($this),
-			ItemDescriptorType::COMPLEX_ALIAS => ComplexAliasItemDescriptor::read($this),
-			default => null
-		};
+		if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_30){
+			$descriptorType = $this->getByte();
+			$descriptor = match($descriptorType){
+				ItemDescriptorType::INT_ID_META => IntIdMetaItemDescriptor::read($this),
+				ItemDescriptorType::STRING_ID_META => StringIdMetaItemDescriptor::read($this),
+				ItemDescriptorType::TAG => TagItemDescriptor::read($this),
+				ItemDescriptorType::MOLANG => MolangItemDescriptor::read($this),
+				ItemDescriptorType::COMPLEX_ALIAS => ComplexAliasItemDescriptor::read($this),
+				default => null
+			};
+		}else{
+			$id = $this->getVarInt();
+			if($id === 0){
+				return new RecipeIngredient(null, 0, 0, 0);
+			}
+			$meta = $this->getVarInt();
+		}
+
 		$count = $this->getVarInt();
 
-		return new RecipeIngredient($descriptor, $count);
+		return new RecipeIngredient($descriptor ?? null, $id ?? 0, $meta ?? 0, $count);
 	}
 
 	public function putRecipeIngredient(RecipeIngredient $ingredient) : void{
-		$type = $ingredient->getDescriptor();
+		if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_30){
+			$type = $ingredient->getDescriptor();
 
-		$this->putByte($type?->getTypeId() ?? 0);
-		$type?->write($this);
+			$this->putByte($type?->getTypeId() ?? 0);
+			$type?->write($this);
 
-		$this->putVarInt($ingredient->getCount());
+			$this->putVarInt($ingredient->getCount());
+		}else{
+			if($ingredient->getId() === 0){
+				$this->putVarInt(0);
+			}else{
+				$this->putVarInt($ingredient->getId());
+				$this->putVarInt($ingredient->getMeta());
+				$this->putVarInt($ingredient->getCount());
+			}
+		}
 	}
 
 	/**

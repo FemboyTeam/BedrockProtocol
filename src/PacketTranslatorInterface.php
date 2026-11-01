@@ -141,6 +141,8 @@ interface PacketTranslatorInterface{
 
 	public function translateGuiDataPickItem(GuiDataPickItemPacket $packet) : ?GuiDataPickItemPacket;
 
+	public function translateAdventureSettings(AdventureSettingsPacket $packet) : ?AdventureSettingsPacket;
+
 	public function translateBlockActorData(BlockActorDataPacket $packet) : ?BlockActorDataPacket;
 
 	public function translatePlayerInput(PlayerInputPacket $packet) : ?PlayerInputPacket;

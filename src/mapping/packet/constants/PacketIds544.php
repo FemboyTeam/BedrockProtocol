@@ -36,7 +36,7 @@ namespace pocketmine\network\mcpe\protocol\mapping\packet\constants;
 /**
  * Packet IDs for the current Minecraft PE protocol
  */
-class PacketIds557{
+class PacketIds544{
 
 	private function __construct(){
 		//NOOP
@@ -96,7 +96,7 @@ class PacketIds557{
 	public const CRAFTING_DATA_PACKET = 0x34;
 	public const CRAFTING_EVENT_PACKET = 0x35;
 	public const GUI_DATA_PICK_ITEM_PACKET = 0x36;
-
+	public const ADVENTURE_SETTINGS_PACKET = 0x37;
 	public const BLOCK_ACTOR_DATA_PACKET = 0x38;
 	public const PLAYER_INPUT_PACKET = 0x39;
 	public const LEVEL_CHUNK_PACKET = 0x3a;
@@ -233,8 +233,4 @@ class PacketIds557{
 	public const DEATH_INFO_PACKET = 0xbd;
 	public const EDITOR_NETWORK_PACKET = 0xbe;
 	public const FEATURE_REGISTRY_PACKET = 0xbf;
-	public const SERVER_STATS_PACKET = 0xc0;
-	public const REQUEST_NETWORK_SETTINGS_PACKET = 0xc1;
-	public const GAME_TEST_REQUEST_PACKET = 0xc2;
-	public const GAME_TEST_RESULTS_PACKET = 0xc3;
 }
