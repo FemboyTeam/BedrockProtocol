@@ -34,6 +34,7 @@ declare(strict_types=1);
 namespace pocketmine\network\mcpe\protocol;
 
 use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
+use pocketmine\network\mcpe\protocol\types\LegacySubChunkPacketEntryCommon;
 use pocketmine\network\mcpe\protocol\types\SubChunkPacketEntryWithCache as EntryWithBlobHash;
 use pocketmine\network\mcpe\protocol\types\SubChunkPacketEntryWithCacheList as ListWithBlobHashes;
 use pocketmine\network\mcpe\protocol\types\SubChunkPacketEntryWithoutCache as EntryWithoutBlobHash;
@@ -47,15 +48,17 @@ class SubChunkPacket extends DataPacket implements ClientboundPacket{
 	private int $dimension;
 	private SubChunkPosition $baseSubChunkPosition;
 	private ListWithBlobHashes|ListWithoutBlobHashes $entries;
+	private LegacySubChunkPacketEntryCommon $legacyEntry;
 
 	/**
 	 * @generate-create-func
 	 */
-	public static function create(int $dimension, SubChunkPosition $baseSubChunkPosition, ListWithBlobHashes|ListWithoutBlobHashes $entries) : self{
+	public static function create(int $dimension, SubChunkPosition $baseSubChunkPosition, ListWithBlobHashes|ListWithoutBlobHashes $entries, LegacySubChunkPacketEntryCommon $legacyEntry) : self{
 		$result = new self;
 		$result->dimension = $dimension;
 		$result->baseSubChunkPosition = $baseSubChunkPosition;
 		$result->entries = $entries;
+		$result->legacyEntry = $legacyEntry;
 		return $result;
 	}
 
@@ -67,36 +70,50 @@ class SubChunkPacket extends DataPacket implements ClientboundPacket{
 
 	public function getEntries() : ListWithBlobHashes|ListWithoutBlobHashes{ return $this->entries; }
 
+	public function getLegacyEntry() : LegacySubChunkPacketEntryCommon{ return $this->legacyEntry; }
+
 	protected function decodePayload(PacketSerializer $in) : void{
-		$cacheEnabled = $in->getBool();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_18_10){
+			$cacheEnabled = $in->getBool();
+		}
 		$this->dimension = $in->getVarInt();
 		$this->baseSubChunkPosition = SubChunkPosition::read($in);
 
-		$count = $in->getLInt();
-		if($cacheEnabled){
-			$entries = [];
-			for($i = 0; $i < $count; $i++){
-				$entries[] = EntryWithBlobHash::read($in);
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_18_10){
+			$count = $in->getLInt();
+			if($cacheEnabled ?? false){ // phpstan cries :)
+				$entries = [];
+				for($i = 0; $i < $count; $i++){
+					$entries[] = EntryWithBlobHash::read($in);
+				}
+				$this->entries = new ListWithBlobHashes($entries);
+			}else{
+				$entries = [];
+				for($i = 0; $i < $count; $i++){
+					$entries[] = EntryWithoutBlobHash::read($in);
+				}
+				$this->entries = new ListWithoutBlobHashes($entries);
 			}
-			$this->entries = new ListWithBlobHashes($entries);
 		}else{
-			$entries = [];
-			for($i = 0; $i < $count; $i++){
-				$entries[] = EntryWithoutBlobHash::read($in);
-			}
-			$this->entries = new ListWithoutBlobHashes($entries);
+			$this->legacyEntry = LegacySubChunkPacketEntryCommon::read($in);
 		}
 	}
 
 	protected function encodePayload(PacketSerializer $out) : void{
-		$out->putBool($this->entries instanceof ListWithBlobHashes);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_18_10){
+			$out->putBool($this->entries instanceof ListWithBlobHashes);
+		}
 		$out->putVarInt($this->dimension);
 		$this->baseSubChunkPosition->write($out);
 
-		$out->putLInt(count($this->entries->getEntries()));
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_18_10){
+			$out->putLInt(count($this->entries->getEntries()));
 
-		foreach($this->entries->getEntries() as $entry){
-			$entry->write($out);
+			foreach($this->entries->getEntries() as $entry){
+				$entry->write($out);
+			}
+		}else{
+			$this->legacyEntry->write($out);
 		}
 	}
 

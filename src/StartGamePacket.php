@@ -200,15 +200,19 @@ class StartGamePacket extends DataPacket implements ClientboundPacket{
 		$this->multiplayerCorrelationId = $in->getString();
 		$this->enableNewInventorySystem = $in->getBool();
 		$this->serverSoftwareVersion = $in->getString();
-		$this->playerActorProperties = new CacheableNbt($in->getNbtCompoundRoot());
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_0){
+			$this->playerActorProperties = new CacheableNbt($in->getNbtCompoundRoot());
+		}
 		$this->blockPaletteChecksum = $in->getLLong();
-		$this->worldTemplateId = $in->getUUID();
-		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_20){
-			$this->enableClientSideChunkGeneration = $in->getBool();
-			if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_80){
-				$this->blockNetworkIdsAreHashes = $in->getBool();
-				if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_20_0){
-					$this->networkPermissions = NetworkPermissions::decode($in);
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_0){
+			$this->worldTemplateId = $in->getUUID();
+			if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_20){
+				$this->enableClientSideChunkGeneration = $in->getBool();
+				if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_80){
+					$this->blockNetworkIdsAreHashes = $in->getBool();
+					if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_20_0){
+						$this->networkPermissions = NetworkPermissions::decode($in);
+					}
 				}
 			}
 		}
@@ -251,15 +255,19 @@ class StartGamePacket extends DataPacket implements ClientboundPacket{
 		$out->putString($this->multiplayerCorrelationId);
 		$out->putBool($this->enableNewInventorySystem);
 		$out->putString($this->serverSoftwareVersion);
-		$out->put($this->playerActorProperties->getEncodedNbt());
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_0){
+			$out->put($this->playerActorProperties->getEncodedNbt());
+		}
 		$out->putLLong($this->blockPaletteChecksum);
-		$out->putUUID($this->worldTemplateId);
-		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_20){
-			$out->putBool($this->enableClientSideChunkGeneration);
-			if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_80){
-				$out->putBool($this->blockNetworkIdsAreHashes);
-				if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_20_0){
-					$this->networkPermissions->encode($out);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_0){
+			$out->putUUID($this->worldTemplateId);
+			if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_20){
+				$out->putBool($this->enableClientSideChunkGeneration);
+				if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_80){
+					$out->putBool($this->blockNetworkIdsAreHashes);
+					if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_20_0){
+						$this->networkPermissions->encode($out);
+					}
 				}
 			}
 		}

@@ -31,41 +31,28 @@
 
 declare(strict_types=1);
 
-namespace pocketmine\network\mcpe\protocol\mapping\command\constants;
+namespace pocketmine\network\mcpe\protocol\mapping\stackrequest\constants;
 
-final class CommandParameterType527{
+final class ItemStackRequestActionType475{
 
-	/**
-	 * Basic parameter types. These must be combined with the ARG_FLAG_VALID constant.
-	 * ARG_FLAG_VALID | (type const)
-	 */
-	public const ARG_TYPE_INT = 1;
-	public const ARG_TYPE_FLOAT = 3;
-	public const ARG_TYPE_VALUE = 4;
-	public const ARG_TYPE_WILDCARD_INT = 5;
-	public const ARG_TYPE_OPERATOR = 6;
-	public const ARG_TYPE_COMPARE_OPERATOR = 7;
-	public const ARG_TYPE_TARGET = 8;
+	private function __construct(){
+		//NOOP
+	}
 
-	public const ARG_TYPE_WILDCARD_TARGET = 10;
-
-	public const ARG_TYPE_FILEPATH = 17;
-
-	public const ARG_TYPE_FULL_INTEGER_RANGE = 23;
-
-	public const ARG_TYPE_EQUIPMENT_SLOT = 38;
-	public const ARG_TYPE_STRING = 39;
-
-	public const ARG_TYPE_INT_POSITION = 47;
-	public const ARG_TYPE_POSITION = 48;
-
-	public const ARG_TYPE_MESSAGE = 51;
-
-	public const ARG_TYPE_RAWTEXT = 53;
-
-	public const ARG_TYPE_JSON = 57;
-
-	public const ARG_TYPE_BLOCK_STATES = 67;
-
-	public const ARG_TYPE_COMMAND = 70;
+	public const TAKE = 0;
+	public const PLACE = 1;
+	public const SWAP = 2;
+	public const DROP = 3;
+	public const DESTROY = 4;
+	public const CRAFTING_CONSUME_INPUT = 5;
+	public const CRAFTING_CREATE_SPECIFIC_RESULT = 6;
+	public const LAB_TABLE_COMBINE = 7;
+	public const BEACON_PAYMENT = 8;
+	public const MINE_BLOCK = 9;
+	public const CRAFTING_RECIPE = 10;
+	public const CRAFTING_RECIPE_AUTO = 11; //recipe book?
+	public const CREATIVE_CREATE = 12;
+	public const CRAFTING_RECIPE_OPTIONAL = 13; //anvil/cartography table rename
+	public const CRAFTING_NON_IMPLEMENTED_DEPRECATED_ASK_TY_LAING = 14;
+	public const CRAFTING_RESULTS_DEPRECATED_ASK_TY_LAING = 15; //no idea what this is for
 }

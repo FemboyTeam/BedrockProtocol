@@ -235,7 +235,9 @@ class PlayerAuthInputPacket extends DataPacket implements ServerboundPacket{
 		$this->inputFlags = $in->getUnsignedVarLong();
 		$this->inputMode = $in->getUnsignedVarInt();
 		$this->playMode = $in->getUnsignedVarInt();
-		$this->interactionMode = $in->getUnsignedVarInt();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_0){
+			$this->interactionMode = $in->getUnsignedVarInt();
+		}
 		if($this->playMode === PlayMode::VR){
 			$this->vrGazeDirection = $in->getVector3();
 		}
@@ -275,7 +277,9 @@ class PlayerAuthInputPacket extends DataPacket implements ServerboundPacket{
 		$out->putUnsignedVarLong($this->inputFlags);
 		$out->putUnsignedVarInt($this->inputMode);
 		$out->putUnsignedVarInt($this->playMode);
-		$out->putUnsignedVarInt($this->interactionMode);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_0){
+			$out->putUnsignedVarInt($this->interactionMode);
+		}
 		if($this->playMode === PlayMode::VR){
 			assert($this->vrGazeDirection !== null);
 			$out->putVector3($this->vrGazeDirection);

@@ -34,7 +34,8 @@ declare(strict_types=1);
 namespace pocketmine\network\mcpe\protocol\mapping\sound;
 
 use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
-use pocketmine\network\mcpe\protocol\mapping\sound\constants\LevelSoundEvent527;
+use pocketmine\network\mcpe\protocol\mapping\sound\constants\LevelSoundEvent475;
+use pocketmine\network\mcpe\protocol\mapping\sound\constants\LevelSoundEvent486;
 use pocketmine\network\mcpe\protocol\mapping\sound\constants\LevelSoundEvent560;
 use pocketmine\network\mcpe\protocol\mapping\sound\constants\LevelSoundEvent567;
 use pocketmine\network\mcpe\protocol\mapping\sound\constants\LevelSoundEvent575;
@@ -57,7 +58,8 @@ class SoundIdMapper extends ProtocolMappingTable{
 		ProtocolInfo::PROTOCOL_V1_19_70 => LevelSoundEvent575::class,
 		ProtocolInfo::PROTOCOL_V1_19_60 => LevelSoundEvent567::class,
 		ProtocolInfo::PROTOCOL_V1_19_50 => LevelSoundEvent560::class,
-		ProtocolInfo::PROTOCOL_V1_19_0 => LevelSoundEvent527::class
+		ProtocolInfo::PROTOCOL_V1_18_10 => LevelSoundEvent486::class,
+		ProtocolInfo::PROTOCOL_V1_18_0 => LevelSoundEvent475::class
 	];
 
 	public const CORE_CONSTANTS = LevelSoundEvent::class;

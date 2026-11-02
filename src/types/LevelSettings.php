@@ -112,7 +112,11 @@ final class LevelSettings{
 	 * @throws PacketDecodeException
 	 */
 	private function internalRead(PacketSerializer $in) : void{
-		$this->seed = $in->getLLong();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_18_30){
+			$this->seed = $in->getLLong();
+		}else{
+			$this->seed = $in->getVarInt();
+		}
 		$this->spawnSettings = SpawnSettings::read($in);
 		$this->generator = $in->getVarInt();
 		$this->worldGamemode = $in->getVarInt();
@@ -174,7 +178,11 @@ final class LevelSettings{
 	}
 
 	public function write(PacketSerializer $out) : void{
-		$out->putLLong($this->seed);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_18_30){
+			$out->putLLong($this->seed);
+		}else{
+			$out->putVarInt($this->seed);
+		}
 		$this->spawnSettings->write($out);
 		$out->putVarInt($this->generator);
 		$out->putVarInt($this->worldGamemode);

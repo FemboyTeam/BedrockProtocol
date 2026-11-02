@@ -104,16 +104,20 @@ class LevelChunkPacket extends DataPacket implements ClientboundPacket{
 	protected function decodePayload(PacketSerializer $in) : void{
 		$this->chunkPosition = ChunkPosition::read($in);
 
-		$subChunkCountButNotReally = $in->getUnsignedVarInt();
-		if($subChunkCountButNotReally === self::CLIENT_REQUEST_FULL_COLUMN_FAKE_COUNT){
-			$this->clientSubChunkRequestsEnabled = true;
-			$this->subChunkCount = PHP_INT_MAX;
-		}elseif($subChunkCountButNotReally === self::CLIENT_REQUEST_TRUNCATED_COLUMN_FAKE_COUNT){
-			$this->clientSubChunkRequestsEnabled = true;
-			$this->subChunkCount = $in->getLShort();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_18_10){
+			$subChunkCountButNotReally = $in->getUnsignedVarInt();
+			if($subChunkCountButNotReally === self::CLIENT_REQUEST_FULL_COLUMN_FAKE_COUNT){
+				$this->clientSubChunkRequestsEnabled = true;
+				$this->subChunkCount = PHP_INT_MAX;
+			}elseif($subChunkCountButNotReally === self::CLIENT_REQUEST_TRUNCATED_COLUMN_FAKE_COUNT){
+				$this->clientSubChunkRequestsEnabled = true;
+				$this->subChunkCount = $in->getLShort();
+			}else{
+				$this->clientSubChunkRequestsEnabled = false;
+				$this->subChunkCount = $subChunkCountButNotReally;
+			}
 		}else{
-			$this->clientSubChunkRequestsEnabled = false;
-			$this->subChunkCount = $subChunkCountButNotReally;
+			$this->subChunkCount = $in->getUnsignedVarInt();
 		}
 
 		$cacheEnabled = $in->getBool();
@@ -133,12 +137,16 @@ class LevelChunkPacket extends DataPacket implements ClientboundPacket{
 	protected function encodePayload(PacketSerializer $out) : void{
 		$this->chunkPosition->write($out);
 
-		if($this->clientSubChunkRequestsEnabled){
-			if($this->subChunkCount === PHP_INT_MAX){
-				$out->putUnsignedVarInt(self::CLIENT_REQUEST_FULL_COLUMN_FAKE_COUNT);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_18_10){
+			if($this->clientSubChunkRequestsEnabled){
+				if($this->subChunkCount === PHP_INT_MAX){
+					$out->putUnsignedVarInt(self::CLIENT_REQUEST_FULL_COLUMN_FAKE_COUNT);
+				}else{
+					$out->putUnsignedVarInt(self::CLIENT_REQUEST_TRUNCATED_COLUMN_FAKE_COUNT);
+					$out->putLShort($this->subChunkCount);
+				}
 			}else{
-				$out->putUnsignedVarInt(self::CLIENT_REQUEST_TRUNCATED_COLUMN_FAKE_COUNT);
-				$out->putLShort($this->subChunkCount);
+				$out->putUnsignedVarInt($this->subChunkCount);
 			}
 		}else{
 			$out->putUnsignedVarInt($this->subChunkCount);

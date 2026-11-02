@@ -33,7 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\mapping\metadata;
 
-use pocketmine\network\mcpe\protocol\mapping\metadata\constants\properties\EntityMetadataProperties527;
+use pocketmine\network\mcpe\protocol\mapping\metadata\constants\properties\EntityMetadataProperties475;
 use pocketmine\network\mcpe\protocol\mapping\metadata\constants\properties\EntityMetadataProperties560;
 use pocketmine\network\mcpe\protocol\mapping\metadata\constants\properties\EntityMetadataProperties594;
 use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
@@ -49,7 +49,7 @@ class MetadataPropertiesMapper extends ProtocolMappingTable{
 	public const FALLBACK_PROTOCOLS = [
 		ProtocolInfo::PROTOCOL_V1_20_10 => EntityMetadataProperties594::class,
 		ProtocolInfo::PROTOCOL_V1_19_50 => EntityMetadataProperties560::class,
-		ProtocolInfo::PROTOCOL_V1_19_0 => EntityMetadataProperties527::class
+		ProtocolInfo::PROTOCOL_V1_18_0 => EntityMetadataProperties475::class
 	];
 
 	public const CORE_CONSTANTS = EntityMetadataProperties::class;

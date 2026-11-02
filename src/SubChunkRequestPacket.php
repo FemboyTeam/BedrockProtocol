@@ -77,8 +77,10 @@ class SubChunkRequestPacket extends DataPacket implements ServerboundPacket{
 		$this->basePosition = SubChunkPosition::read($in);
 
 		$this->entries = [];
-		for($i = 0, $count = $in->getLInt(); $i < $count; $i++){
-			$this->entries[] = SubChunkPositionOffset::read($in);
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_18_10){
+			for($i = 0, $count = $in->getLInt(); $i < $count; $i++){
+				$this->entries[] = SubChunkPositionOffset::read($in);
+			}
 		}
 	}
 
@@ -86,9 +88,11 @@ class SubChunkRequestPacket extends DataPacket implements ServerboundPacket{
 		$out->putVarInt($this->dimension);
 		$this->basePosition->write($out);
 
-		$out->putLInt(count($this->entries));
-		foreach($this->entries as $entry){
-			$entry->write($out);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_18_10){
+			$out->putLInt(count($this->entries));
+			foreach($this->entries as $entry){
+				$entry->write($out);
+			}
 		}
 	}
 
