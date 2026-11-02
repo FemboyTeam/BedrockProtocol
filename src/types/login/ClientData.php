@@ -89,7 +89,7 @@ final class ClientData{
 	/** @required */
 	public int $GuiScale;
 
-	/** @required */
+	/** >= ProtocolInfo::PROTOCOL_V1_19_10 */
 	public bool $IsEditorMode;
 
 	/** @required */
@@ -166,7 +166,7 @@ final class ClientData{
 	/** @required */
 	public bool $ThirdPartyNameOnly;
 
-	/** @required */
+	/** >= ProtocolInfo::PROTOCOL_V1_19_20 */
 	public bool $TrustedSkin;
 
 	/** @required */

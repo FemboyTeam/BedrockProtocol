@@ -33,6 +33,8 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\mapping\packet;
 
+use pocketmine\network\mcpe\protocol\mapping\packet\constants\PacketIds527;
+use pocketmine\network\mcpe\protocol\mapping\packet\constants\PacketIds534;
 use pocketmine\network\mcpe\protocol\mapping\packet\constants\PacketIds544;
 use pocketmine\network\mcpe\protocol\mapping\packet\constants\PacketIds554;
 use pocketmine\network\mcpe\protocol\mapping\packet\constants\PacketIds560;
@@ -61,7 +63,9 @@ class PacketIdMapper extends ProtocolMappingTable{
 		ProtocolInfo::PROTOCOL_V1_19_60 => PacketIds567::class,
 		ProtocolInfo::PROTOCOL_V1_19_50 => PacketIds560::class,
 		ProtocolInfo::PROTOCOL_V1_19_30 => PacketIds554::class,
-		ProtocolInfo::PROTOCOL_V1_19_20 => PacketIds544::class
+		ProtocolInfo::PROTOCOL_V1_19_20 => PacketIds544::class,
+		ProtocolInfo::PROTOCOL_V1_19_10 => PacketIds534::class,
+		ProtocolInfo::PROTOCOL_V1_19_0 => PacketIds527::class
 	];
 
 	public const CORE_CONSTANTS = PacketIds::class;

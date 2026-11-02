@@ -48,6 +48,7 @@ class AddPlayerPacket extends DataPacket implements ClientboundPacket{
 
 	public UuidInterface $uuid;
 	public string $username;
+	public int $actorUniqueId;
 	public int $actorRuntimeId;
 	public string $platformChatId = "";
 	public Vector3 $position;
@@ -65,6 +66,7 @@ class AddPlayerPacket extends DataPacket implements ClientboundPacket{
 	public PropertySyncData $syncedProperties;
 
 	public UpdateAbilitiesPacket $abilitiesPacket;
+	public AdventureSettingsPacket $adventureSettingsPacket;
 
 	/** @var EntityLink[] */
 	public array $links = [];
@@ -80,6 +82,7 @@ class AddPlayerPacket extends DataPacket implements ClientboundPacket{
 	public static function create(
 		UuidInterface $uuid,
 		string $username,
+		int $actorUniqueId,
 		int $actorRuntimeId,
 		string $platformChatId,
 		Vector3 $position,
@@ -92,6 +95,7 @@ class AddPlayerPacket extends DataPacket implements ClientboundPacket{
 		array $metadata,
 		PropertySyncData $syncedProperties,
 		UpdateAbilitiesPacket $abilitiesPacket,
+		AdventureSettingsPacket $adventureSettingsPacket,
 		array $links,
 		string $deviceId,
 		int $buildPlatform,
@@ -99,6 +103,7 @@ class AddPlayerPacket extends DataPacket implements ClientboundPacket{
 		$result = new self;
 		$result->uuid = $uuid;
 		$result->username = $username;
+		$result->actorUniqueId = $actorUniqueId;
 		$result->actorRuntimeId = $actorRuntimeId;
 		$result->platformChatId = $platformChatId;
 		$result->position = $position;
@@ -111,6 +116,7 @@ class AddPlayerPacket extends DataPacket implements ClientboundPacket{
 		$result->metadata = $metadata;
 		$result->syncedProperties = $syncedProperties;
 		$result->abilitiesPacket = $abilitiesPacket;
+		$result->adventureSettingsPacket = $adventureSettingsPacket;
 		$result->links = $links;
 		$result->deviceId = $deviceId;
 		$result->buildPlatform = $buildPlatform;
@@ -120,6 +126,9 @@ class AddPlayerPacket extends DataPacket implements ClientboundPacket{
 	protected function decodePayload(PacketSerializer $in) : void{
 		$this->uuid = $in->getUUID();
 		$this->username = $in->getString();
+		if($in->getProtocol() < ProtocolInfo::PROTOCOL_V1_19_10){
+			$this->actorUniqueId = $in->getActorUniqueId();
+		}
 		$this->actorRuntimeId = $in->getActorRuntimeId();
 		$this->platformChatId = $in->getString();
 		$this->position = $in->getVector3();
@@ -134,8 +143,13 @@ class AddPlayerPacket extends DataPacket implements ClientboundPacket{
 			$this->syncedProperties = PropertySyncData::read($in);
 		}
 
-		$this->abilitiesPacket = new UpdateAbilitiesPacket();
-		$this->abilitiesPacket->decodePayload($in);
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_10){
+			$this->abilitiesPacket = new UpdateAbilitiesPacket();
+			$this->abilitiesPacket->decodePayload($in);
+		}else{
+			$this->adventureSettingsPacket = new AdventureSettingsPacket();
+			$this->adventureSettingsPacket->decodePayload($in);
+		}
 
 		$linkCount = $in->getUnsignedVarInt();
 		for($i = 0; $i < $linkCount; ++$i){
@@ -149,6 +163,9 @@ class AddPlayerPacket extends DataPacket implements ClientboundPacket{
 	protected function encodePayload(PacketSerializer $out) : void{
 		$out->putUUID($this->uuid);
 		$out->putString($this->username);
+		if($out->getProtocol() < ProtocolInfo::PROTOCOL_V1_19_10){
+			$out->putActorUniqueId($this->actorUniqueId);
+		}
 		$out->putActorRuntimeId($this->actorRuntimeId);
 		$out->putString($this->platformChatId);
 		$out->putVector3($this->position);
@@ -163,7 +180,11 @@ class AddPlayerPacket extends DataPacket implements ClientboundPacket{
 			$this->syncedProperties->write($out);
 		}
 
-		$this->abilitiesPacket->encodePayload($out);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_10){
+			$this->abilitiesPacket->encodePayload($out);
+		}else{
+			$this->adventureSettingsPacket->encodePayload($out);
+		}
 
 		$out->putUnsignedVarInt(count($this->links));
 		foreach($this->links as $link){

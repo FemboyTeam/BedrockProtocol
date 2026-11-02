@@ -453,8 +453,10 @@ class PacketSerializer extends BinaryStream{
 			$id = $this->getString();
 
 			$modifiers = [];
-			for($j = 0, $modifierCount = $this->getUnsignedVarInt(); $j < $modifierCount; $j++){
-				$modifiers[] = AttributeModifier::read($this);
+			if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_20){
+				for($j = 0, $modifierCount = $this->getUnsignedVarInt(); $j < $modifierCount; $j++){
+					$modifiers[] = AttributeModifier::read($this);
+				}
 			}
 
 			$list[] = new Attribute($id, $min, $max, $current, $default, $modifiers);
@@ -475,9 +477,11 @@ class PacketSerializer extends BinaryStream{
 			$this->putLFloat($attribute->getDefault());
 			$this->putString($attribute->getId());
 
-			$this->putUnsignedVarInt(count($attribute->getModifiers()));
-			foreach($attribute->getModifiers() as $modifier){
-				$modifier->write($this);
+			if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_20){
+				$this->putUnsignedVarInt(count($attribute->getModifiers()));
+				foreach($attribute->getModifiers() as $modifier){
+					$modifier->write($this);
+				}
 			}
 		}
 	}

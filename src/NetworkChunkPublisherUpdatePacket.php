@@ -64,12 +64,14 @@ class NetworkChunkPublisherUpdatePacket extends DataPacket implements Clientboun
 		$this->blockPosition = $in->getSignedBlockPosition();
 		$this->radius = $in->getUnsignedVarInt();
 
-		$count = $in->getLInt();
-		if($count > self::MAX_SAVED_CHUNKS){
-			throw new PacketDecodeException("Expected at most " . self::MAX_SAVED_CHUNKS . " saved chunks, got " . $count);
-		}
-		for($i = 0, $this->savedChunks = []; $i < $count; $i++){
-			$this->savedChunks[] = ChunkPosition::read($in);
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_20){
+			$count = $in->getLInt();
+			if($count > self::MAX_SAVED_CHUNKS){
+				throw new PacketDecodeException("Expected at most " . self::MAX_SAVED_CHUNKS . " saved chunks, got " . $count);
+			}
+			for($i = 0, $this->savedChunks = []; $i < $count; $i++){
+				$this->savedChunks[] = ChunkPosition::read($in);
+			}
 		}
 	}
 
@@ -77,9 +79,11 @@ class NetworkChunkPublisherUpdatePacket extends DataPacket implements Clientboun
 		$out->putSignedBlockPosition($this->blockPosition);
 		$out->putUnsignedVarInt($this->radius);
 
-		$out->putLInt(count($this->savedChunks));
-		foreach($this->savedChunks as $chunk){
-			$chunk->write($out);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_20){
+			$out->putLInt(count($this->savedChunks));
+			foreach($this->savedChunks as $chunk){
+				$chunk->write($out);
+			}
 		}
 	}
 

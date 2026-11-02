@@ -67,15 +67,23 @@ class ModalFormResponsePacket extends DataPacket implements ServerboundPacket{
 
 	protected function decodePayload(PacketSerializer $in) : void{
 		$this->formId = $in->getUnsignedVarInt();
-		$this->formData = $in->readOptional(\Closure::fromCallable([$in, 'getString']));
-		$this->cancelReason = $in->readOptional(\Closure::fromCallable([$in, 'getByte']));
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_20){
+			$this->formData = $in->readOptional(\Closure::fromCallable([$in, 'getString']));
+			$this->cancelReason = $in->readOptional(\Closure::fromCallable([$in, 'getByte']));
+		}else{
+			$this->formData = $in->getString();
+		}
 	}
 
 	protected function encodePayload(PacketSerializer $out) : void{
 		$out->putUnsignedVarInt($this->formId);
 
-		$out->writeOptional($this->formData, \Closure::fromCallable([$out, 'putString']));
-		$out->writeOptional($this->cancelReason, \Closure::fromCallable([$out, 'putByte']));
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_20){
+			$out->writeOptional($this->formData, \Closure::fromCallable([$out, 'putString']));
+			$out->writeOptional($this->cancelReason, \Closure::fromCallable([$out, 'putByte']));
+		}else{
+			$out->putString($this->formData ?? "");
+		}
 	}
 
 	public function handle(PacketHandlerInterface $handler) : bool{

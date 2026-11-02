@@ -33,7 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\mapping\containerui\constants;
 
-final class ContainerUIIds544{
+final class ContainerUIIds527{
 
 	private function __construct(){
 		//NOOP
