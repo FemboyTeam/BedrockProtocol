@@ -145,7 +145,7 @@ final class ClientData{
 	/** @required */
 	public string $SkinGeometryData;
 
-	/** @required */
+	/** >= ProtocolInfo::PROTOCOL_V1_17_30 */
 	public string $SkinGeometryDataEngineVersion;
 
 	/** @required */

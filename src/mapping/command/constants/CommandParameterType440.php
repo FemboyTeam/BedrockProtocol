@@ -33,7 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\mapping\command\constants;
 
-final class CommandParameterType475{
+final class CommandParameterType440{
 
 	/**
 	 * Basic parameter types. These must be combined with the ARG_FLAG_VALID constant.

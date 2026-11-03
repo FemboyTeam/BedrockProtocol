@@ -34,7 +34,7 @@ declare(strict_types=1);
 namespace pocketmine\network\mcpe\protocol\mapping\stackrequest;
 
 use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
-use pocketmine\network\mcpe\protocol\mapping\stackrequest\constants\ItemStackRequestActionType475;
+use pocketmine\network\mcpe\protocol\mapping\stackrequest\constants\ItemStackRequestActionType440;
 use pocketmine\network\mcpe\protocol\mapping\stackrequest\constants\ItemStackRequestActionType486;
 use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\network\mcpe\protocol\types\inventory\stackrequest\ItemStackRequestActionType;
@@ -47,7 +47,7 @@ class ItemStackRequestActionMapper extends ProtocolMappingTable{
 
 	public const FALLBACK_PROTOCOLS = [
 		ProtocolInfo::PROTOCOL_V1_18_10 => ItemStackRequestActionType486::class,
-		ProtocolInfo::PROTOCOL_V1_18_0 => ItemStackRequestActionType475::class
+		ProtocolInfo::PROTOCOL_V1_17_0 => ItemStackRequestActionType440::class
 	];
 
 	public const CORE_CONSTANTS = ItemStackRequestActionType::class;

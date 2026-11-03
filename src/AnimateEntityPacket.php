@@ -98,7 +98,9 @@ class AnimateEntityPacket extends DataPacket implements ClientboundPacket{
 		$this->animation = $in->getString();
 		$this->nextState = $in->getString();
 		$this->stopExpression = $in->getString();
-		$this->stopExpressionVersion = $in->getLInt();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
+			$this->stopExpressionVersion = $in->getLInt();
+		}
 		$this->controller = $in->getString();
 		$this->blendOutTime = $in->getLFloat();
 		$this->actorRuntimeIds = [];
@@ -111,7 +113,9 @@ class AnimateEntityPacket extends DataPacket implements ClientboundPacket{
 		$out->putString($this->animation);
 		$out->putString($this->nextState);
 		$out->putString($this->stopExpression);
-		$out->putLInt($this->stopExpressionVersion);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
+			$out->putLInt($this->stopExpressionVersion);
+		}
 		$out->putString($this->controller);
 		$out->putLFloat($this->blendOutTime);
 		$out->putUnsignedVarInt(count($this->actorRuntimeIds));

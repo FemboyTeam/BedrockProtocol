@@ -152,8 +152,15 @@ class PacketSerializer extends BinaryStream{
 		}
 		$capeData = $this->getSkinImage();
 		$geometryData = $this->getString();
-		$geometryDataVersion = $this->getString();
+		if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
+			$geometryDataVersion = $this->getString();
+		}
 		$animationData = $this->getString();
+		if($this->getProtocol() < ProtocolInfo::PROTOCOL_V1_17_30){
+			$premium = $this->getBool();
+			$persona = $this->getBool();
+			$capeOnClassic = $this->getBool();
+		}
 		$capeId = $this->getString();
 		$fullSkinId = $this->getString();
 		$armSize = $this->getString();
@@ -183,12 +190,14 @@ class PacketSerializer extends BinaryStream{
 			);
 		}
 
-		$premium = $this->getBool();
-		$persona = $this->getBool();
-		$capeOnClassic = $this->getBool();
-		$isPrimaryUser = $this->getBool();
-		if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_63){
-			$override = $this->getBool();
+		if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
+			$premium = $this->getBool();
+			$persona = $this->getBool();
+			$capeOnClassic = $this->getBool();
+			$isPrimaryUser = $this->getBool();
+			if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_63){
+				$override = $this->getBool();
+			}
 		}
 
 		return new SkinData(
@@ -199,7 +208,7 @@ class PacketSerializer extends BinaryStream{
 			$animations,
 			$capeData,
 			$geometryData,
-			$geometryDataVersion,
+			$geometryDataVersion ?? "",
 			$animationData,
 			$capeId,
 			$fullSkinId,
@@ -208,10 +217,10 @@ class PacketSerializer extends BinaryStream{
 			$personaPieces,
 			$pieceTintColors,
 			true,
-			$premium,
-			$persona,
-			$capeOnClassic,
-			$isPrimaryUser,
+			$premium ?? false,
+			$persona ?? false,
+			$capeOnClassic ?? false,
+			$isPrimaryUser ?? true,
 			$override ?? true,
 		);
 	}
@@ -230,8 +239,15 @@ class PacketSerializer extends BinaryStream{
 		}
 		$this->putSkinImage($skin->getCapeImage());
 		$this->putString($skin->getGeometryData());
-		$this->putString($skin->getGeometryDataEngineVersion());
+		if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
+			$this->putString($skin->getGeometryDataEngineVersion());
+		}
 		$this->putString($skin->getAnimationData());
+		if($this->getProtocol() < ProtocolInfo::PROTOCOL_V1_17_30){
+			$this->putBool($skin->isPremium());
+			$this->putBool($skin->isPersona());
+			$this->putBool($skin->isPersonaCapeOnClassic());
+		}
 		$this->putString($skin->getCapeId());
 		$this->putString($skin->getFullSkinId());
 		$this->putString($skin->getArmSize());
@@ -252,12 +268,14 @@ class PacketSerializer extends BinaryStream{
 				$this->putString($color);
 			}
 		}
-		$this->putBool($skin->isPremium());
-		$this->putBool($skin->isPersona());
-		$this->putBool($skin->isPersonaCapeOnClassic());
-		$this->putBool($skin->isPrimaryUser());
-		if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_63){
-			$this->putBool($skin->isOverride());
+		if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
+			$this->putBool($skin->isPremium());
+			$this->putBool($skin->isPersona());
+			$this->putBool($skin->isPersonaCapeOnClassic());
+			$this->putBool($skin->isPrimaryUser());
+			if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_63){
+				$this->putBool($skin->isOverride());
+			}
 		}
 	}
 

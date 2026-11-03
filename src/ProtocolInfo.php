@@ -71,7 +71,11 @@ final class ProtocolInfo extends PacketIds{
 		self::PROTOCOL_V1_19_0,
 		self::PROTOCOL_V1_18_30,
 		self::PROTOCOL_V1_18_10,
-		self::PROTOCOL_V1_18_0
+		self::PROTOCOL_V1_18_0,
+		self::PROTOCOL_V1_17_40,
+		self::PROTOCOL_V1_17_30,
+		self::PROTOCOL_V1_17_10,
+		self::PROTOCOL_V1_17_0
 	];
 
 	// 1.20
@@ -99,8 +103,14 @@ final class ProtocolInfo extends PacketIds{
 	public const PROTOCOL_V1_18_10 = 486;
 	public const PROTOCOL_V1_18_0 = 475;
 
+	// 1.17
+	public const PROTOCOL_V1_17_40 = 471;
+	public const PROTOCOL_V1_17_30 = 465;
+	public const PROTOCOL_V1_17_10 = 448;
+	public const PROTOCOL_V1_17_0 = 440;
+
 	/** Current Minecraft PE version reported by the server. This is usually the earliest currently supported version. */
-	public const MINECRAFT_VERSION = '1.18.0 - 1.20.50';
+	public const MINECRAFT_VERSION = '1.17.0 - 1.20.50';
 	/** Version number sent to clients in ping responses. */
 	public const MINECRAFT_VERSION_NETWORK = '1.20.50';
 }

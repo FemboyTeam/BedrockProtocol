@@ -33,7 +33,8 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\mapping\particle;
 
-use pocketmine\network\mcpe\protocol\mapping\particle\constants\ParticleIds475;
+use pocketmine\network\mcpe\protocol\mapping\particle\constants\ParticleIds440;
+use pocketmine\network\mcpe\protocol\mapping\particle\constants\ParticleIds448;
 use pocketmine\network\mcpe\protocol\mapping\particle\constants\ParticleIds630;
 use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
 use pocketmine\network\mcpe\protocol\ProtocolInfo;
@@ -47,7 +48,8 @@ class ParticleIdMapper extends ProtocolMappingTable{
 
 	public const FALLBACK_PROTOCOLS = [
 		ProtocolInfo::CURRENT_PROTOCOL => ParticleIds630::class,
-		ProtocolInfo::PROTOCOL_V1_18_0 => ParticleIds475::class
+		ProtocolInfo::PROTOCOL_V1_17_10 => ParticleIds448::class,
+		ProtocolInfo::PROTOCOL_V1_17_0 => ParticleIds440::class
 	];
 
 	public const CORE_CONSTANTS = ParticleIds::class;

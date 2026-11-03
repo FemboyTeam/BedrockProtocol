@@ -34,6 +34,7 @@ declare(strict_types=1);
 namespace pocketmine\network\mcpe\protocol\types;
 
 use pocketmine\network\mcpe\protocol\PacketDecodeException;
+use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
 
 final class LegacySubChunkPacketEntryCommon{
@@ -67,13 +68,15 @@ final class LegacySubChunkPacketEntryCommon{
 			default => throw new PacketDecodeException("Unknown heightmap data type $heightMapDataType")
 		};
 
-		$usedBlobHash = $in->getBool() ? $in->getLLong() : null;
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_18_0){
+			$usedBlobHash = $in->getBool() ? $in->getLLong() : null;
+		}
 
 		return new self(
 			$data,
 			$requestResult,
 			$heightMapData,
-			$usedBlobHash
+			$usedBlobHash ?? null
 		);
 	}
 
@@ -93,10 +96,12 @@ final class LegacySubChunkPacketEntryCommon{
 			$heightMap->write($out);
 		}
 
-		$usedBlobHash = $this->usedBlobHash;
-		$out->putBool($usedBlobHash !== null);
-		if($usedBlobHash !== null){
-			$out->putLLong($usedBlobHash);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_18_0){
+			$usedBlobHash = $this->usedBlobHash;
+			$out->putBool($usedBlobHash !== null);
+			if($usedBlobHash !== null){
+				$out->putLLong($usedBlobHash);
+			}
 		}
 	}
 }

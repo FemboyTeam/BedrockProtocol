@@ -36,7 +36,7 @@ namespace pocketmine\network\mcpe\protocol\mapping\packet\constants;
 /**
  * Packet IDs for the current Minecraft PE protocol
  */
-class PacketIds475{
+class PacketIds465{
 
 	private function __construct(){
 		//NOOP
@@ -215,6 +215,4 @@ class PacketIds475{
 	public const CREATE_PHOTO_PACKET = 0xab;
 	public const UPDATE_SUB_CHUNK_BLOCKS_PACKET = 0xac;
 	public const PHOTO_INFO_REQUEST_PACKET = 0xad;
-	public const SUB_CHUNK_PACKET = 0xae;
-	public const SUB_CHUNK_REQUEST_PACKET = 0xaf;
 }
