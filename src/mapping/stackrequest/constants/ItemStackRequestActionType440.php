@@ -53,8 +53,6 @@ final class ItemStackRequestActionType440{
 	public const CRAFTING_RECIPE_AUTO = 11; //recipe book?
 	public const CREATIVE_CREATE = 12;
 	public const CRAFTING_RECIPE_OPTIONAL = 13; //anvil/cartography table rename
-	public const CRAFTING_GRINDSTONE = 14;
-	public const CRAFTING_LOOM = 15;
-	public const CRAFTING_NON_IMPLEMENTED_DEPRECATED_ASK_TY_LAING = 16;
-	public const CRAFTING_RESULTS_DEPRECATED_ASK_TY_LAING = 17; //no idea what this is for
+	public const CRAFTING_NON_IMPLEMENTED_DEPRECATED_ASK_TY_LAING = 14;
+	public const CRAFTING_RESULTS_DEPRECATED_ASK_TY_LAING = 15; //no idea what this is for
 }
