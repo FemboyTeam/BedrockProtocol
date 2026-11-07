@@ -33,7 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\mapping\command;
 
-use pocketmine\network\mcpe\protocol\mapping\command\constants\CommandParameterType428;
+use pocketmine\network\mcpe\protocol\mapping\command\constants\CommandParameterType419;
 use pocketmine\network\mcpe\protocol\mapping\command\constants\CommandParameterType582;
 use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
 use pocketmine\network\mcpe\protocol\ProtocolInfo;
@@ -47,7 +47,7 @@ class CommandParameterTypeMapper extends ProtocolMappingTable{
 
 	public const FALLBACK_PROTOCOLS = [
 		ProtocolInfo::PROTOCOL_V1_19_80 => CommandParameterType582::class,
-		ProtocolInfo::PROTOCOL_V1_16_210_58 => CommandParameterType428::class
+		ProtocolInfo::PROTOCOL_V1_16_100_60 => CommandParameterType419::class
 	];
 
 	public const CORE_CONSTANTS = CommandParameterType::class;

@@ -33,6 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\types\inventory\stackresponse;
 
+use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
 
 final class ItemStackResponseSlotInfo{
@@ -62,9 +63,13 @@ final class ItemStackResponseSlotInfo{
 		$hotbarSlot = $in->getByte();
 		$count = $in->getByte();
 		$itemStackId = $in->readGenericTypeNetworkId();
-		$customName = $in->getString();
-		$durabilityCorrection = $in->getVarInt();
-		return new self($slot, $hotbarSlot, $count, $itemStackId, $customName, $durabilityCorrection);
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_200_56){
+			$customName = $in->getString();
+			if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_210_58){
+				$durabilityCorrection = $in->getVarInt();
+			}
+		}
+		return new self($slot, $hotbarSlot, $count, $itemStackId, $customName ?? "", $durabilityCorrection ?? 0);
 	}
 
 	public function write(PacketSerializer $out) : void{
@@ -72,7 +77,11 @@ final class ItemStackResponseSlotInfo{
 		$out->putByte($this->hotbarSlot);
 		$out->putByte($this->count);
 		$out->writeGenericTypeNetworkId($this->itemStackId);
-		$out->putString($this->customName);
-		$out->putVarInt($this->durabilityCorrection);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_200_56){
+			$out->putString($this->customName);
+			if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_210_58){
+				$out->putVarInt($this->durabilityCorrection);
+			}
+		}
 	}
 }

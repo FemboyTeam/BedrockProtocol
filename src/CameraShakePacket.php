@@ -73,14 +73,18 @@ class CameraShakePacket extends DataPacket implements ClientboundPacket{
 		$this->intensity = $in->getLFloat();
 		$this->duration = $in->getLFloat();
 		$this->shakeType = $in->getByte();
-		$this->shakeAction = $in->getByte();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_210_58){
+			$this->shakeAction = $in->getByte();
+		}
 	}
 
 	protected function encodePayload(PacketSerializer $out) : void{
 		$out->putLFloat($this->intensity);
 		$out->putLFloat($this->duration);
 		$out->putByte($this->shakeType);
-		$out->putByte($this->shakeAction);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_210_58){
+			$out->putByte($this->shakeAction);
+		}
 	}
 
 	public function handle(PacketHandlerInterface $handler) : bool{

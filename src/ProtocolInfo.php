@@ -79,7 +79,15 @@ final class ProtocolInfo extends PacketIds{
 		self::PROTOCOL_V1_16_220_52,
 		self::PROTOCOL_V1_16_220_51,
 		self::PROTOCOL_V1_16_220_50,
-		self::PROTOCOL_V1_16_210_58
+		self::PROTOCOL_V1_16_210_58,
+		self::PROTOCOL_V1_16_210_56,
+		self::PROTOCOL_V1_16_210_54,
+		self::PROTOCOL_V1_16_210_53,
+		self::PROTOCOL_V1_16_210_50,
+		self::PROTOCOL_V1_16_200_56,
+		self::PROTOCOL_V1_16_200_52,
+		self::PROTOCOL_V1_16_200_50,
+		self::PROTOCOL_V1_16_100_60
 	];
 
 	// 1.20
@@ -118,9 +126,17 @@ final class ProtocolInfo extends PacketIds{
 	public const PROTOCOL_V1_16_220_51 = 430;
 	public const PROTOCOL_V1_16_220_50 = 429;
 	public const PROTOCOL_V1_16_210_58 = 428;
+	public const PROTOCOL_V1_16_210_56 = 427;
+	public const PROTOCOL_V1_16_210_54 = 425;
+	public const PROTOCOL_V1_16_210_53 = 424;
+	public const PROTOCOL_V1_16_210_50 = 423;
+	public const PROTOCOL_V1_16_200_56 = 422;
+	public const PROTOCOL_V1_16_200_52 = 421;
+	public const PROTOCOL_V1_16_200_50 = 420;
+	public const PROTOCOL_V1_16_100_60 = 419;
 
 	/** Current Minecraft PE version reported by the server. This is usually the earliest currently supported version. */
-	public const MINECRAFT_VERSION = '1.16.210.58 - 1.20.50';
+	public const MINECRAFT_VERSION = '1.16.100.60 - 1.20.50';
 	/** Version number sent to clients in ping responses. */
 	public const MINECRAFT_VERSION_NETWORK = '1.20.50';
 }

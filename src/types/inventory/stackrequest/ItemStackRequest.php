@@ -109,11 +109,13 @@ final class ItemStackRequest{
 			$actions[] = self::readAction($in, $typeId);
 		}
 		$filterStrings = [];
-		for($i = 0, $len = $in->getUnsignedVarInt(); $i < $len; ++$i){
-			$filterStrings[] = $in->getString();
-		}
-		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_30){
-			$filterStringCause = $in->getLInt();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_200_56){
+			for($i = 0, $len = $in->getUnsignedVarInt(); $i < $len; ++$i){
+				$filterStrings[] = $in->getString();
+			}
+			if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_30){
+				$filterStringCause = $in->getLInt();
+			}
 		}
 		return new self($requestId, $actions, $filterStrings, $filterStringCause ?? 0);
 	}
@@ -126,12 +128,14 @@ final class ItemStackRequest{
 			$out->putByte($networkId);
 			$action->write($out);
 		}
-		$out->putUnsignedVarInt(count($this->filterStrings));
-		foreach($this->filterStrings as $string){
-			$out->putString($string);
-		}
-		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_30){
-			$out->putLInt($this->filterStringCause);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_200_56){
+			$out->putUnsignedVarInt(count($this->filterStrings));
+			foreach($this->filterStrings as $string){
+				$out->putString($string);
+			}
+			if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_30){
+				$out->putLInt($this->filterStringCause);
+			}
 		}
 	}
 }
