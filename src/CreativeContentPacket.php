@@ -49,7 +49,7 @@ class CreativeContentPacket extends DataPacket implements ClientboundPacket{
 	/**
 	 * @generate-create-func
 	 * @param CreativeGroupEntry[] $groups
-	 * @param CreativeItemEntry[] $items
+	 * @param CreativeItemEntry[]  $items
 	 */
 	public static function create(array $groups, array $items) : self{
 		$result = new self;
