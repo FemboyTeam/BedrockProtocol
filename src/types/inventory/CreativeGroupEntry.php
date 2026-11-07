@@ -38,6 +38,8 @@ use pocketmine\network\mcpe\protocol\types\CacheableNbt;
 use function count;
 
 final class CreativeGroupEntry{
+	public const NONE = 0xffffffff;
+
 	/** @phpstan-param CacheableNbt<\pocketmine\nbt\tag\CompoundTag>[] $nbtBlobs */
 	public function __construct(
 		private string $categoryName,
