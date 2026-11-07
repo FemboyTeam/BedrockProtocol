@@ -121,7 +121,7 @@ final class ClientData{
 
 	public string $PlatformUserId = ""; //xbox-only, apparently
 
-	/** @required */
+	/** >= ProtocolInfo::PROTOCOL_V1_16_210_54 */
 	public string $PlayFabId;
 
 	/** @required */
