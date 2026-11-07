@@ -62,18 +62,18 @@ class MobArmorEquipmentPacket extends DataPacket implements ClientboundPacket, S
 
 	protected function decodePayload(PacketSerializer $in) : void{
 		$this->actorRuntimeId = $in->getActorRuntimeId();
-		$this->head = ItemStackWrapper::read($in);
-		$this->chest = ItemStackWrapper::read($in);
-		$this->legs = ItemStackWrapper::read($in);
-		$this->feet = ItemStackWrapper::read($in);
+		$this->head = ItemStackWrapper::read($in, false);
+		$this->chest = ItemStackWrapper::read($in, false);
+		$this->legs = ItemStackWrapper::read($in, false);
+		$this->feet = ItemStackWrapper::read($in, false);
 	}
 
 	protected function encodePayload(PacketSerializer $out) : void{
 		$out->putActorRuntimeId($this->actorRuntimeId);
-		$this->head->write($out);
-		$this->chest->write($out);
-		$this->legs->write($out);
-		$this->feet->write($out);
+		$this->head->write($out, false);
+		$this->chest->write($out, false);
+		$this->legs->write($out, false);
+		$this->feet->write($out, false);
 	}
 
 	public function handle(PacketHandlerInterface $handler) : bool{

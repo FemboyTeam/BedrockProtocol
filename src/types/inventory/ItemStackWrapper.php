@@ -50,9 +50,9 @@ final class ItemStackWrapper{
 
 	public function getItemStack() : ItemStack{ return $this->itemStack; }
 
-	public static function read(PacketSerializer $in) : self{
+	public static function read(PacketSerializer $in, bool $olderHasStackId = true) : self{
 		$stackId = 0;
-		if($in->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_220_50){
+		if($in->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_220_50 && $olderHasStackId){
 			$stackId = $in->readGenericTypeNetworkId();
 		}
 		$stack = $in->getItemStack(function(PacketSerializer $in) use (&$stackId) : void{
@@ -64,8 +64,8 @@ final class ItemStackWrapper{
 		return new self($stackId, $stack);
 	}
 
-	public function write(PacketSerializer $out) : void{
-		if($out->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_220_50){
+	public function write(PacketSerializer $out, bool $olderHasStackId = true) : void{
+		if($out->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_220_50 && $olderHasStackId){
 			$out->writeGenericTypeNetworkId($this->stackId);
 		}
 		$out->putItemStack($this->itemStack, function(PacketSerializer $out) : void{

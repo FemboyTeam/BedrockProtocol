@@ -70,14 +70,14 @@ class ReleaseItemTransactionData extends TransactionData{
 	protected function decodeData(PacketSerializer $stream) : void{
 		$this->actionType = $stream->getUnsignedVarInt();
 		$this->hotbarSlot = $stream->getVarInt();
-		$this->itemInHand = ItemStackWrapper::read($stream);
+		$this->itemInHand = ItemStackWrapper::read($stream, false);
 		$this->headPosition = $stream->getVector3();
 	}
 
 	protected function encodeData(PacketSerializer $stream) : void{
 		$stream->putUnsignedVarInt($this->actionType);
 		$stream->putVarInt($this->hotbarSlot);
-		$this->itemInHand->write($stream);
+		$this->itemInHand->write($stream, false);
 		$stream->putVector3($this->headPosition);
 	}
 

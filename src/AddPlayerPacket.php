@@ -136,7 +136,7 @@ class AddPlayerPacket extends DataPacket implements ClientboundPacket{
 		$this->pitch = $in->getLFloat();
 		$this->yaw = $in->getLFloat();
 		$this->headYaw = $in->getLFloat();
-		$this->item = ItemStackWrapper::read($in);
+		$this->item = ItemStackWrapper::read($in, false);
 		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_18_30){
 			$this->gameMode = $in->getVarInt();
 		}
@@ -175,7 +175,7 @@ class AddPlayerPacket extends DataPacket implements ClientboundPacket{
 		$out->putLFloat($this->pitch);
 		$out->putLFloat($this->yaw);
 		$out->putLFloat($this->headYaw);
-		$this->item->write($out);
+		$this->item->write($out, false);
 		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_18_30){
 			$out->putVarInt($this->gameMode);
 		}
