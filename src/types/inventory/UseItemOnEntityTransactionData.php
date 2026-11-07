@@ -82,7 +82,7 @@ class UseItemOnEntityTransactionData extends TransactionData{
 		$this->actorRuntimeId = $stream->getActorRuntimeId();
 		$this->actionType = $stream->getUnsignedVarInt();
 		$this->hotbarSlot = $stream->getVarInt();
-		$this->itemInHand = ItemStackWrapper::read($stream, false);
+		$this->itemInHand = ItemStackWrapper::read($stream);
 		$this->playerPosition = $stream->getVector3();
 		$this->clickPosition = $stream->getVector3();
 	}
@@ -91,7 +91,7 @@ class UseItemOnEntityTransactionData extends TransactionData{
 		$stream->putActorRuntimeId($this->actorRuntimeId);
 		$stream->putUnsignedVarInt($this->actionType);
 		$stream->putVarInt($this->hotbarSlot);
-		$this->itemInHand->write($stream, false);
+		$this->itemInHand->write($stream);
 		$stream->putVector3($this->playerPosition);
 		$stream->putVector3($this->clickPosition);
 	}

@@ -33,6 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\types;
 
+use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
 use pocketmine\network\mcpe\protocol\types\inventory\InventoryTransactionChangedSlotsHack;
 use pocketmine\network\mcpe\protocol\types\inventory\UseItemTransactionData;
@@ -45,6 +46,7 @@ final class ItemInteractionData{
 	public function __construct(
 		private int $requestId,
 		private array $requestChangedSlots,
+		private bool $hasItemStackIds,
 		private UseItemTransactionData $transactionData
 	){}
 
@@ -57,6 +59,10 @@ final class ItemInteractionData{
 	 */
 	public function getRequestChangedSlots() : array{
 		return $this->requestChangedSlots;
+	}
+
+	public function getHasItemStackIds() : bool{
+		return $this->hasItemStackIds;
 	}
 
 	public function getTransactionData() : UseItemTransactionData{
@@ -72,9 +78,12 @@ final class ItemInteractionData{
 				$requestChangedSlots[] = InventoryTransactionChangedSlotsHack::read($in);
 			}
 		}
+		if($in->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_220_50){
+			$hasItemStackIds = $in->getBool();
+		}
 		$transactionData = new UseItemTransactionData();
-		$transactionData->decode($in, false);
-		return new ItemInteractionData($requestId, $requestChangedSlots, $transactionData);
+		$transactionData->decode($in, $hasItemStackIds ?? true);
+		return new ItemInteractionData($requestId, $requestChangedSlots, $hasItemStackIds ?? true, $transactionData);
 	}
 
 	public function write(PacketSerializer $out) : void{
@@ -85,6 +94,9 @@ final class ItemInteractionData{
 				$changedSlot->write($out);
 			}
 		}
-		$this->transactionData->encode($out, false);
+		if($out->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_220_50){
+			$out->putBool($this->hasItemStackIds);
+		}
+		$this->transactionData->encode($out, $this->hasItemStackIds);
 	}
 }

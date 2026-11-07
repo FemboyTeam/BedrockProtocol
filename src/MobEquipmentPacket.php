@@ -60,7 +60,7 @@ class MobEquipmentPacket extends DataPacket implements ClientboundPacket, Server
 
 	protected function decodePayload(PacketSerializer $in) : void{
 		$this->actorRuntimeId = $in->getActorRuntimeId();
-		$this->item = ItemStackWrapper::read($in, false);
+		$this->item = ItemStackWrapper::read($in);
 		$this->inventorySlot = $in->getByte();
 		$this->hotbarSlot = $in->getByte();
 		$this->windowId = $in->getByte();
@@ -68,7 +68,7 @@ class MobEquipmentPacket extends DataPacket implements ClientboundPacket, Server
 
 	protected function encodePayload(PacketSerializer $out) : void{
 		$out->putActorRuntimeId($this->actorRuntimeId);
-		$this->item->write($out, false);
+		$this->item->write($out);
 		$out->putByte($this->inventorySlot);
 		$out->putByte($this->hotbarSlot);
 		$out->putByte($this->windowId);

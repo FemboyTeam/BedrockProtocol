@@ -59,7 +59,7 @@ class InventoryContentPacket extends DataPacket implements ClientboundPacket{
 		$this->windowId = $in->getUnsignedVarInt();
 		$count = $in->getUnsignedVarInt();
 		for($i = 0; $i < $count; ++$i){
-			$this->items[] = ItemStackWrapper::read($in);
+			$this->items[] = ItemStackWrapper::read($in, true);
 		}
 	}
 
@@ -67,7 +67,7 @@ class InventoryContentPacket extends DataPacket implements ClientboundPacket{
 		$out->putUnsignedVarInt($this->windowId);
 		$out->putUnsignedVarInt(count($this->items));
 		foreach($this->items as $item){
-			$item->write($out);
+			$item->write($out, true);
 		}
 	}
 

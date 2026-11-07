@@ -81,7 +81,7 @@ class AddItemActorPacket extends DataPacket implements ClientboundPacket{
 	protected function decodePayload(PacketSerializer $in) : void{
 		$this->actorUniqueId = $in->getActorUniqueId();
 		$this->actorRuntimeId = $in->getActorRuntimeId();
-		$this->item = ItemStackWrapper::read($in, false);
+		$this->item = ItemStackWrapper::read($in);
 		$this->position = $in->getVector3();
 		$this->motion = $in->getVector3();
 		$this->metadata = $in->getEntityMetadata();
@@ -91,7 +91,7 @@ class AddItemActorPacket extends DataPacket implements ClientboundPacket{
 	protected function encodePayload(PacketSerializer $out) : void{
 		$out->putActorUniqueId($this->actorUniqueId);
 		$out->putActorRuntimeId($this->actorRuntimeId);
-		$this->item->write($out, false);
+		$this->item->write($out);
 		$out->putVector3($this->position);
 		$out->putVector3Nullable($this->motion);
 		$out->putEntityMetadata($this->metadata);

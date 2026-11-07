@@ -109,8 +109,8 @@ class NetworkInventoryAction{
 		}
 
 		$this->inventorySlot = $packet->getUnsignedVarInt();
-		$this->oldItem = ItemStackWrapper::read($packet, false);
-		$this->newItem = ItemStackWrapper::read($packet, false);
+		$this->oldItem = ItemStackWrapper::read($packet);
+		$this->newItem = ItemStackWrapper::read($packet);
 
 		if($packet->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_220_50){
 			if($hasItemStackIds){
@@ -144,8 +144,8 @@ class NetworkInventoryAction{
 		}
 
 		$packet->putUnsignedVarInt($this->inventorySlot);
-		$this->oldItem->write($packet, false);
-		$this->newItem->write($packet, false);
+		$this->oldItem->write($packet);
+		$this->newItem->write($packet);
 
 		if($packet->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_220_50){
 			if($hasItemStackIds){
