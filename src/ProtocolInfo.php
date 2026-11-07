@@ -87,7 +87,33 @@ final class ProtocolInfo extends PacketIds{
 		self::PROTOCOL_V1_16_200_56,
 		self::PROTOCOL_V1_16_200_52,
 		self::PROTOCOL_V1_16_200_50,
-		self::PROTOCOL_V1_16_100_60
+		self::PROTOCOL_V1_16_100_60,
+		self::PROTOCOL_V1_16_100_59,
+		self::PROTOCOL_V1_16_100_58,
+		self::PROTOCOL_V1_16_100_57,
+		self::PROTOCOL_V1_16_100_56,
+		self::PROTOCOL_V1_16_100_55,
+		self::PROTOCOL_V1_16_100_54,
+		self::PROTOCOL_V1_16_100_53,
+		self::PROTOCOL_V1_16_100_52,
+		self::PROTOCOL_V1_16_100_51,
+		self::PROTOCOL_V1_16_100_50,
+		self::PROTOCOL_V1_16_20_53,
+		self::PROTOCOL_V1_16_0_64,
+		self::PROTOCOL_V1_16_0_63,
+		self::PROTOCOL_V1_16_0_61,
+		self::PROTOCOL_V1_16_0_60,
+		self::PROTOCOL_V1_16_0_57,
+		self::PROTOCOL_V1_16_0_55,
+		self::PROTOCOL_V1_16_0_53,
+		self::PROTOCOL_V1_16_0_51,
+		self::PROTOCOL_V1_15_0_56,
+		self::PROTOCOL_V1_15_0_55,
+		self::PROTOCOL_V1_15_0_54,
+		self::PROTOCOL_V1_15_0_53,
+		self::PROTOCOL_V1_15_0_51,
+		self::PROTOCOL_V1_15_0_8,
+		self::PROTOCOL_V1_14_0_1
 	];
 
 	// 1.20
@@ -134,9 +160,39 @@ final class ProtocolInfo extends PacketIds{
 	public const PROTOCOL_V1_16_200_52 = 421;
 	public const PROTOCOL_V1_16_200_50 = 420;
 	public const PROTOCOL_V1_16_100_60 = 419;
+	public const PROTOCOL_V1_16_100_59 = 418;
+	public const PROTOCOL_V1_16_100_58 = 417;
+	public const PROTOCOL_V1_16_100_57 = 416;
+	public const PROTOCOL_V1_16_100_56 = 415;
+	public const PROTOCOL_V1_16_100_55 = 414;
+	public const PROTOCOL_V1_16_100_54 = 413;
+	public const PROTOCOL_V1_16_100_53 = 412;
+	public const PROTOCOL_V1_16_100_52 = 411;
+	public const PROTOCOL_V1_16_100_51 = 410;
+	public const PROTOCOL_V1_16_100_50 = 409;
+	public const PROTOCOL_V1_16_20_53 = 408;
+	public const PROTOCOL_V1_16_0_64 = 407;
+	public const PROTOCOL_V1_16_0_63 = 406;
+	public const PROTOCOL_V1_16_0_61 = 405;
+	public const PROTOCOL_V1_16_0_60 = 404;
+	public const PROTOCOL_V1_16_0_57 = 403;
+	public const PROTOCOL_V1_16_0_55 = 402;
+	public const PROTOCOL_V1_16_0_53 = 401;
+	public const PROTOCOL_V1_16_0_51 = 400;
+
+	// 1.15
+	public const PROTOCOL_V1_15_0_56 = 396;
+	public const PROTOCOL_V1_15_0_55 = 395;
+	public const PROTOCOL_V1_15_0_54 = 394;
+	public const PROTOCOL_V1_15_0_53 = 393;
+	public const PROTOCOL_V1_15_0_51 = 392;
+	public const PROTOCOL_V1_15_0_8 = 391;
+
+	// 1.14
+	public const PROTOCOL_V1_14_0_1 = 390;
 
 	/** Current Minecraft PE version reported by the server. This is usually the earliest currently supported version. */
-	public const MINECRAFT_VERSION = '1.16.100.60 - 1.20.50';
+	public const MINECRAFT_VERSION = '1.14.0.1 - 1.20.50';
 	/** Version number sent to clients in ping responses. */
 	public const MINECRAFT_VERSION_NETWORK = '1.20.50';
 }

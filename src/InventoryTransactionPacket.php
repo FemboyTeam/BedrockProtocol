@@ -75,17 +75,19 @@ class InventoryTransactionPacket extends DataPacket implements ClientboundPacket
 	}
 
 	protected function decodePayload(PacketSerializer $in) : void{
-		$this->requestId = $in->readGenericTypeNetworkId();
-		$this->requestChangedSlots = [];
-		if($this->requestId !== 0){
-			for($i = 0, $len = $in->getUnsignedVarInt(); $i < $len; ++$i){
-				$this->requestChangedSlots[] = InventoryTransactionChangedSlotsHack::read($in);
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_15_0_51){
+			$this->requestId = $in->readGenericTypeNetworkId();
+			$this->requestChangedSlots = [];
+			if($this->requestId !== 0){
+				for($i = 0, $len = $in->getUnsignedVarInt(); $i < $len; ++$i){
+					$this->requestChangedSlots[] = InventoryTransactionChangedSlotsHack::read($in);
+				}
 			}
 		}
 
 		$transactionType = $in->getUnsignedVarInt();
 
-		if($in->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_220_50){
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_15_0_53 && $in->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_220_50){
 			$this->hasItemStackIds = $in->getBool();
 		}
 
@@ -102,17 +104,19 @@ class InventoryTransactionPacket extends DataPacket implements ClientboundPacket
 	}
 
 	protected function encodePayload(PacketSerializer $out) : void{
-		$out->writeGenericTypeNetworkId($this->requestId);
-		if($this->requestId !== 0){
-			$out->putUnsignedVarInt(count($this->requestChangedSlots));
-			foreach($this->requestChangedSlots as $changedSlots){
-				$changedSlots->write($out);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_15_0_51){
+			$out->writeGenericTypeNetworkId($this->requestId);
+			if($this->requestId !== 0){
+				$out->putUnsignedVarInt(count($this->requestChangedSlots));
+				foreach($this->requestChangedSlots as $changedSlots){
+					$changedSlots->write($out);
+				}
 			}
 		}
 
 		$out->putUnsignedVarInt($this->trData->getTypeId());
 
-		if($out->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_220_50){
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_15_0_53 && $out->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_220_50){
 			$out->putBool($this->hasItemStackIds);
 		}
 

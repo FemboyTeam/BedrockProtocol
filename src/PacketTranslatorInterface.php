@@ -107,6 +107,8 @@ interface PacketTranslatorInterface{
 
 	public function translatePlayerAction(PlayerActionPacket $packet) : ?PlayerActionPacket;
 
+	public function translateActorFall(ActorFallPacket $packet) : ?ActorFallPacket;
+
 	public function translateHurtArmor(HurtArmorPacket $packet) : ?HurtArmorPacket;
 
 	public function translateSetActorData(SetActorDataPacket $packet) : ?SetActorDataPacket;
@@ -294,6 +296,8 @@ interface PacketTranslatorInterface{
 	public function translateStructureTemplateDataRequest(StructureTemplateDataRequestPacket $packet) : ?StructureTemplateDataRequestPacket;
 
 	public function translateStructureTemplateDataResponse(StructureTemplateDataResponsePacket $packet) : ?StructureTemplateDataResponsePacket;
+
+	public function translateUpdateBlockProperties(UpdateBlockPropertiesPacket $packet) : ?UpdateBlockPropertiesPacket;
 
 	public function translateClientCacheBlobStatus(ClientCacheBlobStatusPacket $packet) : ?ClientCacheBlobStatusPacket;
 

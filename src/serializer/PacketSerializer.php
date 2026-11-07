@@ -158,8 +158,10 @@ class PacketSerializer extends BinaryStream{
 			$skinImage = $this->getSkinImage();
 			$animationType = $this->getLInt();
 			$animationFrames = $this->getLFloat();
-			$expressionType = $this->getLInt();
-			$animations[] = new SkinAnimation($skinImage, $animationType, $animationFrames, $expressionType);
+			if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_100_60){
+				$expressionType = $this->getLInt();
+			}
+			$animations[] = new SkinAnimation($skinImage, $animationType, $animationFrames, $expressionType ?? 0);
 		}
 		$capeData = $this->getSkinImage();
 		$geometryData = $this->getString();
@@ -174,40 +176,42 @@ class PacketSerializer extends BinaryStream{
 		}
 		$capeId = $this->getString();
 		$fullSkinId = $this->getString();
-		$armSize = $this->getString();
-		$skinColor = $this->getString();
-		$personaPieceCount = $this->getLInt();
-		$personaPieces = [];
-		for($i = 0; $i < $personaPieceCount; ++$i){
-			$pieceId = $this->getString();
-			$pieceType = $this->getString();
-			$packId = $this->getString();
-			$isDefaultPiece = $this->getBool();
-			$productId = $this->getString();
-			$personaPieces[] = new PersonaSkinPiece($pieceId, $pieceType, $packId, $isDefaultPiece, $productId);
-		}
-		$pieceTintColorCount = $this->getLInt();
-		$pieceTintColors = [];
-		for($i = 0; $i < $pieceTintColorCount; ++$i){
-			$pieceType = $this->getString();
-			$colorCount = $this->getLInt();
-			$colors = [];
-			for($j = 0; $j < $colorCount; ++$j){
-				$colors[] = $this->getString();
+		if($this->getProtocol() === ProtocolInfo::PROTOCOL_V1_14_0_1 || $this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_0_53){
+			$armSize = $this->getString();
+			$skinColor = $this->getString();
+			$personaPieceCount = $this->getLInt();
+			$personaPieces = [];
+			for($i = 0; $i < $personaPieceCount; ++$i){
+				$pieceId = $this->getString();
+				$pieceType = $this->getString();
+				$packId = $this->getString();
+				$isDefaultPiece = $this->getBool();
+				$productId = $this->getString();
+				$personaPieces[] = new PersonaSkinPiece($pieceId, $pieceType, $packId, $isDefaultPiece, $productId);
 			}
-			$pieceTintColors[] = new PersonaPieceTintColor(
-				$pieceType,
-				$colors
-			);
-		}
+			$pieceTintColorCount = $this->getLInt();
+			$pieceTintColors = [];
+			for($i = 0; $i < $pieceTintColorCount; ++$i){
+				$pieceType = $this->getString();
+				$colorCount = $this->getLInt();
+				$colors = [];
+				for($j = 0; $j < $colorCount; ++$j){
+					$colors[] = $this->getString();
+				}
+				$pieceTintColors[] = new PersonaPieceTintColor(
+					$pieceType,
+					$colors
+				);
+			}
 
-		if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
-			$premium = $this->getBool();
-			$persona = $this->getBool();
-			$capeOnClassic = $this->getBool();
-			$isPrimaryUser = $this->getBool();
-			if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_63){
-				$override = $this->getBool();
+			if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
+				$premium = $this->getBool();
+				$persona = $this->getBool();
+				$capeOnClassic = $this->getBool();
+				$isPrimaryUser = $this->getBool();
+				if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_63){
+					$override = $this->getBool();
+				}
 			}
 		}
 
@@ -223,10 +227,10 @@ class PacketSerializer extends BinaryStream{
 			$animationData,
 			$capeId,
 			$fullSkinId,
-			$armSize,
-			$skinColor,
-			$personaPieces,
-			$pieceTintColors,
+			$armSize ?? SkinData::ARM_SIZE_WIDE,
+			$skinColor ?? "",
+			$personaPieces ?? [],
+			$pieceTintColors ?? [],
 			true,
 			$premium ?? false,
 			$persona ?? false,
@@ -248,7 +252,9 @@ class PacketSerializer extends BinaryStream{
 			$this->putSkinImage($animation->getImage());
 			$this->putLInt($animation->getType());
 			$this->putLFloat($animation->getFrames());
-			$this->putLInt($animation->getExpressionType());
+			if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_100_60){
+				$this->putLInt($animation->getExpressionType());
+			}
 		}
 		$this->putSkinImage($skin->getCapeImage());
 		$this->putString($skin->getGeometryData());
@@ -263,31 +269,33 @@ class PacketSerializer extends BinaryStream{
 		}
 		$this->putString($skin->getCapeId());
 		$this->putString($skin->getFullSkinId());
-		$this->putString($skin->getArmSize());
-		$this->putString($skin->getSkinColor());
-		$this->putLInt(count($skin->getPersonaPieces()));
-		foreach($skin->getPersonaPieces() as $piece){
-			$this->putString($piece->getPieceId());
-			$this->putString($piece->getPieceType());
-			$this->putString($piece->getPackId());
-			$this->putBool($piece->isDefaultPiece());
-			$this->putString($piece->getProductId());
-		}
-		$this->putLInt(count($skin->getPieceTintColors()));
-		foreach($skin->getPieceTintColors() as $tint){
-			$this->putString($tint->getPieceType());
-			$this->putLInt(count($tint->getColors()));
-			foreach($tint->getColors() as $color){
-				$this->putString($color);
+		if($this->getProtocol() === ProtocolInfo::PROTOCOL_V1_14_0_1 || $this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_0_53){
+			$this->putString($skin->getArmSize());
+			$this->putString($skin->getSkinColor());
+			$this->putLInt(count($skin->getPersonaPieces()));
+			foreach($skin->getPersonaPieces() as $piece){
+				$this->putString($piece->getPieceId());
+				$this->putString($piece->getPieceType());
+				$this->putString($piece->getPackId());
+				$this->putBool($piece->isDefaultPiece());
+				$this->putString($piece->getProductId());
 			}
-		}
-		if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
-			$this->putBool($skin->isPremium());
-			$this->putBool($skin->isPersona());
-			$this->putBool($skin->isPersonaCapeOnClassic());
-			$this->putBool($skin->isPrimaryUser());
-			if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_63){
-				$this->putBool($skin->isOverride());
+			$this->putLInt(count($skin->getPieceTintColors()));
+			foreach($skin->getPieceTintColors() as $tint){
+				$this->putString($tint->getPieceType());
+				$this->putLInt(count($tint->getColors()));
+				foreach($tint->getColors() as $color){
+					$this->putString($color);
+				}
+			}
+			if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
+				$this->putBool($skin->isPremium());
+				$this->putBool($skin->isPersona());
+				$this->putBool($skin->isPersonaCapeOnClassic());
+				$this->putBool($skin->isPrimaryUser());
+				if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_63){
+					$this->putBool($skin->isOverride());
+				}
 			}
 		}
 	}
@@ -711,8 +719,10 @@ class PacketSerializer extends BinaryStream{
 		$toActorUniqueId = $this->getActorUniqueId();
 		$type = $this->getByte();
 		$immediate = $this->getBool();
-		$causedByRider = $this->getBool();
-		return new EntityLink($fromActorUniqueId, $toActorUniqueId, $type, $immediate, $causedByRider);
+		if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_0_53){
+			$causedByRider = $this->getBool();
+		}
+		return new EntityLink($fromActorUniqueId, $toActorUniqueId, $type, $immediate, $causedByRider ?? false);
 	}
 
 	public function putEntityLink(EntityLink $link) : void{
@@ -720,7 +730,9 @@ class PacketSerializer extends BinaryStream{
 		$this->putActorUniqueId($link->toActorUniqueId);
 		$this->putByte($link->type);
 		$this->putBool($link->immediate);
-		$this->putBool($link->causedByRider);
+		if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_0_53){
+			$this->putBool($link->causedByRider);
+		}
 	}
 
 	/**

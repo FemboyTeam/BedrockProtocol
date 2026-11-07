@@ -78,4 +78,6 @@ final class PlayerAction{
 
 	//Backwards compatibility (blame @dktapps)
 	public const CRACK_BREAK = 18;
+
+	public const DIMENSION_CHANGE_REQUEST = 100; //sent when dying in different dimension
 }

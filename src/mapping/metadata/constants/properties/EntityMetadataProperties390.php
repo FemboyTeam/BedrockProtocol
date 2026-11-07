@@ -33,7 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\mapping\metadata\constants\properties;
 
-final class EntityMetadataProperties419{
+final class EntityMetadataProperties390{
 
 	private function __construct(){
 		//NOOP

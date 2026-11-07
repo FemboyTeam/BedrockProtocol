@@ -31,26 +31,23 @@
 
 declare(strict_types=1);
 
-namespace pocketmine\network\mcpe\protocol\mapping\stackrequest\constants;
+namespace pocketmine\network\mcpe\protocol\mapping\text\constants;
 
-final class ItemStackRequestActionType419{
+final class TextPacketType401{
 
 	private function __construct(){
 		//NOOP
 	}
 
-	public const TAKE = 0;
-	public const PLACE = 1;
-	public const SWAP = 2;
-	public const DROP = 3;
-	public const DESTROY = 4;
-	public const CRAFTING_CONSUME_INPUT = 5;
-	public const CRAFTING_CREATE_SPECIFIC_RESULT = 6;
-	public const LAB_TABLE_COMBINE = 7;
-	public const BEACON_PAYMENT = 8;
-	public const CRAFTING_RECIPE = 9;
-	public const CRAFTING_RECIPE_AUTO = 10; //recipe book?
-	public const CREATIVE_CREATE = 11;
-	public const CRAFTING_NON_IMPLEMENTED_DEPRECATED_ASK_TY_LAING = 12; //anvils aren't fully implemented yet
-	public const CRAFTING_RESULTS_DEPRECATED_ASK_TY_LAING = 13; //no idea what this is for
+	public const TYPE_RAW = 0;
+	public const TYPE_CHAT = 1;
+	public const TYPE_TRANSLATION = 2;
+	public const TYPE_POPUP = 3;
+	public const TYPE_JUKEBOX_POPUP = 4;
+	public const TYPE_TIP = 5;
+	public const TYPE_SYSTEM = 6;
+	public const TYPE_WHISPER = 7;
+	public const TYPE_ANNOUNCEMENT = 8;
+	public const TYPE_JSON_WHISPER = 9;
+	public const TYPE_JSON = 10;
 }

@@ -34,38 +34,60 @@ declare(strict_types=1);
 namespace pocketmine\network\mcpe\protocol;
 
 use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
-use pocketmine\network\mcpe\protocol\types\inventory\CreativeContentEntry;
+use pocketmine\network\mcpe\protocol\types\inventory\CreativeGroupEntry;
+use pocketmine\network\mcpe\protocol\types\inventory\CreativeItemEntry;
 use function count;
 
 class CreativeContentPacket extends DataPacket implements ClientboundPacket{
 	public const NETWORK_ID = ProtocolInfo::CREATIVE_CONTENT_PACKET;
 
-	/** @var CreativeContentEntry[] */
-	private array $entries;
+	/** @var CreativeGroupEntry[] */
+	private array $groups;
+	/** @var CreativeItemEntry[] */
+	private array $items;
 
 	/**
 	 * @generate-create-func
-	 * @param CreativeContentEntry[] $entries
+	 * @param CreativeGroupEntry[] $groups
+	 * @param CreativeItemEntry[] $items
 	 */
-	public static function create(array $entries) : self{
+	public static function create(array $groups, array $items) : self{
 		$result = new self;
-		$result->entries = $entries;
+		$result->groups = $groups;
+		$result->items = $items;
 		return $result;
 	}
 
-	/** @return CreativeContentEntry[] */
-	public function getEntries() : array{ return $this->entries; }
+	/** @return CreativeGroupEntry[] */
+	public function getGroups() : array{ return $this->groups; }
+
+	/** @return CreativeItemEntry[] */
+	public function getItems() : array{ return $this->items; }
 
 	protected function decodePayload(PacketSerializer $in) : void{
-		$this->entries = [];
+		$this->groups = [];
+		if($in->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_0_63){
+			for($i = 0, $len = $in->getUnsignedVarInt(); $i < $len; ++$i){
+				$this->groups[] = CreativeGroupEntry::read($in);
+			}
+		}
+
+		$this->items = [];
 		for($i = 0, $len = $in->getUnsignedVarInt(); $i < $len; ++$i){
-			$this->entries[] = CreativeContentEntry::read($in);
+			$this->items[] = CreativeItemEntry::read($in);
 		}
 	}
 
 	protected function encodePayload(PacketSerializer $out) : void{
-		$out->putUnsignedVarInt(count($this->entries));
-		foreach($this->entries as $entry){
+		if($out->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_0_63){
+			$out->putUnsignedVarInt(count($this->groups));
+			foreach($this->groups as $entry){
+				$entry->write($out);
+			}
+		}
+
+		$out->putUnsignedVarInt(count($this->items));
+		foreach($this->items as $entry){
 			$entry->write($out);
 		}
 	}

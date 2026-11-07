@@ -44,7 +44,7 @@ final class ClientData{
 	 */
 	public array $AnimatedImageData;
 
-	/** @required */
+	/** === ProtocolInfo::PROTOCOL_V1_14_0_1 || >= ProtocolInfo::PROTOCOL_V1_16_0_53 */
 	public string $ArmSize;
 
 	/** @required */
@@ -100,7 +100,7 @@ final class ClientData{
 
 	/**
 	 * @var ClientDataPersonaSkinPiece[]
-	 * @required
+	 * === ProtocolInfo::PROTOCOL_V1_14_0_1 || >= ProtocolInfo::PROTOCOL_V1_16_0_53
 	 */
 	public array $PersonaPieces;
 
@@ -109,7 +109,7 @@ final class ClientData{
 
 	/**
 	 * @var ClientDataPersonaPieceTintColor[]
-	 * @required
+	 * === ProtocolInfo::PROTOCOL_V1_14_0_1 || >= ProtocolInfo::PROTOCOL_V1_16_0_53
 	 */
 	public array $PieceTintColors;
 
@@ -136,7 +136,7 @@ final class ClientData{
 	/** @required */
 	public string $SkinAnimationData;
 
-	/** @required */
+	/** === ProtocolInfo::PROTOCOL_V1_14_0_1 || >= ProtocolInfo::PROTOCOL_V1_16_0_53 */
 	public string $SkinColor;
 
 	/** @required */

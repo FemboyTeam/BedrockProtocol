@@ -33,6 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\types;
 
+use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
 
 final class SpawnSettings{
@@ -61,16 +62,20 @@ final class SpawnSettings{
 	}
 
 	public static function read(PacketSerializer $in) : self{
-		$biomeType = $in->getLShort();
-		$biomeName = $in->getString();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_0_51){
+			$biomeType = $in->getLShort();
+			$biomeName = $in->getString();
+		}
 		$dimension = $in->getVarInt();
 
-		return new self($biomeType, $biomeName, $dimension);
+		return new self($biomeType ?? self::BIOME_TYPE_DEFAULT, $biomeName ?? "", $dimension);
 	}
 
 	public function write(PacketSerializer $out) : void{
-		$out->putLShort($this->biomeType);
-		$out->putString($this->biomeName);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_0_51){
+			$out->putLShort($this->biomeType);
+			$out->putString($this->biomeName);
+		}
 		$out->putVarInt($this->dimension);
 	}
 }

@@ -45,6 +45,7 @@ class SetSpawnPositionPacket extends DataPacket implements ClientboundPacket{
 
 	public int $spawnType;
 	public BlockPosition $spawnPosition;
+	public bool $spawnForced;
 	public int $dimension;
 	/**
 	 * Position of the respawn anchor or bed that this spawn position was set by.
@@ -56,35 +57,44 @@ class SetSpawnPositionPacket extends DataPacket implements ClientboundPacket{
 	/**
 	 * @generate-create-func
 	 */
-	private static function create(int $spawnType, BlockPosition $spawnPosition, int $dimension, BlockPosition $causingBlockPosition) : self{
+	private static function create(int $spawnType, BlockPosition $spawnPosition, bool $spawnForced, int $dimension, BlockPosition $causingBlockPosition) : self{
 		$result = new self;
 		$result->spawnType = $spawnType;
 		$result->spawnPosition = $spawnPosition;
+		$result->spawnForced = $spawnForced;
 		$result->dimension = $dimension;
 		$result->causingBlockPosition = $causingBlockPosition;
 		return $result;
 	}
 
-	public static function playerSpawn(BlockPosition $spawnPosition, int $dimension, BlockPosition $causingBlockPosition) : self{
-		return self::create(self::TYPE_PLAYER_SPAWN, $spawnPosition, $dimension, $causingBlockPosition);
+	public static function playerSpawn(BlockPosition $spawnPosition, bool $spawnForced, int $dimension, BlockPosition $causingBlockPosition) : self{
+		return self::create(self::TYPE_PLAYER_SPAWN, $spawnPosition, $spawnForced, $dimension, $causingBlockPosition);
 	}
 
-	public static function worldSpawn(BlockPosition $spawnPosition, int $dimension) : self{
-		return self::create(self::TYPE_WORLD_SPAWN, $spawnPosition, $dimension, new BlockPosition(Limits::INT32_MIN, Limits::INT32_MIN, Limits::INT32_MIN));
+	public static function worldSpawn(BlockPosition $spawnPosition, bool $spawnForced, int $dimension) : self{
+		return self::create(self::TYPE_WORLD_SPAWN, $spawnPosition, $spawnForced, $dimension, new BlockPosition(Limits::INT32_MIN, Limits::INT32_MIN, Limits::INT32_MIN));
 	}
 
 	protected function decodePayload(PacketSerializer $in) : void{
 		$this->spawnType = $in->getVarInt();
 		$this->spawnPosition = $in->getBlockPosition();
-		$this->dimension = $in->getVarInt();
-		$this->causingBlockPosition = $in->getBlockPosition();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_0_53){
+			$this->dimension = $in->getVarInt();
+			$this->causingBlockPosition = $in->getBlockPosition();
+		}else{
+			$this->spawnForced = $in->getBool();
+		}
 	}
 
 	protected function encodePayload(PacketSerializer $out) : void{
 		$out->putVarInt($this->spawnType);
 		$out->putBlockPosition($this->spawnPosition);
-		$out->putVarInt($this->dimension);
-		$out->putBlockPosition($this->causingBlockPosition);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_0_53){
+			$out->putVarInt($this->dimension);
+			$out->putBlockPosition($this->causingBlockPosition);
+		}else{
+			$out->putBool($this->spawnForced);
+		}
 	}
 
 	public function handle(PacketHandlerInterface $handler) : bool{

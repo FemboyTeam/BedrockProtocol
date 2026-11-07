@@ -114,7 +114,9 @@ class MovePlayerPacket extends DataPacket implements ClientboundPacket, Serverbo
 			$this->teleportCause = $in->getLInt();
 			$this->teleportItem = $in->getLInt();
 		}
-		$this->tick = $in->getUnsignedVarLong();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_100_60){
+			$this->tick = $in->getUnsignedVarLong();
+		}
 	}
 
 	protected function encodePayload(PacketSerializer $out) : void{
@@ -130,7 +132,9 @@ class MovePlayerPacket extends DataPacket implements ClientboundPacket, Serverbo
 			$out->putLInt($this->teleportCause);
 			$out->putLInt($this->teleportItem);
 		}
-		$out->putUnsignedVarLong($this->tick);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_100_60){
+			$out->putUnsignedVarLong($this->tick);
+		}
 	}
 
 	public function handle(PacketHandlerInterface $handler) : bool{

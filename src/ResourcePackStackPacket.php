@@ -46,6 +46,7 @@ class ResourcePackStackPacket extends DataPacket implements ClientboundPacket{
 	/** @var ResourcePackStackEntry[] */
 	public array $behaviorPackStack = [];
 	public bool $mustAccept = false;
+	public bool $isExperimental = false;
 	public string $baseGameVersion = ProtocolInfo::MINECRAFT_VERSION_NETWORK;
 	public Experiments $experiments;
 
@@ -54,11 +55,12 @@ class ResourcePackStackPacket extends DataPacket implements ClientboundPacket{
 	 * @param ResourcePackStackEntry[] $resourcePackStack
 	 * @param ResourcePackStackEntry[] $behaviorPackStack
 	 */
-	public static function create(array $resourcePackStack, array $behaviorPackStack, bool $mustAccept, string $baseGameVersion, Experiments $experiments) : self{
+	public static function create(array $resourcePackStack, array $behaviorPackStack, bool $mustAccept, bool $isExperimental, string $baseGameVersion, Experiments $experiments) : self{
 		$result = new self;
 		$result->resourcePackStack = $resourcePackStack;
 		$result->behaviorPackStack = $behaviorPackStack;
 		$result->mustAccept = $mustAccept;
+		$result->isExperimental = $isExperimental;
 		$result->baseGameVersion = $baseGameVersion;
 		$result->experiments = $experiments;
 		return $result;
@@ -76,8 +78,14 @@ class ResourcePackStackPacket extends DataPacket implements ClientboundPacket{
 			$this->resourcePackStack[] = ResourcePackStackEntry::read($in);
 		}
 
+		if($in->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_100_60){
+			$this->isExperimental = $in->getBool();
+		}
+
 		$this->baseGameVersion = $in->getString();
-		$this->experiments = Experiments::read($in);
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_100_60){
+			$this->experiments = Experiments::read($in);
+		}
 	}
 
 	protected function encodePayload(PacketSerializer $out) : void{
@@ -93,8 +101,14 @@ class ResourcePackStackPacket extends DataPacket implements ClientboundPacket{
 			$entry->write($out);
 		}
 
+		if($out->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_100_60){
+			$out->putBool($this->isExperimental);
+		}
+
 		$out->putString($this->baseGameVersion);
-		$this->experiments->write($out);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_100_60){
+			$this->experiments->write($out);
+		}
 	}
 
 	public function handle(PacketHandlerInterface $handler) : bool{

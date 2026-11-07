@@ -181,6 +181,10 @@ trait PacketTranslatorDefaultImplTrait{
 		return $packet;
 	}
 
+	public function translateActorFall(ActorFallPacket $packet) : ?ActorFallPacket{
+		return $packet;
+	}
+
 	public function translateHurtArmor(HurtArmorPacket $packet) : ?HurtArmorPacket{
 		return $packet;
 	}
@@ -554,6 +558,10 @@ trait PacketTranslatorDefaultImplTrait{
 	}
 
 	public function translateStructureTemplateDataResponse(StructureTemplateDataResponsePacket $packet) : ?StructureTemplateDataResponsePacket{
+		return $packet;
+	}
+
+	public function translateUpdateBlockProperties(UpdateBlockPropertiesPacket $packet) : ?UpdateBlockPropertiesPacket{
 		return $packet;
 	}
 

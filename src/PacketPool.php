@@ -88,6 +88,7 @@ class PacketPool{
 		$this->registerPacket(new BlockPickRequestPacket());
 		$this->registerPacket(new ActorPickRequestPacket());
 		$this->registerPacket(new PlayerActionPacket());
+		$this->registerPacket(new ActorFallPacket());
 		$this->registerPacket(new HurtArmorPacket());
 		$this->registerPacket(new SetActorDataPacket());
 		$this->registerPacket(new SetActorMotionPacket());
@@ -182,6 +183,7 @@ class PacketPool{
 		$this->registerPacket(new MapCreateLockedCopyPacket());
 		$this->registerPacket(new StructureTemplateDataRequestPacket());
 		$this->registerPacket(new StructureTemplateDataResponsePacket());
+		$this->registerPacket(new UpdateBlockPropertiesPacket());
 		$this->registerPacket(new ClientCacheBlobStatusPacket());
 		$this->registerPacket(new ClientCacheMissResponsePacket());
 		$this->registerPacket(new EducationSettingsPacket());

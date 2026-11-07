@@ -34,7 +34,8 @@ declare(strict_types=1);
 namespace pocketmine\network\mcpe\protocol\mapping\text;
 
 use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
-use pocketmine\network\mcpe\protocol\mapping\text\constants\TextPacketType419;
+use pocketmine\network\mcpe\protocol\mapping\text\constants\TextPacketType390;
+use pocketmine\network\mcpe\protocol\mapping\text\constants\TextPacketType401;
 use pocketmine\network\mcpe\protocol\mapping\text\constants\TextPacketType554;
 use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\network\mcpe\protocol\types\TextPacketType;
@@ -47,7 +48,8 @@ class TextPacketTypeMapper extends ProtocolMappingTable{
 
 	public const FALLBACK_PROTOCOLS = [
 		ProtocolInfo::PROTOCOL_V1_19_30 => TextPacketType554::class,
-		ProtocolInfo::PROTOCOL_V1_16_100_60 => TextPacketType419::class
+		ProtocolInfo::PROTOCOL_V1_16_0_53 => TextPacketType401::class,
+		ProtocolInfo::PROTOCOL_V1_14_0_1 => TextPacketType390::class
 	];
 
 	public const CORE_CONSTANTS = TextPacketType::class;

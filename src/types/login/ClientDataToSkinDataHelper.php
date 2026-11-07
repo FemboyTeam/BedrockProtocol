@@ -70,7 +70,7 @@ final class ClientDataToSkinDataHelper{
 				),
 				$animation->Type,
 				$animation->Frames,
-				$animation->AnimationExpression
+				$protocol >= ProtocolInfo::PROTOCOL_V1_16_100_60 ? $animation->AnimationExpression : 0
 			);
 		}
 		return new SkinData(
@@ -85,14 +85,14 @@ final class ClientDataToSkinDataHelper{
 			self::safeB64Decode($clientData->SkinAnimationData, "SkinAnimationData"),
 			$clientData->CapeId,
 			null,
-			$clientData->ArmSize,
-			$clientData->SkinColor,
-			array_map(function(ClientDataPersonaSkinPiece $piece) : PersonaSkinPiece{
+			($protocol === ProtocolInfo::PROTOCOL_V1_14_0_1 || $protocol >= ProtocolInfo::PROTOCOL_V1_16_0_53) ? $clientData->ArmSize : SkinData::ARM_SIZE_WIDE,
+			($protocol === ProtocolInfo::PROTOCOL_V1_14_0_1 || $protocol >= ProtocolInfo::PROTOCOL_V1_16_0_53) ? $clientData->SkinColor : "",
+			($protocol === ProtocolInfo::PROTOCOL_V1_14_0_1 || $protocol >= ProtocolInfo::PROTOCOL_V1_16_0_53) ? array_map(function(ClientDataPersonaSkinPiece $piece) : PersonaSkinPiece{
 				return new PersonaSkinPiece($piece->PieceId, $piece->PieceType, $piece->PackId, $piece->IsDefault, $piece->ProductId);
-			}, $clientData->PersonaPieces),
-			array_map(function(ClientDataPersonaPieceTintColor $tint) : PersonaPieceTintColor{
+			}, $clientData->PersonaPieces) : [],
+			($protocol === ProtocolInfo::PROTOCOL_V1_14_0_1 || $protocol >= ProtocolInfo::PROTOCOL_V1_16_0_53) ? array_map(function(ClientDataPersonaPieceTintColor $tint) : PersonaPieceTintColor{
 				return new PersonaPieceTintColor($tint->PieceType, $tint->Colors);
-			}, $clientData->PieceTintColors),
+			}, $clientData->PieceTintColors) : [],
 			true,
 			$clientData->PremiumSkin,
 			$clientData->PersonaSkin,

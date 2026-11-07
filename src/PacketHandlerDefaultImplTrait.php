@@ -181,6 +181,10 @@ trait PacketHandlerDefaultImplTrait{
 		return false;
 	}
 
+	public function handleActorFall(ActorFallPacket $packet) : bool{
+		return false;
+	}
+
 	public function handleHurtArmor(HurtArmorPacket $packet) : bool{
 		return false;
 	}
@@ -554,6 +558,10 @@ trait PacketHandlerDefaultImplTrait{
 	}
 
 	public function handleStructureTemplateDataResponse(StructureTemplateDataResponsePacket $packet) : bool{
+		return false;
+	}
+
+	public function handleUpdateBlockProperties(UpdateBlockPropertiesPacket $packet) : bool{
 		return false;
 	}
 

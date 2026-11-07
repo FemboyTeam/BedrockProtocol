@@ -241,30 +241,32 @@ class PlayerAuthInputPacket extends DataPacket implements ServerboundPacket{
 		if($this->playMode === PlayMode::VR){
 			$this->vrGazeDirection = $in->getVector3();
 		}
-		$this->tick = $in->getUnsignedVarLong();
-		$this->delta = $in->getVector3();
-		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_210_58){
-			if($this->hasFlag(PlayerAuthInputFlags::PERFORM_ITEM_INTERACTION)){
-				$this->itemInteractionData = ItemInteractionData::read($in);
-			}
-			if($this->hasFlag(PlayerAuthInputFlags::PERFORM_ITEM_STACK_REQUEST)){
-				$this->itemStackRequest = ItemStackRequest::read($in);
-			}
-			if($this->hasFlag(PlayerAuthInputFlags::PERFORM_BLOCK_ACTIONS)){
-				$this->blockActions = [];
-				$max = $in->getVarInt();
-				for($i = 0; $i < $max; ++$i){
-					$actionType = $in->getVarInt();
-					$this->blockActions[] = match(true){
-						PlayerBlockActionWithBlockInfo::isValidActionType($actionType) => PlayerBlockActionWithBlockInfo::read($in, $actionType),
-						$actionType === PlayerAction::STOP_BREAK => new PlayerBlockActionStopBreak(),
-						default => throw new PacketDecodeException("Unexpected block action type $actionType")
-					};
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_100_60){
+			$this->tick = $in->getUnsignedVarLong();
+			$this->delta = $in->getVector3();
+			if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_210_58){
+				if($this->hasFlag(PlayerAuthInputFlags::PERFORM_ITEM_INTERACTION)){
+					$this->itemInteractionData = ItemInteractionData::read($in);
 				}
-			}
-			if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_70){
-				$this->analogMoveVecX = $in->getLFloat();
-				$this->analogMoveVecZ = $in->getLFloat();
+				if($this->hasFlag(PlayerAuthInputFlags::PERFORM_ITEM_STACK_REQUEST)){
+					$this->itemStackRequest = ItemStackRequest::read($in);
+				}
+				if($this->hasFlag(PlayerAuthInputFlags::PERFORM_BLOCK_ACTIONS)){
+					$this->blockActions = [];
+					$max = $in->getVarInt();
+					for($i = 0; $i < $max; ++$i){
+						$actionType = $in->getVarInt();
+						$this->blockActions[] = match(true){
+							PlayerBlockActionWithBlockInfo::isValidActionType($actionType) => PlayerBlockActionWithBlockInfo::read($in, $actionType),
+							$actionType === PlayerAction::STOP_BREAK => new PlayerBlockActionStopBreak(),
+							default => throw new PacketDecodeException("Unexpected block action type $actionType")
+						};
+					}
+				}
+				if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_70){
+					$this->analogMoveVecX = $in->getLFloat();
+					$this->analogMoveVecZ = $in->getLFloat();
+				}
 			}
 		}
 	}
@@ -286,25 +288,27 @@ class PlayerAuthInputPacket extends DataPacket implements ServerboundPacket{
 			assert($this->vrGazeDirection !== null);
 			$out->putVector3($this->vrGazeDirection);
 		}
-		$out->putUnsignedVarLong($this->tick);
-		$out->putVector3($this->delta);
-		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_210_58){
-			if($this->itemInteractionData !== null){
-				$this->itemInteractionData->write($out);
-			}
-			if($this->itemStackRequest !== null){
-				$this->itemStackRequest->write($out);
-			}
-			if($this->blockActions !== null){
-				$out->putVarInt(count($this->blockActions));
-				foreach($this->blockActions as $blockAction){
-					$out->putVarInt($blockAction->getActionType());
-					$blockAction->write($out);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_100_60){
+			$out->putUnsignedVarLong($this->tick);
+			$out->putVector3($this->delta);
+			if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_210_58){
+				if($this->itemInteractionData !== null){
+					$this->itemInteractionData->write($out);
 				}
-			}
-			if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_70){
-				$out->putLFloat($this->analogMoveVecX);
-				$out->putLFloat($this->analogMoveVecZ);
+				if($this->itemStackRequest !== null){
+					$this->itemStackRequest->write($out);
+				}
+				if($this->blockActions !== null){
+					$out->putVarInt(count($this->blockActions));
+					foreach($this->blockActions as $blockAction){
+						$out->putVarInt($blockAction->getActionType());
+						$blockAction->write($out);
+					}
+				}
+				if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_70){
+					$out->putLFloat($this->analogMoveVecX);
+					$out->putLFloat($this->analogMoveVecZ);
+				}
 			}
 		}
 	}

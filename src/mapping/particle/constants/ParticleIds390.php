@@ -33,7 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\mapping\particle\constants;
 
-final class ParticleIds419{
+final class ParticleIds390{
 
 	private function __construct(){
 		//NOOP

@@ -112,15 +112,17 @@ class EducationSettingsPacket extends DataPacket implements ClientboundPacket{
 
 	protected function decodePayload(PacketSerializer $in) : void{
 		$this->codeBuilderDefaultUri = $in->getString();
-		$this->codeBuilderTitle = $in->getString();
-		$this->canResizeCodeBuilder = $in->getBool();
-		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
-			$this->disableLegacyTitleBar = $in->getBool();
-			$this->postProcessFilter = $in->getString();
-			$this->screenshotBorderResourcePath = $in->getString();
-			$this->agentCapabilities = $in->readOptional(fn() => EducationSettingsAgentCapabilities::read($in));
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_0_53){
+			$this->codeBuilderTitle = $in->getString();
+			$this->canResizeCodeBuilder = $in->getBool();
+			if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
+				$this->disableLegacyTitleBar = $in->getBool();
+				$this->postProcessFilter = $in->getString();
+				$this->screenshotBorderResourcePath = $in->getString();
+				$this->agentCapabilities = $in->readOptional(fn() => EducationSettingsAgentCapabilities::read($in));
+			}
+			$this->codeBuilderOverrideUri = $in->readOptional(fn() => $in->getString());
 		}
-		$this->codeBuilderOverrideUri = $in->readOptional(fn() => $in->getString());
 		$this->hasQuiz = $in->getBool();
 		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
 			$this->linkSettings = $in->readOptional(fn() => EducationSettingsExternalLinkSettings::read($in));
@@ -129,15 +131,17 @@ class EducationSettingsPacket extends DataPacket implements ClientboundPacket{
 
 	protected function encodePayload(PacketSerializer $out) : void{
 		$out->putString($this->codeBuilderDefaultUri);
-		$out->putString($this->codeBuilderTitle);
-		$out->putBool($this->canResizeCodeBuilder);
-		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
-			$out->putBool($this->disableLegacyTitleBar);
-			$out->putString($this->postProcessFilter);
-			$out->putString($this->screenshotBorderResourcePath);
-			$out->writeOptional($this->agentCapabilities, fn(EducationSettingsAgentCapabilities $v) => $v->write($out));
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_0_53){
+			$out->putString($this->codeBuilderTitle);
+			$out->putBool($this->canResizeCodeBuilder);
+			if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
+				$out->putBool($this->disableLegacyTitleBar);
+				$out->putString($this->postProcessFilter);
+				$out->putString($this->screenshotBorderResourcePath);
+				$out->writeOptional($this->agentCapabilities, fn(EducationSettingsAgentCapabilities $v) => $v->write($out));
+			}
+			$out->writeOptional($this->codeBuilderOverrideUri, fn(string $v) => $out->putString($v));
 		}
-		$out->writeOptional($this->codeBuilderOverrideUri, fn(string $v) => $out->putString($v));
 		$out->putBool($this->hasQuiz);
 		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
 			$out->writeOptional($this->linkSettings, fn(EducationSettingsExternalLinkSettings $v) => $v->write($out));

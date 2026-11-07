@@ -31,41 +31,45 @@
 
 declare(strict_types=1);
 
-namespace pocketmine\network\mcpe\protocol\mapping\command\constants;
+namespace pocketmine\network\mcpe\protocol;
 
-final class CommandParameterType419{
+use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
+
+class ActorFallPacket extends DataPacket implements ServerboundPacket{
+	public const NETWORK_ID = ProtocolInfo::ACTOR_FALL_PACKET;
+
+	public int $entityRuntimeId;
+	public float $fallDistance;
+	public bool $isInVoid;
 
 	/**
-	 * Basic parameter types. These must be combined with the ARG_FLAG_VALID constant.
-	 * ARG_FLAG_VALID | (type const)
+	 * @generate-create-func
 	 */
-	public const ARG_TYPE_INT = 1;
-	public const ARG_TYPE_FLOAT = 3;
-	public const ARG_TYPE_VALUE = 4;
-	public const ARG_TYPE_WILDCARD_INT = 5;
-	public const ARG_TYPE_OPERATOR = 6;
-	public const ARG_TYPE_COMPARE_OPERATOR = 7;
-	public const ARG_TYPE_TARGET = 8;
+	public static function create(int $entityRuntimeId, float $fallDistance, bool $isInVoid) : self{
+		$result = new self;
+		$result->entityRuntimeId = $entityRuntimeId;
+		$result->fallDistance = $fallDistance;
+		$result->isInVoid = $isInVoid;
+		return $result;
+	}
 
-	public const ARG_TYPE_WILDCARD_TARGET = 10;
+	protected function decodePayload(PacketSerializer $in) : void{
+		$this->entityRuntimeId = $in->getActorRuntimeId();
+		$this->fallDistance = $in->getLFloat();
+		$this->isInVoid = $in->getBool();
+	}
 
-	public const ARG_TYPE_FILEPATH = 17;
+	protected function encodePayload(PacketSerializer $out) : void{
+		$out->putActorRuntimeId($this->entityRuntimeId);
+		$out->putLFloat($this->fallDistance);
+		$out->putBool($this->isInVoid);
+	}
 
-	public const ARG_TYPE_FULL_INTEGER_RANGE = 23;
+	public function handle(PacketHandlerInterface $handler) : bool{
+		return $handler->handleActorFall($this);
+	}
 
-	public const ARG_TYPE_EQUIPMENT_SLOT = 38;
-	public const ARG_TYPE_STRING = 39;
-
-	public const ARG_TYPE_INT_POSITION = 47;
-	public const ARG_TYPE_POSITION = 48;
-
-	public const ARG_TYPE_MESSAGE = 51;
-
-	public const ARG_TYPE_RAWTEXT = 53;
-
-	public const ARG_TYPE_JSON = 57;
-
-	public const ARG_TYPE_BLOCK_STATES = 67;
-
-	public const ARG_TYPE_COMMAND = 70;
+	public function translate(PacketTranslatorInterface $translator) : ?self{
+		return $translator->translateActorFall($this);
+	}
 }

@@ -45,7 +45,7 @@ final class ContainerIds{
 	public const LAST = 100;
 	public const OFFHAND = 119;
 	public const ARMOR = 120;
-
+	public const CREATIVE = 121; // < ProtocolInfo::PROTOCOL_V1_15_0_51
 	public const HOTBAR = 122;
 	public const FIXED_INVENTORY = 123;
 	public const UI = 124;

@@ -52,6 +52,7 @@ final class LevelSettings{
 	public bool $createdInEditorMode = false;
 	public bool $exportedFromEditorMode = false;
 	public int $time = -1;
+	public bool $legacyEduMode = false;
 	public int $eduEditionOffer = EducationEditionOffer::NONE;
 	public bool $hasEduFeaturesEnabled = false;
 	public string $eduProductUUID = "";
@@ -62,6 +63,7 @@ final class LevelSettings{
 	public bool $hasLANBroadcast = true;
 	public int $xboxLiveBroadcastMode = MultiplayerGameVisibility::PUBLIC;
 	public int $platformBroadcastMode = MultiplayerGameVisibility::PUBLIC;
+	public bool $xboxLiveBroadcastIntent;
 	public bool $commandsEnabled;
 	public bool $isTexturePacksRequired = true;
 	/**
@@ -133,9 +135,14 @@ final class LevelSettings{
 			$this->exportedFromEditorMode = $in->getBool();
 		}
 		$this->time = $in->getVarInt();
+		if($in->getProtocol() === ProtocolInfo::PROTOCOL_V1_16_0_51){
+			$this->legacyEduMode = $in->getBool();
+		}
 		$this->eduEditionOffer = $in->getVarInt();
 		$this->hasEduFeaturesEnabled = $in->getBool();
-		$this->eduProductUUID = $in->getString();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_0_53){
+			$this->eduProductUUID = $in->getString();
+		}
 		$this->rainLevel = $in->getLFloat();
 		$this->lightningLevel = $in->getLFloat();
 		$this->hasConfirmedPlatformLockedContent = $in->getBool();
@@ -143,10 +150,15 @@ final class LevelSettings{
 		$this->hasLANBroadcast = $in->getBool();
 		$this->xboxLiveBroadcastMode = $in->getVarInt();
 		$this->platformBroadcastMode = $in->getVarInt();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_15_0_51 && $in->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_0_51){
+			$this->xboxLiveBroadcastIntent = $in->getBool();
+		}
 		$this->commandsEnabled = $in->getBool();
 		$this->isTexturePacksRequired = $in->getBool();
 		$this->gameRules = $in->getGameRules();
-		$this->experiments = Experiments::read($in);
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_100_60){
+			$this->experiments = Experiments::read($in);
+		}
 		$this->hasBonusChestEnabled = $in->getBool();
 		$this->hasStartWithMapEnabled = $in->getBool();
 		$this->defaultPlayerPermission = $in->getVarInt();
@@ -166,16 +178,20 @@ final class LevelSettings{
 			}
 		}
 		$this->vanillaVersion = $in->getString();
-		$this->limitedWorldWidth = $in->getLInt();
-		$this->limitedWorldLength = $in->getLInt();
-		$this->isNewNether = $in->getBool();
-		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
-			$this->eduSharedUriResource = EducationUriResource::read($in);
-		}
-		$this->experimentalGameplayOverride = $in->readOptional(\Closure::fromCallable([$in, 'getBool']));
-		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_20){
-			$this->chatRestrictionLevel = $in->getByte();
-			$this->disablePlayerInteractions = $in->getBool();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_15_0_51){
+			$this->limitedWorldWidth = $in->getLInt();
+			$this->limitedWorldLength = $in->getLInt();
+			$this->isNewNether = $in->getBool();
+			if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_0_64){
+				if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
+					$this->eduSharedUriResource = EducationUriResource::read($in);
+				}
+				$this->experimentalGameplayOverride = $in->readOptional(\Closure::fromCallable([$in, 'getBool']));
+				if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_20){
+					$this->chatRestrictionLevel = $in->getByte();
+					$this->disablePlayerInteractions = $in->getBool();
+				}
+			}
 		}
 	}
 
@@ -201,9 +217,14 @@ final class LevelSettings{
 			$out->putBool($this->exportedFromEditorMode);
 		}
 		$out->putVarInt($this->time);
+		if($out->getProtocol() === ProtocolInfo::PROTOCOL_V1_16_0_51){
+			$out->putBool($this->legacyEduMode);
+		}
 		$out->putVarInt($this->eduEditionOffer);
 		$out->putBool($this->hasEduFeaturesEnabled);
-		$out->putString($this->eduProductUUID);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_0_53){
+			$out->putString($this->eduProductUUID);
+		}
 		$out->putLFloat($this->rainLevel);
 		$out->putLFloat($this->lightningLevel);
 		$out->putBool($this->hasConfirmedPlatformLockedContent);
@@ -211,10 +232,15 @@ final class LevelSettings{
 		$out->putBool($this->hasLANBroadcast);
 		$out->putVarInt($this->xboxLiveBroadcastMode);
 		$out->putVarInt($this->platformBroadcastMode);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_15_0_51 && $out->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_0_51){
+			$out->putBool($this->xboxLiveBroadcastIntent);
+		}
 		$out->putBool($this->commandsEnabled);
 		$out->putBool($this->isTexturePacksRequired);
 		$out->putGameRules($this->gameRules);
-		$this->experiments->write($out);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_100_60){
+			$this->experiments->write($out);
+		}
 		$out->putBool($this->hasBonusChestEnabled);
 		$out->putBool($this->hasStartWithMapEnabled);
 		$out->putVarInt($this->defaultPlayerPermission);
@@ -234,16 +260,20 @@ final class LevelSettings{
 			}
 		}
 		$out->putString($this->vanillaVersion);
-		$out->putLInt($this->limitedWorldWidth);
-		$out->putLInt($this->limitedWorldLength);
-		$out->putBool($this->isNewNether);
-		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
-			($this->eduSharedUriResource ?? new EducationUriResource("", ""))->write($out);
-		}
-		$out->writeOptional($this->experimentalGameplayOverride, \Closure::fromCallable([$out, 'putBool']));
-		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_20){
-			$out->putByte($this->chatRestrictionLevel);
-			$out->putBool($this->disablePlayerInteractions);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_15_0_51){
+			$out->putLInt($this->limitedWorldWidth);
+			$out->putLInt($this->limitedWorldLength);
+			$out->putBool($this->isNewNether);
+			if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_0_64){
+				if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_30){
+					($this->eduSharedUriResource ?? new EducationUriResource("", ""))->write($out);
+				}
+				$out->writeOptional($this->experimentalGameplayOverride, \Closure::fromCallable([$out, 'putBool']));
+				if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_20){
+					$out->putByte($this->chatRestrictionLevel);
+					$out->putBool($this->disablePlayerInteractions);
+				}
+			}
 		}
 	}
 }

@@ -107,6 +107,8 @@ interface PacketHandlerInterface{
 
 	public function handlePlayerAction(PlayerActionPacket $packet) : bool;
 
+	public function handleActorFall(ActorFallPacket $packet) : bool;
+
 	public function handleHurtArmor(HurtArmorPacket $packet) : bool;
 
 	public function handleSetActorData(SetActorDataPacket $packet) : bool;
@@ -294,6 +296,8 @@ interface PacketHandlerInterface{
 	public function handleStructureTemplateDataRequest(StructureTemplateDataRequestPacket $packet) : bool;
 
 	public function handleStructureTemplateDataResponse(StructureTemplateDataResponsePacket $packet) : bool;
+
+	public function handleUpdateBlockProperties(UpdateBlockPropertiesPacket $packet) : bool;
 
 	public function handleClientCacheBlobStatus(ClientCacheBlobStatusPacket $packet) : bool;
 

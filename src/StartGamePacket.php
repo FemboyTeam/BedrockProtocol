@@ -35,6 +35,9 @@ namespace pocketmine\network\mcpe\protocol;
 
 use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\ListTag;
+use pocketmine\nbt\TreeRoot;
+use pocketmine\network\mcpe\protocol\serializer\NetworkNbtSerializer;
 use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
 use pocketmine\network\mcpe\protocol\types\BlockPaletteEntry;
 use pocketmine\network\mcpe\protocol\types\CacheableNbt;
@@ -66,6 +69,7 @@ class StartGamePacket extends DataPacket implements ClientboundPacket{
 	public string $worldName;
 	public string $premiumWorldTemplateId = "";
 	public bool $isTrial = false;
+	public bool $isMovementServerAuthoritative = true;
 	public PlayerMovementSettings $playerMovementSettings;
 	public int $currentTick = 0; //only used if isTrial is true
 	public int $enchantmentSeed = 0;
@@ -117,6 +121,7 @@ class StartGamePacket extends DataPacket implements ClientboundPacket{
 		string $worldName,
 		string $premiumWorldTemplateId,
 		bool $isTrial,
+		bool $isMovementServerAuthoritative,
 		PlayerMovementSettings $playerMovementSettings,
 		int $currentTick,
 		int $enchantmentSeed,
@@ -144,6 +149,7 @@ class StartGamePacket extends DataPacket implements ClientboundPacket{
 		$result->worldName = $worldName;
 		$result->premiumWorldTemplateId = $premiumWorldTemplateId;
 		$result->isTrial = $isTrial;
+		$result->isMovementServerAuthoritative = $isMovementServerAuthoritative;
 		$result->playerMovementSettings = $playerMovementSettings;
 		$result->currentTick = $currentTick;
 		$result->enchantmentSeed = $enchantmentSeed;
@@ -176,44 +182,72 @@ class StartGamePacket extends DataPacket implements ClientboundPacket{
 		$this->worldName = $in->getString();
 		$this->premiumWorldTemplateId = $in->getString();
 		$this->isTrial = $in->getBool();
-		$this->playerMovementSettings = PlayerMovementSettings::read($in);
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_100_60){
+			$this->playerMovementSettings = PlayerMovementSettings::read($in);
+		}else{
+			$this->isMovementServerAuthoritative = $in->getBool();
+		}
 		$this->currentTick = $in->getLLong();
 
 		$this->enchantmentSeed = $in->getVarInt();
 
 		$this->blockPalette = [];
-		for($i = 0, $len = $in->getUnsignedVarInt(); $i < $len; ++$i){
-			$blockName = $in->getString();
-			$state = $in->getNbtCompoundRoot();
-			$this->blockPalette[] = new BlockPaletteEntry($blockName, new CacheableNbt($state));
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_100_60){
+			for($i = 0, $len = $in->getUnsignedVarInt(); $i < $len; ++$i){
+				$blockName = $in->getString();
+				$state = $in->getNbtCompoundRoot();
+				$this->blockPalette[] = new BlockPaletteEntry($blockName, new CacheableNbt($state));
+			}
+		}else{
+			$blockPalette = $in->getNbtRoot()->getTag();
+			if(!($blockPalette instanceof ListTag)){
+				throw new PacketDecodeException("Expected TAG_List NBT root");
+			}
+
+			foreach($blockPalette->getValue() as $state){
+				if(!($state instanceof CompoundTag)){
+					throw new PacketDecodeException("Expected TAG_Compound NBT state");
+				}
+
+				$name = $state->getCompoundTag("block");
+				if($name === null) {
+					throw new PacketDecodeException("Expected TAG_Compound NBT block");
+				}
+
+				$this->blockPalette[] = new BlockPaletteEntry($name->getString("name"), new CacheableNbt($state));
+			}
 		}
 
 		$this->itemTable = [];
 		for($i = 0, $count = $in->getUnsignedVarInt(); $i < $count; ++$i){
 			$stringId = $in->getString();
 			$numericId = $in->getSignedLShort();
-			$isComponentBased = $in->getBool();
+			if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_100_60){
+				$isComponentBased = $in->getBool();
+			}
 
-			$this->itemTable[] = new ItemTypeEntry($stringId, $numericId, $isComponentBased);
+			$this->itemTable[] = new ItemTypeEntry($stringId, $numericId, $isComponentBased ?? false);
 		}
 
 		$this->multiplayerCorrelationId = $in->getString();
-		$this->enableNewInventorySystem = $in->getBool();
-		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_0){
-			$this->serverSoftwareVersion = $in->getString();
-			if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_18_0){
-				if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_0){
-					$this->playerActorProperties = new CacheableNbt($in->getNbtCompoundRoot());
-				}
-				$this->blockPaletteChecksum = $in->getLLong();
-				if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_0){
-					$this->worldTemplateId = $in->getUUID();
-					if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_20){
-						$this->enableClientSideChunkGeneration = $in->getBool();
-						if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_80){
-							$this->blockNetworkIdsAreHashes = $in->getBool();
-							if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_20_0){
-								$this->networkPermissions = NetworkPermissions::decode($in);
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_15_0_51){
+			$this->enableNewInventorySystem = $in->getBool();
+			if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_0){
+				$this->serverSoftwareVersion = $in->getString();
+				if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_18_0){
+					if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_0){
+						$this->playerActorProperties = new CacheableNbt($in->getNbtCompoundRoot());
+					}
+					$this->blockPaletteChecksum = $in->getLLong();
+					if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_0){
+						$this->worldTemplateId = $in->getUUID();
+						if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_20){
+							$this->enableClientSideChunkGeneration = $in->getBool();
+							if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_80){
+								$this->blockNetworkIdsAreHashes = $in->getBool();
+								if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_20_0){
+									$this->networkPermissions = NetworkPermissions::decode($in);
+								}
 							}
 						}
 					}
@@ -238,41 +272,57 @@ class StartGamePacket extends DataPacket implements ClientboundPacket{
 		$out->putString($this->worldName);
 		$out->putString($this->premiumWorldTemplateId);
 		$out->putBool($this->isTrial);
-		$this->playerMovementSettings->write($out);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_100_60){
+			$this->playerMovementSettings->write($out);
+		}else{
+			$out->putBool($this->isMovementServerAuthoritative);
+		}
 		$out->putLLong($this->currentTick);
 
 		$out->putVarInt($this->enchantmentSeed);
 
-		$out->putUnsignedVarInt(count($this->blockPalette));
-		foreach($this->blockPalette as $entry){
-			$out->putString($entry->getName());
-			$out->put($entry->getStates()->getEncodedNbt());
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_100_60){
+			$out->putUnsignedVarInt(count($this->blockPalette));
+			foreach($this->blockPalette as $entry){
+				$out->putString($entry->getName());
+				$out->put($entry->getStates()->getEncodedNbt());
+			}
+		}else{
+			$palette = new ListTag();
+			foreach($this->blockPalette as $entry){
+				$palette->push($entry->getStates()->getRoot());
+			}
+			$out->put((new NetworkNbtSerializer())->write(new TreeRoot($palette)));
 		}
 
 		$out->putUnsignedVarInt(count($this->itemTable));
 		foreach($this->itemTable as $entry){
 			$out->putString($entry->getStringId());
 			$out->putLShort($entry->getNumericId());
-			$out->putBool($entry->isComponentBased());
+			if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_100_60){
+				$out->putBool($entry->isComponentBased());
+			}
 		}
 
 		$out->putString($this->multiplayerCorrelationId);
-		$out->putBool($this->enableNewInventorySystem);
-		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_0){
-			$out->putString($this->serverSoftwareVersion);
-			if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_18_0){
-				if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_0){
-					$out->put($this->playerActorProperties->getEncodedNbt());
-				}
-				$out->putLLong($this->blockPaletteChecksum);
-				if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_0){
-					$out->putUUID($this->worldTemplateId);
-					if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_20){
-						$out->putBool($this->enableClientSideChunkGeneration);
-						if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_80){
-							$out->putBool($this->blockNetworkIdsAreHashes);
-							if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_20_0){
-								$this->networkPermissions->encode($out);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_15_0_51){
+			$out->putBool($this->enableNewInventorySystem);
+			if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_0){
+				$out->putString($this->serverSoftwareVersion);
+				if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_18_0){
+					if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_0){
+						$out->put($this->playerActorProperties->getEncodedNbt());
+					}
+					$out->putLLong($this->blockPaletteChecksum);
+					if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_0){
+						$out->putUUID($this->worldTemplateId);
+						if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_20){
+							$out->putBool($this->enableClientSideChunkGeneration);
+							if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_19_80){
+								$out->putBool($this->blockNetworkIdsAreHashes);
+								if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_20_0){
+									$this->networkPermissions->encode($out);
+								}
 							}
 						}
 					}

@@ -33,7 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\mapping\containerui;
 
-use pocketmine\network\mcpe\protocol\mapping\containerui\constants\ContainerUIIds419;
+use pocketmine\network\mcpe\protocol\mapping\containerui\constants\ContainerUIIds392;
 use pocketmine\network\mcpe\protocol\mapping\containerui\constants\ContainerUIIds560;
 use pocketmine\network\mcpe\protocol\mapping\containerui\constants\ContainerUIIds582;
 use pocketmine\network\mcpe\protocol\mapping\containerui\constants\ContainerUIIds630;
@@ -51,7 +51,7 @@ class ContainerUIIdMapper extends ProtocolMappingTable{
 		ProtocolInfo::CURRENT_PROTOCOL => ContainerUIIds630::class,
 		ProtocolInfo::PROTOCOL_V1_19_80 => ContainerUIIds582::class,
 		ProtocolInfo::PROTOCOL_V1_19_50 => ContainerUIIds560::class,
-		ProtocolInfo::PROTOCOL_V1_16_100_60 => ContainerUIIds419::class
+		ProtocolInfo::PROTOCOL_V1_15_0_51 => ContainerUIIds392::class
 	];
 
 	public const CORE_CONSTANTS = ContainerUIIds::class;

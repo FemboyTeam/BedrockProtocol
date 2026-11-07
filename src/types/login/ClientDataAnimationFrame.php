@@ -53,6 +53,6 @@ final class ClientDataAnimationFrame{
 	/** @required */
 	public string $Image;
 
-	/** @required */
+	/** >= ProtocolInfo::PROTOCOL_V1_16_100_60 */
 	public int $AnimationExpression;
 }

@@ -78,7 +78,7 @@ class PacketIds{
 	public const BLOCK_PICK_REQUEST_PACKET = 0x22;
 	public const ACTOR_PICK_REQUEST_PACKET = 0x23;
 	public const PLAYER_ACTION_PACKET = 0x24;
-
+	public const ACTOR_FALL_PACKET = 0x25;
 	public const HURT_ARMOR_PACKET = 0x26;
 	public const SET_ACTOR_DATA_PACKET = 0x27;
 	public const SET_ACTOR_MOTION_PACKET = 0x28;
@@ -167,7 +167,7 @@ class PacketIds{
 	public const LEVEL_SOUND_EVENT_PACKET = 0x7b;
 	public const LEVEL_EVENT_GENERIC_PACKET = 0x7c;
 	public const LECTERN_UPDATE_PACKET = 0x7d;
-
+	public const VIDEO_STREAM_CONNECT_PACKET = 0x7e;
 	public const ADD_ENTITY_PACKET = 0x7f;
 	public const REMOVE_ENTITY_PACKET = 0x80;
 	public const CLIENT_CACHE_STATUS_PACKET = 0x81;
@@ -175,7 +175,7 @@ class PacketIds{
 	public const MAP_CREATE_LOCKED_COPY_PACKET = 0x83;
 	public const STRUCTURE_TEMPLATE_DATA_REQUEST_PACKET = 0x84;
 	public const STRUCTURE_TEMPLATE_DATA_RESPONSE_PACKET = 0x85;
-
+	public const UPDATE_BLOCK_PROPERTIES_PACKET = 0x86;
 	public const CLIENT_CACHE_BLOB_STATUS_PACKET = 0x87;
 	public const CLIENT_CACHE_MISS_RESPONSE_PACKET = 0x88;
 	public const EDUCATION_SETTINGS_PACKET = 0x89;

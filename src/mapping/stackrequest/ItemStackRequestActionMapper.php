@@ -34,7 +34,7 @@ declare(strict_types=1);
 namespace pocketmine\network\mcpe\protocol\mapping\stackrequest;
 
 use pocketmine\network\mcpe\protocol\mapping\ProtocolMappingTable;
-use pocketmine\network\mcpe\protocol\mapping\stackrequest\constants\ItemStackRequestActionType419;
+use pocketmine\network\mcpe\protocol\mapping\stackrequest\constants\ItemStackRequestActionType392;
 use pocketmine\network\mcpe\protocol\mapping\stackrequest\constants\ItemStackRequestActionType422;
 use pocketmine\network\mcpe\protocol\mapping\stackrequest\constants\ItemStackRequestActionType428;
 use pocketmine\network\mcpe\protocol\mapping\stackrequest\constants\ItemStackRequestActionType471;
@@ -53,7 +53,7 @@ class ItemStackRequestActionMapper extends ProtocolMappingTable{
 		ProtocolInfo::PROTOCOL_V1_17_40 => ItemStackRequestActionType471::class,
 		ProtocolInfo::PROTOCOL_V1_16_210_58 => ItemStackRequestActionType428::class,
 		ProtocolInfo::PROTOCOL_V1_16_200_56 => ItemStackRequestActionType422::class,
-		ProtocolInfo::PROTOCOL_V1_16_100_60 => ItemStackRequestActionType419::class
+		ProtocolInfo::PROTOCOL_V1_15_0_51 => ItemStackRequestActionType392::class
 	];
 
 	public const CORE_CONSTANTS = ItemStackRequestActionType::class;
