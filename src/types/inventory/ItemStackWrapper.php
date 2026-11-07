@@ -33,6 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\types\inventory;
 
+use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
 
 final class ItemStackWrapper{
@@ -51,6 +52,9 @@ final class ItemStackWrapper{
 
 	public static function read(PacketSerializer $in) : self{
 		$stackId = 0;
+		if($in->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_220_50){
+			$stackId = $in->readGenericTypeNetworkId();
+		}
 		$stack = $in->getItemStack(function(PacketSerializer $in) use (&$stackId) : void{
 			$hasNetId = $in->getBool();
 			if($hasNetId){
@@ -61,6 +65,9 @@ final class ItemStackWrapper{
 	}
 
 	public function write(PacketSerializer $out) : void{
+		if($out->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_220_50){
+			$out->writeGenericTypeNetworkId($this->stackId);
+		}
 		$out->putItemStack($this->itemStack, function(PacketSerializer $out) : void{
 			$out->putBool($this->stackId !== 0);
 			if($this->stackId !== 0){
