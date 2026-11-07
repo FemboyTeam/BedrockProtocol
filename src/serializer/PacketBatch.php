@@ -75,13 +75,13 @@ class PacketBatch{
 	 * @phpstan-return \Generator<int, Packet, void, void>
 	 * @throws PacketDecodeException
 	 */
-	final public static function decodePackets(BinaryStream $stream, PacketPool $packetPool, int $protocol) : \Generator{
+	final public static function decodePackets(BinaryStream $stream, PacketPool $packetPool, int $protocol, PacketSerializerContext $context = null) : \Generator{
 		$c = 0;
 		foreach(self::decodeRaw($stream) as $packetBuffer){
 			$packet = $packetPool->getPacket($packetBuffer, $protocol);
 			if($packet !== null){
 				try{
-					$packet->decode(PacketSerializer::decoder($packetBuffer, 0)->setProtocol($protocol));
+					$packet->decode(PacketSerializer::decoder($packetBuffer, 0)->setProtocol($protocol)->setContext($context));
 				}catch(PacketDecodeException $e){
 					throw new PacketDecodeException("Error decoding packet $c in batch: " . $e->getMessage(), 0, $e);
 				}
@@ -96,9 +96,9 @@ class PacketBatch{
 	/**
 	 * @param Packet[]       $packets
 	 */
-	final public static function encodePackets(BinaryStream $stream, array $packets, int $protocol) : void{
+	final public static function encodePackets(BinaryStream $stream, array $packets, int $protocol, PacketSerializerContext $context = null) : void{
 		foreach($packets as $packet){
-			$serializer = PacketSerializer::encoder()->setProtocol($protocol);
+			$serializer = PacketSerializer::encoder()->setProtocol($protocol)->setContext($context);
 			$packet->encode($serializer);
 			$stream->putUnsignedVarInt(strlen($serializer->getBuffer()));
 			$stream->put($serializer->getBuffer());

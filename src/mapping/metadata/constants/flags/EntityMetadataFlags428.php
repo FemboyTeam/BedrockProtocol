@@ -33,7 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\mapping\metadata\constants\flags;
 
-final class EntityMetadataFlags440{
+final class EntityMetadataFlags428{
 
 	private function __construct(){
 		//NOOP

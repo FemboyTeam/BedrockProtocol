@@ -38,6 +38,8 @@ use pocketmine\nbt\NbtDataException;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\TreeRoot;
 use pocketmine\network\mcpe\protocol\PacketDecodeException;
+use pocketmine\network\mcpe\protocol\ProtocolInfo;
+use pocketmine\network\mcpe\protocol\serializer\NetworkNbtSerializer;
 use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
 use function count;
 use function strlen;
@@ -88,7 +90,12 @@ class ItemStackExtraData{
 			}
 			$offset = $in->getOffset();
 			try{
-				$compound = (new LittleEndianNbtSerializer())->read($in->getBuffer(), $offset, 512)->mustGetCompoundTag();
+				if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_220_50){
+					$reader = new LittleEndianNbtSerializer();
+				}else{
+					$reader = new NetworkNbtSerializer();
+				}
+				$compound = $reader->read($in->getBuffer(), $offset, 512)->mustGetCompoundTag();
 			}catch(NbtDataException $e){
 				throw PacketDecodeException::wrap($e, "Failed decoding NBT root");
 			}finally{
@@ -98,14 +105,24 @@ class ItemStackExtraData{
 			throw new PacketDecodeException("Unexpected fake NBT length $nbtLen");
 		}
 
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_220_50){
+			$getCount = \Closure::fromCallable([$in, "getLInt"]);
+			$getString = \Closure::fromCallable(function() use ($in) : string{
+				return $in->get($in->getLShort());
+			});
+		}else{
+			$getCount = \Closure::fromCallable([$in, "getVarInt"]);
+			$getString = \Closure::fromCallable([$in, "getString"]);
+		}
+
 		$canPlaceOn = [];
-		for($i = 0, $canPlaceOnCount = $in->getLInt(); $i < $canPlaceOnCount; ++$i){
-			$canPlaceOn[] = $in->get($in->getLShort());
+		for($i = 0, $canPlaceOnCount = $getCount(); $i < $canPlaceOnCount; ++$i){
+			$canPlaceOn[] = $getString();
 		}
 
 		$canDestroy = [];
-		for($i = 0, $canDestroyCount = $in->getLInt(); $i < $canDestroyCount; ++$i){
-			$canDestroy[] = $in->get($in->getLShort());
+		for($i = 0, $canDestroyCount = $getCount(); $i < $canDestroyCount; ++$i){
+			$canDestroy[] = $getString();
 		}
 
 		return new self($compound, $canPlaceOn, $canDestroy);
@@ -115,20 +132,44 @@ class ItemStackExtraData{
 		if($this->nbt !== null){
 			$out->putLShort(0xffff);
 			$out->putByte(1); //TODO: NBT data version (?)
-			$out->put((new LittleEndianNbtSerializer())->write(new TreeRoot($this->nbt)));
+			if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_220_50){
+				$writer = new LittleEndianNbtSerializer();
+			}else{
+				$writer = new NetworkNbtSerializer();
+			}
+			$out->put($writer->write(new TreeRoot($this->nbt)));
 		}else{
 			$out->putLShort(0);
 		}
 
-		$out->putLInt(count($this->canPlaceOn));
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_220_50){
+			$putCount = \Closure::fromCallable([$out, "putLInt"]);
+			$putString = \Closure::fromCallable(function(string $str) use ($out) : void{
+				$out->putLShort(strlen($str));
+				$out->put($str);
+			});
+		}else{
+			$putCount = \Closure::fromCallable([$out, "putVarInt"]);
+			$putString = \Closure::fromCallable([$out, "putString"]);
+		}
+
+		$putCount(count($this->canPlaceOn));
 		foreach($this->canPlaceOn as $entry){
-			$out->putLShort(strlen($entry));
-			$out->put($entry);
+			$putString($entry);
 		}
-		$out->putLInt(count($this->canDestroy));
+		$putCount(count($this->canDestroy));
 		foreach($this->canDestroy as $entry){
-			$out->putLShort(strlen($entry));
-			$out->put($entry);
+			$putString($entry);
 		}
+	}
+
+	public function equals(ItemStackExtraData $extraData) : bool{
+		return
+			$this->canPlaceOn === $extraData->canPlaceOn &&
+			$this->canDestroy === $extraData->canDestroy &&
+			(
+				$this->nbt === $extraData->nbt || //this covers null === null and fast object identity
+				($this->nbt !== null && $extraData->nbt !== null && $this->nbt->equals($extraData->nbt))
+			);
 	}
 }

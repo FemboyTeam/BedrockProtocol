@@ -59,6 +59,8 @@ use pocketmine\network\mcpe\protocol\types\FloatGameRule;
 use pocketmine\network\mcpe\protocol\types\GameRule;
 use pocketmine\network\mcpe\protocol\types\IntGameRule;
 use pocketmine\network\mcpe\protocol\types\inventory\ItemStack;
+use pocketmine\network\mcpe\protocol\types\inventory\ItemStackExtraData;
+use pocketmine\network\mcpe\protocol\types\inventory\ItemStackExtraDataShield;
 use pocketmine\network\mcpe\protocol\types\recipe\ComplexAliasItemDescriptor;
 use pocketmine\network\mcpe\protocol\types\recipe\IntIdMetaItemDescriptor;
 use pocketmine\network\mcpe\protocol\types\recipe\ItemDescriptorType;
@@ -87,6 +89,8 @@ class PacketSerializer extends BinaryStream{
 
 	private int $protocol = ProtocolInfo::CURRENT_PROTOCOL;
 
+	private ?PacketSerializerContext $context = null;
+
 	protected function __construct(string $buffer = "", int $offset = 0){
 		parent::__construct($buffer, $offset);
 	}
@@ -98,6 +102,11 @@ class PacketSerializer extends BinaryStream{
 
 	public function getProtocol() : int{
 		return $this->protocol;
+	}
+
+	public function setContext(?PacketSerializerContext $context = null) : self{
+		$this->context = $context;
+		return $this;
 	}
 
 	public static function encoder() : self{
@@ -324,16 +333,27 @@ class PacketSerializer extends BinaryStream{
 			return ItemStack::null();
 		}
 
-		$count = $this->getLShort();
-		$meta = $this->getUnsignedVarInt();
+		if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_220_50){
+			$count = $this->getLShort();
+			$meta = $this->getUnsignedVarInt();
 
-		$readExtraCrapInTheMiddle($this);
+			$readExtraCrapInTheMiddle($this);
 
-		$blockRuntimeId = $this->getVarInt();
+			$blockRuntimeId = $this->getVarInt();
+			$extraDataReader = PacketSerializer::decoder($this->getString(), 0)->setProtocol($this->protocol);
+		}else{
+			$auxValue = $this->getVarInt();
+			$meta = $auxValue >> 8;
+			$count = $auxValue & 0xff;
 
-		$extraData = $this->getString();
+			$extraDataReader = $this;
+		}
 
-		return new ItemStack($id, $meta, $count, $blockRuntimeId, $extraData);
+		$extraData = $id === $this->context?->getShieldRuntimeId() ?
+			ItemStackExtraDataShield::read($extraDataReader) :
+			ItemStackExtraData::read($extraDataReader);
+
+		return new ItemStack($id, $meta, $count, $blockRuntimeId ?? 0, $extraData);
 	}
 
 	/**
@@ -347,14 +367,24 @@ class PacketSerializer extends BinaryStream{
 		}
 
 		$this->putVarInt($item->getId());
-		$this->putLShort($item->getCount());
-		$this->putUnsignedVarInt($item->getMeta());
 
-		$writeExtraCrapInTheMiddle($this);
+		if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_220_50){
+			$this->putLShort($item->getCount());
+			$this->putUnsignedVarInt($item->getMeta());
 
-		$this->putVarInt($item->getBlockRuntimeId());
+			$writeExtraCrapInTheMiddle($this);
 
-		$this->putString($item->getRawExtraData());
+			$this->putVarInt($item->getBlockRuntimeId());
+
+			$encoder = PacketSerializer::encoder()->setProtocol($this->protocol);
+			$item->getExtraData()->write($encoder);
+			$this->putString($encoder->getBuffer());
+		}else{
+			$auxValue = (($item->getMeta() & 0x7fff) << 8) | $item->getCount();
+			$this->putVarInt($auxValue);
+
+			$item->getExtraData()->write($this);
+		}
 	}
 
 	public function getRecipeIngredient() : RecipeIngredient{
@@ -641,9 +671,11 @@ class PacketSerializer extends BinaryStream{
 		$rules = [];
 		for($i = 0; $i < $count; ++$i){
 			$name = $this->getString();
-			$isPlayerModifiable = $this->getBool();
+			if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_0){
+				$isPlayerModifiable = $this->getBool();
+			}
 			$type = $this->getUnsignedVarInt();
-			$rules[$name] = $this->readGameRule($type, $isPlayerModifiable);
+			$rules[$name] = $this->readGameRule($type, $isPlayerModifiable ?? false);
 		}
 
 		return $rules;
@@ -659,7 +691,9 @@ class PacketSerializer extends BinaryStream{
 		$this->putUnsignedVarInt(count($rules));
 		foreach($rules as $name => $rule){
 			$this->putString($name);
-			$this->putBool($rule->isPlayerModifiable());
+			if($this->getProtocol() >= ProtocolInfo::PROTOCOL_V1_17_0){
+				$this->putBool($rule->isPlayerModifiable());
+			}
 			$this->putUnsignedVarInt($rule->getTypeId());
 			$rule->encode($this);
 		}

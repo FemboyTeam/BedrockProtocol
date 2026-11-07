@@ -58,16 +58,18 @@ class InventoryTransactionPacket extends DataPacket implements ClientboundPacket
 	public int $requestId;
 	/** @var InventoryTransactionChangedSlotsHack[] */
 	public array $requestChangedSlots;
+	public bool $hasItemStackIds;
 	public TransactionData $trData;
 
 	/**
 	 * @generate-create-func
 	 * @param InventoryTransactionChangedSlotsHack[] $requestChangedSlots
 	 */
-	public static function create(int $requestId, array $requestChangedSlots, TransactionData $trData) : self{
+	public static function create(int $requestId, array $requestChangedSlots, bool $hasItemStackIds, TransactionData $trData) : self{
 		$result = new self;
 		$result->requestId = $requestId;
 		$result->requestChangedSlots = $requestChangedSlots;
+		$result->hasItemStackIds = $hasItemStackIds;
 		$result->trData = $trData;
 		return $result;
 	}
@@ -83,6 +85,10 @@ class InventoryTransactionPacket extends DataPacket implements ClientboundPacket
 
 		$transactionType = $in->getUnsignedVarInt();
 
+		if($in->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_220_50){
+			$this->hasItemStackIds = $in->getBool();
+		}
+
 		$this->trData = match($transactionType){
 			NormalTransactionData::ID => new NormalTransactionData(),
 			MismatchTransactionData::ID => new MismatchTransactionData(),
@@ -92,7 +98,7 @@ class InventoryTransactionPacket extends DataPacket implements ClientboundPacket
 			default => throw new PacketDecodeException("Unknown transaction type $transactionType"),
 		};
 
-		$this->trData->decode($in);
+		$this->trData->decode($in, $this->hasItemStackIds ?? true);
 	}
 
 	protected function encodePayload(PacketSerializer $out) : void{
@@ -106,7 +112,11 @@ class InventoryTransactionPacket extends DataPacket implements ClientboundPacket
 
 		$out->putUnsignedVarInt($this->trData->getTypeId());
 
-		$this->trData->encode($out);
+		if($out->getProtocol() < ProtocolInfo::PROTOCOL_V1_16_220_50){
+			$out->putBool($this->hasItemStackIds);
+		}
+
+		$this->trData->encode($out, $this->hasItemStackIds);
 	}
 
 	public function handle(PacketHandlerInterface $handler) : bool{

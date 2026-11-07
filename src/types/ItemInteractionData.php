@@ -73,7 +73,7 @@ final class ItemInteractionData{
 			}
 		}
 		$transactionData = new UseItemTransactionData();
-		$transactionData->decode($in);
+		$transactionData->decode($in, false);
 		return new ItemInteractionData($requestId, $requestChangedSlots, $transactionData);
 	}
 
@@ -85,6 +85,6 @@ final class ItemInteractionData{
 				$changedSlot->write($out);
 			}
 		}
-		$this->transactionData->encode($out);
+		$this->transactionData->encode($out, false);
 	}
 }

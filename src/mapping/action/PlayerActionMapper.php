@@ -33,7 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\mapping\action;
 
-use pocketmine\network\mcpe\protocol\mapping\action\constants\PlayerAction440;
+use pocketmine\network\mcpe\protocol\mapping\action\constants\PlayerAction428;
 use pocketmine\network\mcpe\protocol\mapping\action\constants\PlayerAction527;
 use pocketmine\network\mcpe\protocol\mapping\action\constants\PlayerAction567;
 use pocketmine\network\mcpe\protocol\mapping\action\constants\PlayerAction594;
@@ -55,7 +55,7 @@ class PlayerActionMapper extends ProtocolMappingTable{
 		ProtocolInfo::PROTOCOL_V1_20_10 => PlayerAction594::class,
 		ProtocolInfo::PROTOCOL_V1_19_60 => PlayerAction567::class,
 		ProtocolInfo::PROTOCOL_V1_19_0 => PlayerAction527::class,
-		ProtocolInfo::PROTOCOL_V1_17_0 => PlayerAction440::class
+		ProtocolInfo::PROTOCOL_V1_16_210_58 => PlayerAction428::class
 	];
 
 	public const CORE_CONSTANTS = PlayerAction::class;

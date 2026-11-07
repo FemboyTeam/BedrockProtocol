@@ -34,6 +34,7 @@ declare(strict_types=1);
 namespace pocketmine\network\mcpe\protocol\types\inventory;
 
 use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\network\mcpe\protocol\serializer\PacketSerializer;
 
 /**
@@ -58,13 +59,30 @@ final class ItemStackExtraDataShield extends ItemStackExtraData{
 
 	public static function read(PacketSerializer $in) : self{
 		$base = parent::read($in);
-		$blockingTick = $in->getLLong();
+		if($in->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_220_50){
+			$blockingTick = $in->getLLong();
+		}else{
+			$blockingTick = $in->getVarLong();
+		}
 
 		return new self($base->getNbt(), $base->getCanPlaceOn(), $base->getCanDestroy(), $blockingTick);
 	}
 
 	public function write(PacketSerializer $out) : void{
 		parent::write($out);
-		$out->putLLong($this->blockingTick);
+		if($out->getProtocol() >= ProtocolInfo::PROTOCOL_V1_16_220_50){
+			$out->putLLong($this->blockingTick);
+		}else{
+			$out->putVarLong($this->blockingTick);
+		}
+	}
+
+	public function equals(ItemStackExtraData $extraData) : bool{
+		return
+			parent::equals($extraData) &&
+			(
+				$extraData instanceof ItemStackExtraDataShield &&
+				$this->blockingTick === $extraData->blockingTick
+			);
 	}
 }

@@ -33,7 +33,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\mapping\stackrequest\constants;
 
-final class ItemStackRequestActionType440{
+final class ItemStackRequestActionType428{
 
 	private function __construct(){
 		//NOOP
