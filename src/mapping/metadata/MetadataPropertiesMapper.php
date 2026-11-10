@@ -51,7 +51,7 @@ class MetadataPropertiesMapper extends ProtocolMappingTable{
 		ProtocolInfo::PROTOCOL_V1_20_10 => EntityMetadataProperties594::class,
 		ProtocolInfo::PROTOCOL_V1_19_50 => EntityMetadataProperties560::class,
 		ProtocolInfo::PROTOCOL_V1_16_210_58 => EntityMetadataProperties428::class,
-		ProtocolInfo::PROTOCOL_V1_16_0_53 => EntityMetadataProperties390::class
+		ProtocolInfo::PROTOCOL_V1_14_0_1 => EntityMetadataProperties390::class
 	];
 
 	public const CORE_CONSTANTS = EntityMetadataProperties::class;

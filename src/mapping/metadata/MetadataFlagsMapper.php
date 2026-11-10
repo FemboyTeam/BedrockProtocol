@@ -53,7 +53,7 @@ class MetadataFlagsMapper extends ProtocolMappingTable{
 		ProtocolInfo::PROTOCOL_V1_20_10 => EntityMetadataFlags594::class,
 		ProtocolInfo::PROTOCOL_V1_19_70 => EntityMetadataFlags575::class,
 		ProtocolInfo::PROTOCOL_V1_19_50 => EntityMetadataFlags560::class,
-		ProtocolInfo::PROTOCOL_V1_16_0_53 => EntityMetadataFlags390::class
+		ProtocolInfo::PROTOCOL_V1_14_0_1 => EntityMetadataFlags390::class
 	];
 
 	public const CORE_CONSTANTS = EntityMetadataFlags::class;
