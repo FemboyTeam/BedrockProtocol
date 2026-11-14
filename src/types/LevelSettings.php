@@ -63,7 +63,7 @@ final class LevelSettings{
 	public bool $hasLANBroadcast = true;
 	public int $xboxLiveBroadcastMode = MultiplayerGameVisibility::PUBLIC;
 	public int $platformBroadcastMode = MultiplayerGameVisibility::PUBLIC;
-	public bool $xboxLiveBroadcastIntent;
+	public bool $xboxLiveBroadcastIntent = false;
 	public bool $commandsEnabled;
 	public bool $isTexturePacksRequired = true;
 	/**
